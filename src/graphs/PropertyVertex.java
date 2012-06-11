@@ -1,6 +1,6 @@
 package graphs;
 
-import graphsInterfaces.IPropertyVertex;
+import graphsInterfaces.IVertex;
 
 /**
  * 
@@ -9,6 +9,6 @@ import graphsInterfaces.IPropertyVertex;
  * @author iz2
  *
  */
-public class PropertyVertex extends HasProperties implements IPropertyVertex {
+public class PropertyVertex extends PropertiesMap implements IVertex {
 	
 }

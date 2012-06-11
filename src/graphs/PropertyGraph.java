@@ -1,9 +1,8 @@
 package graphs;
 
-import graphsInterfaces.IPropertyEdge;
-import graphsInterfaces.IPropertyGraph;
-import graphsInterfaces.IPropertyVertex;
-import graphsInterfaces.Property;
+import graphsInterfaces.IEdge;
+import graphsInterfaces.IGraph;
+import graphsInterfaces.IVertex;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 
 import org.neo4j.graphdb.DynamicRelationshipType;
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -21,7 +21,7 @@ import org.neo4j.graphdb.Transaction;
 
 import util.MySqlUtil;
 import util.Neo4jUtil;
-import converters.INeo4jIndexer;
+import convertersInterfaces.INeo4jIndexer;
 
 /**
  * 
@@ -30,7 +30,7 @@ import converters.INeo4jIndexer;
  * @author iz2
  *
  */
-public final class PropertyGraph implements IPropertyGraph {
+public final class PropertyGraph implements IGraph {
 
 	/**
 	 * 
@@ -56,7 +56,7 @@ public final class PropertyGraph implements IPropertyGraph {
 	private static RelationshipType getRelationshipTypeOfEdge(PropertyEdge edge) {
 		
 		// Gets the relationship type property.
-		String relationshipType = edge.getProperty(RELATIONSHIP_TYPE_PROPERTY);
+		String relationshipType = edge.getProperties().get(RELATIONSHIP_TYPE_PROPERTY);
 		
 		// The relationship type is undefined.
 		if (relationshipType == null) {
@@ -66,19 +66,19 @@ public final class PropertyGraph implements IPropertyGraph {
 		return DynamicRelationshipType.withName(relationshipType);
 	}
 
-	private ArrayList<IPropertyVertex> vertices;
+	private ArrayList<IVertex> vertices;
 	private ArrayList<PropertyEdge> edges;
 
 	/**
 	 * Creates empty graph with no nodes and edges.
 	 */
 	public PropertyGraph() {
-		vertices = new ArrayList<IPropertyVertex>();
+		vertices = new ArrayList<IVertex>();
 		edges = new ArrayList<PropertyEdge>();
 	}
 	
 	@Override
-	public void addVertex(IPropertyVertex vertex) {
+	public void addVertex(IVertex vertex) {
 
 		// Checks if the vertex is already in the graph.
 		if (vertices.contains(vertex) == false) {
@@ -87,7 +87,7 @@ public final class PropertyGraph implements IPropertyGraph {
 	}
 
 	@Override
-	public IPropertyEdge createEdge(IPropertyVertex start, IPropertyVertex end) {
+	public IEdge createEdge(IVertex start, IVertex end) {
 
 		// Checks if both vertices are in the graph.
 		if (vertices.contains(start) && vertices.contains(end)) {
@@ -101,12 +101,12 @@ public final class PropertyGraph implements IPropertyGraph {
 	}
 	
 	@Override
-	public IPropertyVertex getVertex(int index) {
+	public IVertex getVertex(int index) {
 		return vertices.get(index);
 	}
 	
 	@Override
-	public IPropertyEdge getEdge(int i) {
+	public IEdge getEdge(int i) {
 		return edges.get(i);
 	}
 
@@ -149,10 +149,10 @@ public final class PropertyGraph implements IPropertyGraph {
 			insertNode.executeUpdate();
 
 			// and its properties.
-			for ( Property<String, String> property : vertices.get(i).getProperties()) {
+			for ( Entry<String, String> property : vertices.get(i).getProperties().entrySet()) {
 				insertProperty.setInt(1, i);
-				insertProperty.setString(2, property.key);
-				insertProperty.setString(3, property.value);
+				insertProperty.setString(2, property.getKey());
+				insertProperty.setString(3, property.getValue());
 				insertProperty.executeUpdate();
 			}
 		}
@@ -173,10 +173,10 @@ public final class PropertyGraph implements IPropertyGraph {
 			insertEdge.executeUpdate();
 
 			// and its properties.
-			for ( Property<String, String> property : edges.get(i).getProperties()) {
+			for ( Entry<String, String> property : edges.get(i).getProperties().entrySet()) {
 				insertProperty.setInt(1, i);
-				insertProperty.setString(2, property.key);
-				insertProperty.setString(3, property.value);
+				insertProperty.setString(2, property.getKey());
+				insertProperty.setString(3, property.getValue());
 				insertProperty.executeUpdate();
 			}
 		}
@@ -203,8 +203,8 @@ public final class PropertyGraph implements IPropertyGraph {
 				
 				// creates a neo4j node with the properties of the vertex,
 				Node node = graphDb.createNode();
-				for ( Property<String, String> property : vertices.get(i).getProperties()) {
-					node.setProperty(property.key, property.value);
+				for ( Entry<String, String> property : vertices.get(i).getProperties().entrySet()) {
+					node.setProperty(property.getKey(), property.getValue());
 				}
 				
 				// indexes the node.
@@ -233,8 +233,8 @@ public final class PropertyGraph implements IPropertyGraph {
 				
 				// creates a neo4j relationship with the properties of the edge,
 				Relationship relationship = start.createRelationshipTo(end, getRelationshipTypeOfEdge(edge));
-				for ( Property<String, String> property : edge.getProperties()) {
-					relationship.setProperty(property.key, property.value);
+				for ( Entry<String, String> property : edge.getProperties().entrySet()) {
+					relationship.setProperty(property.getKey(), property.getValue());
 				}
 				
 				tx.success();
@@ -261,15 +261,13 @@ public final class PropertyGraph implements IPropertyGraph {
 	 * Deletes all nodes and edges.
 	 */
 	private void clear() {
-		vertices = new ArrayList<IPropertyVertex>();
+		vertices = new ArrayList<IVertex>();
 		edges = new ArrayList<PropertyEdge>();
 	}
 
 	@Override
 	public void readFromMySql(Connection connection, String name)
 			throws SQLException {
-		
-		// TODO : implement.
 
 		// Clears the old graph.
 		clear();
@@ -302,7 +300,7 @@ public final class PropertyGraph implements IPropertyGraph {
 				int id = rs.getInt("id");
 				String key = rs.getString("p_key");
 				String value = rs.getString("p_value");
-				vertices.get(id).setProperty(key, value);
+				vertices.get(id).getProperties().put(key, value);
 			}
 			
 			// Reads and creates edges.
@@ -325,7 +323,7 @@ public final class PropertyGraph implements IPropertyGraph {
 				int id = rs.getInt("id");
 				String key = rs.getString("p_key");
 				String value = rs.getString("p_value");
-				edges.get(id).setProperty(key, value);
+				edges.get(id).getProperties().put(key, value);
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 package graphs;
 
-import graphsInterfaces.IPropertyEdge;
-import graphsInterfaces.IPropertyVertex;
+import graphsInterfaces.IEdge;
+import graphsInterfaces.IVertex;
 
 /**
  * 
@@ -10,22 +10,22 @@ import graphsInterfaces.IPropertyVertex;
  * @author iz2
  *
  */
-public class PropertyEdge extends HasProperties implements IPropertyEdge {
+public class PropertyEdge extends PropertiesMap implements IEdge {
 	
-	IPropertyVertex start;
-	IPropertyVertex end;
+	IVertex start;
+	IVertex end;
 
 	@Override
-	public IPropertyVertex getStart() {
+	public IVertex getStart() {
 		return start;
 	}
 
 	@Override
-	public IPropertyVertex getEnd() {
+	public IVertex getEnd() {
 		return end;
 	}
 
-	public PropertyEdge(IPropertyVertex start, IPropertyVertex end) {
+	public PropertyEdge(IVertex start, IVertex end) {
 		super();
 		this.start = start;
 		this.end = end;
