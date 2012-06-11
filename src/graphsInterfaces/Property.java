@@ -17,4 +17,21 @@ public class Property<K, V> {
 		this.key = key;
 		this.value = value;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if (obj instanceof Property) {
+			
+			// Casts.
+			@SuppressWarnings("rawtypes")
+			Property p = (Property) obj;
+			
+			// Checks key and value equality.
+			return key.equals(p.key) && value.equals((p.value));
+		}
+		
+		// Not instance of property.
+		return false;
+	}
 }

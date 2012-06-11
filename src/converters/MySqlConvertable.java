@@ -27,7 +27,7 @@ public interface MySqlConvertable {
 	
 	/**
 	 * 
-	 * Initialises this object from reading a MySql database,
+	 * (Re)Initialises this object from reading a MySql database,
 	 * where the object to read is represented by a specified name.
 	 * 
 	 * Of course this object and the specified object to read should be compatible.

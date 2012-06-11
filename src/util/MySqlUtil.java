@@ -36,6 +36,14 @@ public class MySqlUtil {
 		return false;
 	}
 	
+	public static void deleteMySqlName(Connection connection, String name) throws SQLException {
+		
+		// Deletes the name written in the names table.
+		Statement st = connection.createStatement();
+		st.executeUpdate("CREATE TABLE IF NOT EXISTS taken_names (name" + MYSQL_STRING + ")");
+		st.executeUpdate("DELETE FROM taken_names WHERE name = '" + name + "'");
+	}
+	
 	/**
 	 * 
 	 * Attempts to register a name for identifying this graph in MySql.

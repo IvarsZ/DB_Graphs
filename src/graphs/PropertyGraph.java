@@ -7,6 +7,7 @@ import graphsInterfaces.Property;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -31,12 +32,38 @@ import converters.INeo4jIndexer;
  */
 public final class PropertyGraph implements IPropertyGraph {
 
-	private static final String RELATIONSHIP_TYPE_PROPERTY = "relationshipType";
-
+	/**
+	 * 
+	 * Relationship types used when writing to ne4oj.
+	 *
+	 */
 	public enum GraphRelationshipTypes implements RelationshipType {
 		REFERENCE_TO_NODE,
 		REFERENCE_TO_GRAPH,
 		UNDEFINED
+	}
+	
+	/**
+	 * String representing the name of the relationship type property.
+	 */
+	private static final String RELATIONSHIP_TYPE_PROPERTY = "relationshipType";
+	
+	/**
+	 * 
+	 * @return the relationship type in Neo4j of the specified edge.
+	 * 
+	 */
+	private static RelationshipType getRelationshipTypeOfEdge(PropertyEdge edge) {
+		
+		// Gets the relationship type property.
+		String relationshipType = edge.getProperty(RELATIONSHIP_TYPE_PROPERTY);
+		
+		// The relationship type is undefined.
+		if (relationshipType == null) {
+			return GraphRelationshipTypes.UNDEFINED;
+		}
+		
+		return DynamicRelationshipType.withName(relationshipType);
 	}
 
 	private ArrayList<IPropertyVertex> vertices;
@@ -48,11 +75,6 @@ public final class PropertyGraph implements IPropertyGraph {
 	public PropertyGraph() {
 		vertices = new ArrayList<IPropertyVertex>();
 		edges = new ArrayList<PropertyEdge>();
-	}
-	
-	@Override
-	public IPropertyVertex getVertex(int index) {
-		return vertices.get(index);
 	}
 	
 	@Override
@@ -76,6 +98,16 @@ public final class PropertyGraph implements IPropertyGraph {
 		}
 
 		return null;
+	}
+	
+	@Override
+	public IPropertyVertex getVertex(int index) {
+		return vertices.get(index);
+	}
+	
+	@Override
+	public IPropertyEdge getEdge(int i) {
+		return edges.get(i);
 	}
 
 	@Override
@@ -213,7 +245,7 @@ public final class PropertyGraph implements IPropertyGraph {
 		}
 
 		/*
-		 * TODO: improvements
+		 * TODO: Neo4j writer improvements
 		 * 
 		 * 	connect only unconnected parts, not every node.
 		 * 
@@ -225,29 +257,127 @@ public final class PropertyGraph implements IPropertyGraph {
 		 */
 	}
 	
-	private static RelationshipType getRelationshipTypeOfEdge(PropertyEdge edge) {
-		
-		// Gets the relationship type property.
-		String relationshipType = edge.getProperty(RELATIONSHIP_TYPE_PROPERTY);
-		
-		// The relationship type is undefined.
-		if (relationshipType == null) {
-			return GraphRelationshipTypes.UNDEFINED;
-		}
-		
-		return DynamicRelationshipType.withName(relationshipType);
+	/**
+	 * Deletes all nodes and edges.
+	 */
+	private void clear() {
+		vertices = new ArrayList<IPropertyVertex>();
+		edges = new ArrayList<PropertyEdge>();
 	}
 
 	@Override
 	public void readFromMySql(Connection connection, String name)
 			throws SQLException {
-		// TODO : Implement
 		
+		// TODO : implement.
+
+		// Clears the old graph.
+		clear();
+		
+		// Checks that the graph exists in the database.
+		if (MySqlUtil.doesMySqlNameExists(connection, name)) {
+			
+			// Names of the tables used for representing the graph.
+			String nodesTableName = name + "_nodes";
+			String nodesPropertiesTableName = name + "_nodes_properties";
+			String edgesTableName = name + "_edges";
+			String edgesPropertiesTableName = name + "_edges_properties";
+			
+			// Reads and creates vertices.
+			Statement st = connection.createStatement();
+			ResultSet rs = st.executeQuery("SELECT * FROM " + nodesTableName);
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				
+				// Makes sure can add the vertex.
+				while (vertices.size() <= id) {
+					vertices.add(null);
+				}
+				vertices.set(id, new PropertyVertex());
+			}
+			
+			// Reads and adds vertex properties.
+			rs = st.executeQuery("SELECT * FROM " + nodesPropertiesTableName);
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String key = rs.getString("p_key");
+				String value = rs.getString("p_value");
+				vertices.get(id).setProperty(key, value);
+			}
+			
+			// Reads and creates edges.
+			rs = st.executeQuery("SELECT * FROM " + edgesTableName);
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				int start = rs.getInt("start");
+				int end = rs.getInt("end");
+				
+				// Makes sure can add the edge.
+				while (edges.size() <= id) {
+					edges.add(null);
+				}
+				edges.set(id, new PropertyEdge(vertices.get(start), vertices.get(end)));
+			}
+			
+			// Reads and adds edge properties.
+			rs = st.executeQuery("SELECT * FROM " + edgesPropertiesTableName);
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String key = rs.getString("p_key");
+				String value = rs.getString("p_value");
+				edges.get(id).setProperty(key, value);
+			}
+		}
 	}
 
 	@Override
 	public void readFromNeo4j(GraphDatabaseService graphDb, String rootName) {
 		// TODO : Implement
+
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
 		
+		if (obj instanceof PropertyGraph) {
+			
+			PropertyGraph graph2 = (PropertyGraph) obj;
+			
+			// Checks vertices.
+			if (graph2.vertices.size() != vertices.size()) {
+				return false;
+			}
+			for (int i = 0; i < vertices.size(); i++) {
+
+				// Check properties.
+				if (vertices.get(i).getProperties().equals(graph2.vertices.get(i).getProperties()) == false) {
+					return false;
+				}
+			}
+			
+			// Checks edges.
+			if (graph2.edges.size() != edges.size()) {
+				return false;
+			}
+			for (int i = 0; i < edges.size(); i++) {
+				
+				// Checks indexes of start and end of edges.
+				if (vertices.indexOf(edges.get(i).start) != graph2.vertices.indexOf(graph2.edges.get(i).start) ||
+					vertices.indexOf(edges.get(i).end) != graph2.vertices.indexOf(graph2.edges.get(i).end)) {
+					return false;
+				}
+				
+				// Check properties.
+				if (edges.get(i).getProperties().equals(graph2.edges.get(i).getProperties()) == false) {
+					return false;
+				}
+			}
+		}
+		else {
+			return false;
+		}
+		
+		// All nodes and edges were equal.
+		return true;
 	}
 }

@@ -42,12 +42,21 @@ public interface IPropertyGraph extends Neo4jConvertable, MySqlConvertable {
 
 	/**
 	 * 
-	 * Gets a vertex that has a specified index in the graph.
+	 * Gets a vertex that has the specified index in the graph.
 	 * 
 	 * @param index of the vertex.
 	 * 
 	 * @return the vertex with the index, or null if there is no vertex with the index.
 	 */
 	public IPropertyVertex getVertex(int index);
-	
+
+	/**
+	 * 
+	 * Gets an edge that has the specified index in the graph.
+	 * 
+	 * @param index of the vertex.
+	 * 
+	 * @return the vertex with the index, or null if there is no vertex with the index.
+	 */
+	public IPropertyEdge getEdge(int i);
 }

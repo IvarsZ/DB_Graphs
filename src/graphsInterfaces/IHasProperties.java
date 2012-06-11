@@ -2,7 +2,6 @@ package graphsInterfaces;
 
 import java.util.ArrayList;
 
-
 /**
  * 
  * An interface for an object that can have properties.

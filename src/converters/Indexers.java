@@ -36,7 +36,7 @@ public class Indexers {
 			@Override
 			public void indexNode(Node node) {
 				
-				// If the node has the specified propery,
+				// If the node has the specified property,
 				if (node.hasProperty(propertyName)) {
 					
 					// gets the index with indexName and adds the node and its property to the index.

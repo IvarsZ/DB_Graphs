@@ -3,8 +3,14 @@ package graphs;
 import graphsInterfaces.IPropertyEdge;
 import graphsInterfaces.IPropertyVertex;
 
-
-public final class PropertyEdge extends HasProperties implements IPropertyEdge {
+/**
+ * 
+ * Implementation of the IPropertyEdge.
+ * 
+ * @author iz2
+ *
+ */
+public class PropertyEdge extends HasProperties implements IPropertyEdge {
 	
 	IPropertyVertex start;
 	IPropertyVertex end;

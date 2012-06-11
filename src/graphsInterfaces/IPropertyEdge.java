@@ -14,7 +14,17 @@ package graphsInterfaces;
  */
 public interface IPropertyEdge extends IHasProperties<String, String> {
 	
+	/**
+	 * 
+	 * @return the start vertex of this edge.
+	 * 
+	 */
 	public IPropertyVertex getStart();
 	
+	/**
+	 * 
+	 * @return the end vertex of this edge.
+	 * 
+	 */
 	public IPropertyVertex getEnd();
 }
