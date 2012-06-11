@@ -237,4 +237,17 @@ public final class PropertyGraph implements IPropertyGraph {
 		
 		return DynamicRelationshipType.withName(relationshipType);
 	}
+
+	@Override
+	public void readFromMySql(Connection connection, String name)
+			throws SQLException {
+		// TODO : Implement
+		
+	}
+
+	@Override
+	public void readFromNeo4j(GraphDatabaseService graphDb, String rootName) {
+		// TODO : Implement
+		
+	}
 }

@@ -57,7 +57,7 @@ public class MySqlNeigbourFinder {
 		String nodesTableName = tableName + "_nodes";
 		String edgesTableName = tableName + "_edges";
 
-		// TODO: hope there isn't a column with the same name, as it just drops the old one.
+		// There shouldn't be a column with the same name, as just drops the old one.
 		String markDepthColumn = "depth_in_findNeighbours";
 
 		Statement statement = connection.createStatement();
@@ -65,8 +65,11 @@ public class MySqlNeigbourFinder {
 		// Drops markDepthColumn if it already existed.
 		try {
 			statement.executeUpdate("ALTER TABLE " + nodesTableName + " DROP " + markDepthColumn);
+			
+			// Dropped it.
+			System.err.println("Dropped existing column " + markDepthColumn + " in findNeighbours ");
 		}
-		catch (SQLException e) { /* TODO : error message */}
+		catch (SQLException e) {}
 
 		statement.executeUpdate("ALTER TABLE " + nodesTableName + " ADD " + markDepthColumn + " INT ;");
 		PreparedStatement markDepthStatement = connection.prepareStatement("UPDATE " + nodesTableName + " SET " + markDepthColumn + " = ? WHERE id = ? ;");
@@ -114,7 +117,8 @@ public class MySqlNeigbourFinder {
 			visitChildNodes(q, resultSet, markDepthStatement, getDepthStatement, nodeDepth);
 		}
 
-		// TODO: cleanup - delete markDepthColumn.
+		// Cleanup - delete markDepthColumn.
+		statement.executeUpdate("ALTER TABLE " + nodesTableName + " DROP " + markDepthColumn);
 
 		return neighbours;
 	}

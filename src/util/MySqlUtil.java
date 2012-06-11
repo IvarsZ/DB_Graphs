@@ -9,6 +9,17 @@ public class MySqlUtil {
 
 	public static final String MYSQL_STRING = " VARCHAR(50) ";
 	
+	/**
+	 * 
+	 * Checks if a specified name of an object (graph) is already used in MySql database.
+	 * 
+	 * @param connection - to the MySql database.
+	 * @param name - the name used to identify the object.
+	 * 
+	 * @return true if the name is already used (exists), false otherwise.
+	 * 
+	 * @throws SQLException
+	 */
 	public static boolean doesMySqlNameExists(Connection connection, String name) throws SQLException {
 		
 		// Checks if the name is written in the names table.

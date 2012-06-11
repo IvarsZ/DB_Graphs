@@ -625,3 +625,1853 @@
 2012-06-11 09:12:42.057+0000: NeoStore closed
 2012-06-11 09:12:42.060+0000: --- SHUTDOWN diagnostics START ---
 2012-06-11 09:12:42.062+0000: --- SHUTDOWN diagnostics END ---
+2012-06-11 10:05:19.180+0000: Opened [H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\nioneo_logical.log.1] clean empty log, version=0, lastTxId=20025
+2012-06-11 10:05:19.215+0000: TM opening log: H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\tm_tx_log.1
+2012-06-11 10:05:19.638+0000: Opened [H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\index\lucene.log.1] clean empty log, version=0, lastTxId=25
+2012-06-11 10:05:19.645+0000: --- STARTUP diagnostics START ---
+2012-06-11 10:05:19.650+0000: Neo4j Kernel properties:
+    store_dir=H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db
+    remote_logging_host=127.0.0.1
+    read_only=false
+    neo4j.ext.udc.host=udc.neo4j.org
+    logical_log=H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\nioneo_logical.log
+    remote_logging_port=4560
+    gc_monitor_threshold=200ms
+    load_kernel_extensions=true
+    array_block_size=120
+    intercept_committing_transactions=false
+    node_auto_indexing=false
+    neostore.relationshipstore.db.mapped_memory=68M
+    remote_shell_name=shell
+    dump_configuration=false
+    gc_monitor_wait_time=100ms
+    cache_type=soft
+    intercept_deserialized_transactions=false
+    neostore.nodestore.db.mapped_memory=15M
+    neo4j.ext.udc.first_delay=600000
+    remote_shell_enabled=false
+    neo4j.ext.udc.reg=unreg
+    remote_shell_port=1337
+    lucene_searcher_cache_size=2147483647
+    neo4j.ext.udc.interval=86400000
+    use_memory_mapped_buffers=false
+    rebuild_idgenerators_fast=true
+    ephemeral=false
+    neostore.propertystore.db.index.keys.mapped_memory=1M
+    neostore.propertystore.db.strings.mapped_memory=47M
+    neostore.propertystore.db.arrays.mapped_memory=54M
+    neo_store=H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\neostore
+    neostore.propertystore.db.index.mapped_memory=1M
+    backup_slave=false
+    neostore.propertystore.db.mapped_memory=55M
+    gcr_cache_min_log_interval=60s
+    relationship_auto_indexing=false
+    relationship_grab_size=100
+    string_block_size=120
+    remote_shell_read_only=false
+    lucene_writer_cache_size=2147483647
+    grab_file_lock=true
+    node_cache_array_fraction=1.0
+    remote_logging_enabled=false
+    allow_store_upgrade=false
+    execution_guard_enabled=false
+    neo4j.ext.udc.enabled=true
+    relationship_cache_array_fraction=1.0
+2012-06-11 10:05:19.662+0000: Diagnostics providers:
+    org.neo4j.kernel.configuration.Config
+    org.neo4j.kernel.info.DiagnosticsManager
+    SYSTEM_MEMORY
+    JAVA_MEMORY
+    OPERATING_SYSTEM
+    JAVA_VIRTUAL_MACHINE
+    CLASSPATH
+    LIBRARY_PATH
+    SYSTEM_PROPERTIES
+2012-06-11 10:05:19.666+0000: System memory information:
+    Total Physical memory: 4.00 GB
+    Free Physical memory: 2.01 GB
+    Committed virtual memory: 105.94 MB
+    Total swap space: 7.99 GB
+    Free swap space: 5.45 GB
+2012-06-11 10:05:19.673+0000: JVM memory information:
+    Free  memory: 45.70 MB
+    Total memory: 61.38 MB
+    Max   memory: 910.25 MB
+    Garbage Collector: PS Scavenge: [PS Eden Space, PS Survivor Space]
+    Garbage Collector: PS MarkSweep: [PS Eden Space, PS Survivor Space, PS Old Gen, PS Perm Gen]
+    Memory Pool: Code Cache (Non-heap memory): committed=2.44 MB, used=567.00 kB, max=48.00 MB, threshold=0.00 B
+    Memory Pool: PS Eden Space (Heap memory): committed=16.06 MB, used=15.67 MB, max=336.06 MB, threshold=?
+    Memory Pool: PS Survivor Space (Heap memory): committed=2.63 MB, used=0.00 B, max=2.63 MB, threshold=?
+    Memory Pool: PS Old Gen (Heap memory): committed=42.69 MB, used=0.00 B, max=682.69 MB, threshold=0.00 B
+    Memory Pool: PS Perm Gen (Non-heap memory): committed=20.75 MB, used=9.66 MB, max=84.00 MB, threshold=0.00 B
+2012-06-11 10:05:19.680+0000: Operating system information:
+    Operating System: Windows 7; version: 6.1; arch: amd64; cpus: 4
+    Process id: 3264@PC1-109-W
+    Byte order: LITTLE_ENDIAN
+2012-06-11 10:05:19.689+0000: JVM information:
+    VM Name: Java HotSpot(TM) 64-Bit Server VM
+    VM Vendor: Sun Microsystems Inc.
+    VM Version: 16.3-b01
+    JIT compiler: HotSpot 64-Bit Server Compiler
+    VM Arguments: [-Dfile.encoding=Cp1252]
+2012-06-11 10:05:19.691+0000: Java classpath:
+     [classpath + loader.0] file:/C:/Users/iz2.CSAD.000/.eclipse/config/org.eclipse.osgi/bundles/151/1/.cp/
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\mysql-connector-java-5.1.20\mysql-connector-java-5.1.20-bin.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/lucene-core-3.5.0.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\scala-library-2.9.1-1.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\sunrsasign.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-udc-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/geronimo-jta_1.1_spec-1.1.1.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-jmx-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-kernel-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\lucene-core-3.5.0.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-lucene-index-1.8.M03.jar
+     [loader.1] file:/C:/Program%20Files/Java/jre6/lib/ext/dnsns.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/server-api-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\server-api-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/scala-library-2.9.1-1.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\geronimo-jta_1.1_spec-1.1.1.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\jce.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-kernel-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-lucene-index-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-graph-matching-1.8.M03.jar
+     [loader.1] file:/C:/Program%20Files/Java/jre6/lib/ext/localedata.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-cypher-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-shell-1.8.M03.jar
+     [loader.0] file:/C:/Program%20Files/eclipse-java-helios-win32-x86_64/eclipse/plugins/org.junit_4.8.1.v4_8_1_v20100427-1100/junit.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\resources.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-graph-algo-1.8.M03.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\jsse.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\org.apache.servicemix.bundles.jline-0.9.94_1.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\charsets.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-graph-algo-1.8.M03.jar
+     [classpath] C:\Program Files\eclipse-java-helios-win32-x86_64\eclipse\plugins\org.hamcrest.core_1.1.0.v20090501071000.jar
+     [bootstrap] C:\Program Files\Java\jre6\classes
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/mysql-connector-java-5.1.20/mysql-connector-java-5.1.20-bin.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-shell-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-graph-matching-1.8.M03.jar
+     [loader.1] file:/C:/Program%20Files/Java/jre6/lib/ext/sunjce_provider.jar
+     [classpath] H:\Graph databases\workspace\GraphForDB\bin
+     [classpath + loader.0] file:/C:/Users/iz2.CSAD.000/.eclipse/config/org.eclipse.osgi/bundles/153/1/.cp/
+     [bootstrap] C:\Program Files\Java\jre6\lib\rt.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/org.apache.servicemix.bundles.jline-0.9.94_1.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-cypher-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-udc-1.8.M03.jar
+     [classpath + loader.0] file:/C:/Users/iz2.CSAD.000/.eclipse/config/org.eclipse.osgi/bundles/152/1/.cp/
+     [classpath] C:\Program Files\eclipse-java-helios-win32-x86_64\eclipse\plugins\org.junit_4.8.1.v4_8_1_v20100427-1100\junit.jar
+     [loader.0] file:/C:/Program%20Files/eclipse-java-helios-win32-x86_64/eclipse/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar
+     [loader.0] file:/H:/Graph%20databases/workspace/GraphForDB/bin/
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-jmx-1.8.M03.jar
+2012-06-11 10:05:19.722+0000: Library path:
+    C:\Program Files\Java\jre6\bin
+    H:\Graph databases\workspace\GraphForDB
+    C:\Windows\Sun\Java\bin
+    C:\Windows\System32
+    C:\Windows
+    C:\Windows\System32
+    C:\Windows
+    C:\Windows\System32\wbem
+    C:\Windows\System32\WindowsPowerShell\v1.0
+    C:\Program Files (x86)\GNU\GnuPG\pub
+    C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn
+    C:\Program Files\Microsoft SQL Server\100\Tools\Binn
+    C:\Program Files\Microsoft SQL Server\100\DTS\Binn
+    C:\Program Files\TortoiseSVN\bin
+    C:\Program Files (x86)\QuickTime\QTSystem
+    C:\Program Files (x86)\TortoiseHg
+    C:\Program Files\Mercurial\bin
+    C:\Program Files (x86)\putty
+2012-06-11 10:05:19.733+0000: System.properties:
+    sun.boot.library.path = C:\Program Files\Java\jre6\bin
+    path.separator = ;
+    file.encoding.pkg = sun.io
+    sun.java.launcher = SUN_STANDARD
+    user.country = GB
+    sun.os.patch.level = Service Pack 1
+    user.dir = H:\Graph databases\workspace\GraphForDB
+    user.variant = 
+    sun.jnu.encoding = Cp1252
+    sun.management.compiler = HotSpot 64-Bit Server Compiler
+    user.home = C:\Users\iz2.CSAD.000
+    user.timezone = Europe/London
+    file.encoding = Cp1252
+    user.name = iz2
+    sun.arch.data.model = 64
+    user.language = en
+    awt.toolkit = sun.awt.windows.WToolkit
+    file.separator = \
+    sun.io.unicode.encoding = UnicodeLittle
+    sun.cpu.endian = little
+    sun.desktop = windows
+    sun.cpu.isalist = amd64
+2012-06-11 10:05:19.736+0000: --- STARTUP diagnostics END ---
+2012-06-11 10:05:19.833+0000: Extension org.neo4j.kernel.KernelExtension[kernel jmx] loaded ok
+2012-06-11 10:05:19.838+0000: Extension org.neo4j.kernel.KernelExtension[shell] loaded ok
+2012-06-11 10:05:19.861+0000: Extension org.neo4j.kernel.KernelExtension[kernel udc] loaded ok
+2012-06-11 10:05:19.871+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions START ---
+2012-06-11 10:05:19.873+0000: Graph Database: org.neo4j.kernel.EmbeddedGraphDatabase StoreId[time:1339405876530, id:-5425952750467893280, store version: 13561656364791302]
+2012-06-11 10:05:19.875+0000: Kernel version: Neo4j - Graph Database Kernel 1.8.M03
+2012-06-11 10:05:19.876+0000: Neo4j component versions:
+2012-06-11 10:05:19.880+0000:   Neo4j - Graph Database Kernel 1.8.M03
+2012-06-11 10:05:19.883+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions END ---
+2012-06-11 10:05:19.890+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS START ---
+2012-06-11 10:05:19.894+0000: Store versions:
+    Store versions:
+      NeoStore v0.A.0
+      NodeStore v0.A.0
+      RelationshipStore v0.A.0
+      RelationshipTypeStore v0.A.0
+      PropertyStore v0.A.0
+      PropertyIndexStore v0.A.0
+      StringPropertyStore v0.A.0
+      ArrayPropertyStore v0.A.0
+2012-06-11 10:05:19.896+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS END ---
+2012-06-11 10:05:19.898+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE START ---
+2012-06-11 10:05:19.900+0000: Id usage:
+    Id usage:
+      NodeStore: used=10012 high=10011
+      RelationshipStore: used=20021 high=20020
+      RelationshipTypeStore: used=3 high=2
+      PropertyStore: used=21 high=20
+      PropertyIndexStore: used=2 high=1
+      StringPropertyStore: used=1 high=0
+      ArrayPropertyStore: used=1 high=0
+2012-06-11 10:05:19.903+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE END ---
+2012-06-11 10:05:19.906+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles START ---
+2012-06-11 10:05:19.907+0000: Storage files:
+    neostore.relationshipstore.db.id: 9.00 B
+    neostore.propertystore.db.strings: 128.00 B
+    neostore.relationshiptypestore.db.id: 9.00 B
+    nioneo_logical.log.1: 16.00 B
+    neostore.propertystore.db.index.keys: 114.00 B
+    lock: 0.00 B
+    neostore.propertystore.db.index.keys.id: 9.00 B
+    messages.log: 45.59 kB
+    neostore.propertystore.db: 861.00 B
+    neostore.nodestore.db: 88.00 kB
+    neostore.propertystore.db.arrays: 128.00 B
+    tm_tx_log.2: 28.68 kB
+    neostore: 54.00 B
+    index:
+      lucene-store.db: 40.00 B
+      lucene.log.1: 16.00 B
+      lucene.log.active: 4.00 B
+      lucene:
+        node:
+          graphsIndex:
+            segments.gen: 20.00 B
+            _1.fdt: 19.00 B
+            _1.nrm: 6.00 B
+            _1.tis: 44.00 B
+            segments_1: 450.00 B
+            _0.tii: 35.00 B
+            _0.tis: 43.00 B
+            _0.nrm: 6.00 B
+            _0.fdt: 18.00 B
+            _1.tii: 35.00 B
+            _1.fdx: 12.00 B
+            _1.frq: 2.00 B
+            _1.fnm: 22.00 B
+            _1.prx: 2.00 B
+            _0.prx: 2.00 B
+            _0.frq: 2.00 B
+            _0.fnm: 22.00 B
+            _0.fdx: 12.00 B
+          - Total: 752.00 B
+          graph2NodeNames:
+            _a.tii: 35.00 B
+            _a.nrm: 24.00 B
+            _a.tis: 170.00 B
+            segments_1: 279.00 B
+            _a.fdt: 144.00 B
+            segments.gen: 20.00 B
+            _a.prx: 20.00 B
+            _a.fdx: 84.00 B
+            _a.fnm: 18.00 B
+            _a.frq: 20.00 B
+          - Total: 814.00 B
+          graph1NodeNames:
+            _8.prx: 2.00 B
+            _1.prx: 2.00 B
+            _6.prx: 2.00 B
+            _2.tii: 35.00 B
+            _8.frq: 2.00 B
+            _6.fdx: 12.00 B
+            _8.fnm: 18.00 B
+            _1.fdx: 12.00 B
+            _5.tii: 35.00 B
+            _1.frq: 2.00 B
+            _1.fnm: 18.00 B
+            _6.frq: 2.00 B
+            _8.fdx: 12.00 B
+            _6.fnm: 18.00 B
+            _3.fdt: 17.00 B
+            _4.fdt: 17.00 B
+            _3.tis: 42.00 B
+            _4.tis: 42.00 B
+            _3.nrm: 6.00 B
+            _4.nrm: 6.00 B
+            _7.frq: 2.00 B
+            _7.fnm: 18.00 B
+            _0.frq: 2.00 B
+            _0.fnm: 18.00 B
+            _0.fdx: 12.00 B
+            _4.tii: 35.00 B
+            _3.tii: 35.00 B
+            _7.fdx: 12.00 B
+            _7.prx: 2.00 B
+            _0.prx: 2.00 B
+            segments.gen: 20.00 B
+            _5.nrm: 6.00 B
+            _2.nrm: 6.00 B
+            _5.tis: 42.00 B
+            segments_1: 1.87 kB
+            _2.tis: 42.00 B
+            _5.fdt: 17.00 B
+            _2.fdt: 17.00 B
+            _8.tis: 43.00 B
+            _1.nrm: 6.00 B
+            _6.nrm: 6.00 B
+            _8.nrm: 6.00 B
+            _1.tis: 42.00 B
+            _6.tis: 42.00 B
+            _8.fdt: 18.00 B
+            _1.fdt: 17.00 B
+            _6.fdt: 17.00 B
+            _3.frq: 2.00 B
+            _3.fnm: 18.00 B
+            _4.frq: 2.00 B
+            _4.fnm: 18.00 B
+            _0.tii: 35.00 B
+            _4.fdx: 12.00 B
+            _3.fdx: 12.00 B
+            _7.tii: 35.00 B
+            _3.prx: 2.00 B
+            _4.prx: 2.00 B
+            _7.fdt: 17.00 B
+            _0.fdt: 17.00 B
+            _7.tis: 42.00 B
+            _0.tis: 42.00 B
+            _7.nrm: 6.00 B
+            _0.nrm: 6.00 B
+            _5.prx: 2.00 B
+            _2.prx: 2.00 B
+            _2.fdx: 12.00 B
+            _6.tii: 35.00 B
+            _1.tii: 35.00 B
+            _5.fdx: 12.00 B
+            _5.frq: 2.00 B
+            _5.fnm: 18.00 B
+            _2.frq: 2.00 B
+            _2.fnm: 18.00 B
+            _8.tii: 35.00 B
+          - Total: 3.07 kB
+        - Total: 4.60 kB
+      - Total: 4.60 kB
+    - Total: 4.66 kB
+    neostore.relationshipstore.db: 645.21 kB
+    neostore.propertystore.db.arrays.id: 9.00 B
+    neostore.nodestore.db.id: 9.00 B
+    tm_tx_log.1: 0.00 B
+    neostore.propertystore.db.index: 18.00 B
+    neostore.propertystore.db.index.id: 9.00 B
+    active_tx_log: 11.00 B
+    nioneo_logical.log.active: 4.00 B
+    neostore.relationshiptypestore.db.names.id: 9.00 B
+    neostore.relationshiptypestore.db: 15.00 B
+    neostore.propertystore.db.id: 9.00 B
+    index.db: 315.00 B
+    neostore.propertystore.db.strings.id: 9.00 B
+    neostore.relationshiptypestore.db.names: 152.00 B
+    neostore.id: 9.00 B
+2012-06-11 10:05:20.632+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles END ---
+2012-06-11 10:05:20.638+0000: Started - database is now available
+2012-06-11 10:05:20.640+0000: GC Monitor started. 
+2012-06-11 10:05:23.414+0000: Stopping - database is now unavailable
+2012-06-11 10:05:23.417+0000: TM shutting down
+2012-06-11 10:05:23.447+0000: GC Monitor stopped. 
+2012-06-11 10:05:23.647+0000: Closed log H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\index\lucene.log
+2012-06-11 10:05:23.685+0000: Closed log H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\nioneo_logical.log
+2012-06-11 10:05:23.743+0000: NeoStore closed
+2012-06-11 10:05:23.745+0000: --- SHUTDOWN diagnostics START ---
+2012-06-11 10:05:23.747+0000: --- SHUTDOWN diagnostics END ---
+2012-06-11 10:09:05.881+0000: Opened [H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\nioneo_logical.log.1] clean empty log, version=0, lastTxId=20025
+2012-06-11 10:09:05.911+0000: TM opening log: H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\tm_tx_log.1
+2012-06-11 10:09:06.331+0000: Opened [H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\index\lucene.log.1] clean empty log, version=0, lastTxId=25
+2012-06-11 10:09:06.341+0000: --- STARTUP diagnostics START ---
+2012-06-11 10:09:06.351+0000: Neo4j Kernel properties:
+    store_dir=H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db
+    remote_logging_host=127.0.0.1
+    read_only=false
+    neo4j.ext.udc.host=udc.neo4j.org
+    logical_log=H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\nioneo_logical.log
+    remote_logging_port=4560
+    gc_monitor_threshold=200ms
+    load_kernel_extensions=true
+    array_block_size=120
+    intercept_committing_transactions=false
+    node_auto_indexing=false
+    neostore.relationshipstore.db.mapped_memory=68M
+    remote_shell_name=shell
+    dump_configuration=false
+    gc_monitor_wait_time=100ms
+    cache_type=soft
+    intercept_deserialized_transactions=false
+    neostore.nodestore.db.mapped_memory=15M
+    neo4j.ext.udc.first_delay=600000
+    remote_shell_enabled=false
+    neo4j.ext.udc.reg=unreg
+    remote_shell_port=1337
+    lucene_searcher_cache_size=2147483647
+    neo4j.ext.udc.interval=86400000
+    use_memory_mapped_buffers=false
+    rebuild_idgenerators_fast=true
+    ephemeral=false
+    neostore.propertystore.db.index.keys.mapped_memory=1M
+    neostore.propertystore.db.strings.mapped_memory=47M
+    neostore.propertystore.db.arrays.mapped_memory=54M
+    neo_store=H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\neostore
+    neostore.propertystore.db.index.mapped_memory=1M
+    backup_slave=false
+    neostore.propertystore.db.mapped_memory=55M
+    gcr_cache_min_log_interval=60s
+    relationship_auto_indexing=false
+    relationship_grab_size=100
+    string_block_size=120
+    remote_shell_read_only=false
+    lucene_writer_cache_size=2147483647
+    grab_file_lock=true
+    node_cache_array_fraction=1.0
+    remote_logging_enabled=false
+    allow_store_upgrade=false
+    execution_guard_enabled=false
+    neo4j.ext.udc.enabled=true
+    relationship_cache_array_fraction=1.0
+2012-06-11 10:09:06.361+0000: Diagnostics providers:
+    org.neo4j.kernel.configuration.Config
+    org.neo4j.kernel.info.DiagnosticsManager
+    SYSTEM_MEMORY
+    JAVA_MEMORY
+    OPERATING_SYSTEM
+    JAVA_VIRTUAL_MACHINE
+    CLASSPATH
+    LIBRARY_PATH
+    SYSTEM_PROPERTIES
+2012-06-11 10:09:06.361+0000: System memory information:
+    Total Physical memory: 4.00 GB
+    Free Physical memory: 2.01 GB
+    Committed virtual memory: 106.04 MB
+    Total swap space: 7.99 GB
+    Free swap space: 5.46 GB
+2012-06-11 10:09:06.371+0000: JVM memory information:
+    Free  memory: 45.70 MB
+    Total memory: 61.38 MB
+    Max   memory: 910.25 MB
+    Garbage Collector: PS Scavenge: [PS Eden Space, PS Survivor Space]
+    Garbage Collector: PS MarkSweep: [PS Eden Space, PS Survivor Space, PS Old Gen, PS Perm Gen]
+    Memory Pool: Code Cache (Non-heap memory): committed=2.44 MB, used=567.00 kB, max=48.00 MB, threshold=0.00 B
+    Memory Pool: PS Eden Space (Heap memory): committed=16.06 MB, used=15.67 MB, max=336.06 MB, threshold=?
+    Memory Pool: PS Survivor Space (Heap memory): committed=2.63 MB, used=0.00 B, max=2.63 MB, threshold=?
+    Memory Pool: PS Old Gen (Heap memory): committed=42.69 MB, used=0.00 B, max=682.69 MB, threshold=0.00 B
+    Memory Pool: PS Perm Gen (Non-heap memory): committed=20.75 MB, used=9.66 MB, max=84.00 MB, threshold=0.00 B
+2012-06-11 10:09:06.381+0000: Operating system information:
+    Operating System: Windows 7; version: 6.1; arch: amd64; cpus: 4
+    Process id: 3708@PC1-109-W
+    Byte order: LITTLE_ENDIAN
+2012-06-11 10:09:06.391+0000: JVM information:
+    VM Name: Java HotSpot(TM) 64-Bit Server VM
+    VM Vendor: Sun Microsystems Inc.
+    VM Version: 16.3-b01
+    JIT compiler: HotSpot 64-Bit Server Compiler
+    VM Arguments: [-Dfile.encoding=Cp1252]
+2012-06-11 10:09:06.391+0000: Java classpath:
+     [classpath + loader.0] file:/C:/Users/iz2.CSAD.000/.eclipse/config/org.eclipse.osgi/bundles/151/1/.cp/
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\mysql-connector-java-5.1.20\mysql-connector-java-5.1.20-bin.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/lucene-core-3.5.0.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\scala-library-2.9.1-1.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\sunrsasign.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-udc-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/geronimo-jta_1.1_spec-1.1.1.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-jmx-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-kernel-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\lucene-core-3.5.0.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-lucene-index-1.8.M03.jar
+     [loader.1] file:/C:/Program%20Files/Java/jre6/lib/ext/dnsns.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/server-api-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\server-api-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/scala-library-2.9.1-1.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\geronimo-jta_1.1_spec-1.1.1.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\jce.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-kernel-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-lucene-index-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-graph-matching-1.8.M03.jar
+     [loader.1] file:/C:/Program%20Files/Java/jre6/lib/ext/localedata.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-cypher-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-shell-1.8.M03.jar
+     [loader.0] file:/C:/Program%20Files/eclipse-java-helios-win32-x86_64/eclipse/plugins/org.junit_4.8.1.v4_8_1_v20100427-1100/junit.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\resources.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-graph-algo-1.8.M03.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\jsse.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\org.apache.servicemix.bundles.jline-0.9.94_1.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\charsets.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-graph-algo-1.8.M03.jar
+     [classpath] C:\Program Files\eclipse-java-helios-win32-x86_64\eclipse\plugins\org.hamcrest.core_1.1.0.v20090501071000.jar
+     [bootstrap] C:\Program Files\Java\jre6\classes
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/mysql-connector-java-5.1.20/mysql-connector-java-5.1.20-bin.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-shell-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-graph-matching-1.8.M03.jar
+     [loader.1] file:/C:/Program%20Files/Java/jre6/lib/ext/sunjce_provider.jar
+     [classpath] H:\Graph databases\workspace\GraphForDB\bin
+     [classpath + loader.0] file:/C:/Users/iz2.CSAD.000/.eclipse/config/org.eclipse.osgi/bundles/153/1/.cp/
+     [bootstrap] C:\Program Files\Java\jre6\lib\rt.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/org.apache.servicemix.bundles.jline-0.9.94_1.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-cypher-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-udc-1.8.M03.jar
+     [classpath + loader.0] file:/C:/Users/iz2.CSAD.000/.eclipse/config/org.eclipse.osgi/bundles/152/1/.cp/
+     [classpath] C:\Program Files\eclipse-java-helios-win32-x86_64\eclipse\plugins\org.junit_4.8.1.v4_8_1_v20100427-1100\junit.jar
+     [loader.0] file:/C:/Program%20Files/eclipse-java-helios-win32-x86_64/eclipse/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar
+     [loader.0] file:/H:/Graph%20databases/workspace/GraphForDB/bin/
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-jmx-1.8.M03.jar
+2012-06-11 10:09:06.421+0000: Library path:
+    C:\Program Files\Java\jre6\bin
+    H:\Graph databases\workspace\GraphForDB
+    C:\Windows\Sun\Java\bin
+    C:\Windows\System32
+    C:\Windows
+    C:\Windows\System32
+    C:\Windows
+    C:\Windows\System32\wbem
+    C:\Windows\System32\WindowsPowerShell\v1.0
+    C:\Program Files (x86)\GNU\GnuPG\pub
+    C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn
+    C:\Program Files\Microsoft SQL Server\100\Tools\Binn
+    C:\Program Files\Microsoft SQL Server\100\DTS\Binn
+    C:\Program Files\TortoiseSVN\bin
+    C:\Program Files (x86)\QuickTime\QTSystem
+    C:\Program Files (x86)\TortoiseHg
+    C:\Program Files\Mercurial\bin
+    C:\Program Files (x86)\putty
+2012-06-11 10:09:06.431+0000: System.properties:
+    sun.boot.library.path = C:\Program Files\Java\jre6\bin
+    path.separator = ;
+    file.encoding.pkg = sun.io
+    sun.java.launcher = SUN_STANDARD
+    user.country = GB
+    sun.os.patch.level = Service Pack 1
+    user.dir = H:\Graph databases\workspace\GraphForDB
+    user.variant = 
+    sun.jnu.encoding = Cp1252
+    sun.management.compiler = HotSpot 64-Bit Server Compiler
+    user.home = C:\Users\iz2.CSAD.000
+    user.timezone = Europe/London
+    file.encoding = Cp1252
+    user.name = iz2
+    sun.arch.data.model = 64
+    user.language = en
+    awt.toolkit = sun.awt.windows.WToolkit
+    file.separator = \
+    sun.io.unicode.encoding = UnicodeLittle
+    sun.cpu.endian = little
+    sun.desktop = windows
+    sun.cpu.isalist = amd64
+2012-06-11 10:09:06.431+0000: --- STARTUP diagnostics END ---
+2012-06-11 10:09:06.531+0000: Extension org.neo4j.kernel.KernelExtension[kernel jmx] loaded ok
+2012-06-11 10:09:06.531+0000: Extension org.neo4j.kernel.KernelExtension[shell] loaded ok
+2012-06-11 10:09:06.561+0000: Extension org.neo4j.kernel.KernelExtension[kernel udc] loaded ok
+2012-06-11 10:09:06.571+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions START ---
+2012-06-11 10:09:06.571+0000: Graph Database: org.neo4j.kernel.EmbeddedGraphDatabase StoreId[time:1339405876530, id:-5425952750467893280, store version: 13561656364791302]
+2012-06-11 10:09:06.571+0000: Kernel version: Neo4j - Graph Database Kernel 1.8.M03
+2012-06-11 10:09:06.581+0000: Neo4j component versions:
+2012-06-11 10:09:06.581+0000:   Neo4j - Graph Database Kernel 1.8.M03
+2012-06-11 10:09:06.581+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions END ---
+2012-06-11 10:09:06.591+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS START ---
+2012-06-11 10:09:06.591+0000: Store versions:
+    Store versions:
+      NeoStore v0.A.0
+      NodeStore v0.A.0
+      RelationshipStore v0.A.0
+      RelationshipTypeStore v0.A.0
+      PropertyStore v0.A.0
+      PropertyIndexStore v0.A.0
+      StringPropertyStore v0.A.0
+      ArrayPropertyStore v0.A.0
+2012-06-11 10:09:06.601+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS END ---
+2012-06-11 10:09:06.601+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE START ---
+2012-06-11 10:09:06.601+0000: Id usage:
+    Id usage:
+      NodeStore: used=10012 high=10011
+      RelationshipStore: used=20021 high=20020
+      RelationshipTypeStore: used=3 high=2
+      PropertyStore: used=21 high=20
+      PropertyIndexStore: used=2 high=1
+      StringPropertyStore: used=1 high=0
+      ArrayPropertyStore: used=1 high=0
+2012-06-11 10:09:06.601+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE END ---
+2012-06-11 10:09:06.611+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles START ---
+2012-06-11 10:09:06.611+0000: Storage files:
+    neostore.relationshipstore.db.id: 9.00 B
+    neostore.propertystore.db.strings: 128.00 B
+    neostore.relationshiptypestore.db.id: 9.00 B
+    nioneo_logical.log.1: 16.00 B
+    neostore.propertystore.db.index.keys: 114.00 B
+    lock: 0.00 B
+    neostore.propertystore.db.index.keys.id: 9.00 B
+    messages.log: 63.63 kB
+    neostore.propertystore.db: 861.00 B
+    neostore.nodestore.db: 88.00 kB
+    neostore.propertystore.db.arrays: 128.00 B
+    tm_tx_log.2: 28.68 kB
+    neostore: 54.00 B
+    index:
+      lucene-store.db: 40.00 B
+      lucene.log.1: 16.00 B
+      lucene.log.active: 4.00 B
+      lucene:
+        node:
+          graphsIndex:
+            segments.gen: 20.00 B
+            _1.fdt: 19.00 B
+            _1.nrm: 6.00 B
+            _1.tis: 44.00 B
+            segments_1: 450.00 B
+            _0.tii: 35.00 B
+            _0.tis: 43.00 B
+            _0.nrm: 6.00 B
+            _0.fdt: 18.00 B
+            _1.tii: 35.00 B
+            _1.fdx: 12.00 B
+            _1.frq: 2.00 B
+            _1.fnm: 22.00 B
+            _1.prx: 2.00 B
+            _0.prx: 2.00 B
+            _0.frq: 2.00 B
+            _0.fnm: 22.00 B
+            _0.fdx: 12.00 B
+          - Total: 752.00 B
+          graph2NodeNames:
+            _a.tii: 35.00 B
+            _a.nrm: 24.00 B
+            _a.tis: 170.00 B
+            segments_1: 279.00 B
+            _a.fdt: 144.00 B
+            segments.gen: 20.00 B
+            _a.prx: 20.00 B
+            _a.fdx: 84.00 B
+            _a.fnm: 18.00 B
+            _a.frq: 20.00 B
+          - Total: 814.00 B
+          graph1NodeNames:
+            _8.prx: 2.00 B
+            _1.prx: 2.00 B
+            _6.prx: 2.00 B
+            _2.tii: 35.00 B
+            _8.frq: 2.00 B
+            _6.fdx: 12.00 B
+            _8.fnm: 18.00 B
+            _1.fdx: 12.00 B
+            _5.tii: 35.00 B
+            _1.frq: 2.00 B
+            _1.fnm: 18.00 B
+            _6.frq: 2.00 B
+            _8.fdx: 12.00 B
+            _6.fnm: 18.00 B
+            _3.fdt: 17.00 B
+            _4.fdt: 17.00 B
+            _3.tis: 42.00 B
+            _4.tis: 42.00 B
+            _3.nrm: 6.00 B
+            _4.nrm: 6.00 B
+            _7.frq: 2.00 B
+            _7.fnm: 18.00 B
+            _0.frq: 2.00 B
+            _0.fnm: 18.00 B
+            _0.fdx: 12.00 B
+            _4.tii: 35.00 B
+            _3.tii: 35.00 B
+            _7.fdx: 12.00 B
+            _7.prx: 2.00 B
+            _0.prx: 2.00 B
+            segments.gen: 20.00 B
+            _5.nrm: 6.00 B
+            _2.nrm: 6.00 B
+            _5.tis: 42.00 B
+            segments_1: 1.87 kB
+            _2.tis: 42.00 B
+            _5.fdt: 17.00 B
+            _2.fdt: 17.00 B
+            _8.tis: 43.00 B
+            _1.nrm: 6.00 B
+            _6.nrm: 6.00 B
+            _8.nrm: 6.00 B
+            _1.tis: 42.00 B
+            _6.tis: 42.00 B
+            _8.fdt: 18.00 B
+            _1.fdt: 17.00 B
+            _6.fdt: 17.00 B
+            _3.frq: 2.00 B
+            _3.fnm: 18.00 B
+            _4.frq: 2.00 B
+            _4.fnm: 18.00 B
+            _0.tii: 35.00 B
+            _4.fdx: 12.00 B
+            _3.fdx: 12.00 B
+            _7.tii: 35.00 B
+            _3.prx: 2.00 B
+            _4.prx: 2.00 B
+            _7.fdt: 17.00 B
+            _0.fdt: 17.00 B
+            _7.tis: 42.00 B
+            _0.tis: 42.00 B
+            _7.nrm: 6.00 B
+            _0.nrm: 6.00 B
+            _5.prx: 2.00 B
+            _2.prx: 2.00 B
+            _2.fdx: 12.00 B
+            _6.tii: 35.00 B
+            _1.tii: 35.00 B
+            _5.fdx: 12.00 B
+            _5.frq: 2.00 B
+            _5.fnm: 18.00 B
+            _2.frq: 2.00 B
+            _2.fnm: 18.00 B
+            _8.tii: 35.00 B
+          - Total: 3.07 kB
+        - Total: 4.60 kB
+      - Total: 4.60 kB
+    - Total: 4.66 kB
+    neostore.relationshipstore.db: 645.21 kB
+    neostore.propertystore.db.arrays.id: 9.00 B
+    neostore.nodestore.db.id: 9.00 B
+    tm_tx_log.1: 0.00 B
+    neostore.propertystore.db.index: 18.00 B
+    neostore.propertystore.db.index.id: 9.00 B
+    active_tx_log: 11.00 B
+    nioneo_logical.log.active: 4.00 B
+    neostore.relationshiptypestore.db.names.id: 9.00 B
+    neostore.relationshiptypestore.db: 15.00 B
+    neostore.propertystore.db.id: 9.00 B
+    index.db: 315.00 B
+    neostore.propertystore.db.strings.id: 9.00 B
+    neostore.relationshiptypestore.db.names: 152.00 B
+    neostore.id: 9.00 B
+2012-06-11 10:09:07.342+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles END ---
+2012-06-11 10:09:07.342+0000: Started - database is now available
+2012-06-11 10:09:07.342+0000: GC Monitor started. 
+2012-06-11 10:09:10.126+0000: Stopping - database is now unavailable
+2012-06-11 10:09:10.129+0000: TM shutting down
+2012-06-11 10:09:10.134+0000: GC Monitor stopped. 
+2012-06-11 10:09:10.362+0000: Closed log H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\index\lucene.log
+2012-06-11 10:09:10.408+0000: Closed log H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\nioneo_logical.log
+2012-06-11 10:09:10.492+0000: NeoStore closed
+2012-06-11 10:09:10.494+0000: --- SHUTDOWN diagnostics START ---
+2012-06-11 10:09:10.496+0000: --- SHUTDOWN diagnostics END ---
+2012-06-11 10:09:54.292+0000: Opened [H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\nioneo_logical.log.1] clean empty log, version=0, lastTxId=20025
+2012-06-11 10:09:54.328+0000: TM opening log: H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\tm_tx_log.1
+2012-06-11 10:09:54.751+0000: Opened [H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\index\lucene.log.1] clean empty log, version=0, lastTxId=25
+2012-06-11 10:09:54.759+0000: --- STARTUP diagnostics START ---
+2012-06-11 10:09:54.764+0000: Neo4j Kernel properties:
+    store_dir=H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db
+    remote_logging_host=127.0.0.1
+    read_only=false
+    neo4j.ext.udc.host=udc.neo4j.org
+    logical_log=H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\nioneo_logical.log
+    remote_logging_port=4560
+    gc_monitor_threshold=200ms
+    load_kernel_extensions=true
+    array_block_size=120
+    intercept_committing_transactions=false
+    node_auto_indexing=false
+    neostore.relationshipstore.db.mapped_memory=68M
+    remote_shell_name=shell
+    dump_configuration=false
+    gc_monitor_wait_time=100ms
+    cache_type=soft
+    intercept_deserialized_transactions=false
+    neostore.nodestore.db.mapped_memory=15M
+    neo4j.ext.udc.first_delay=600000
+    remote_shell_enabled=false
+    neo4j.ext.udc.reg=unreg
+    remote_shell_port=1337
+    lucene_searcher_cache_size=2147483647
+    neo4j.ext.udc.interval=86400000
+    use_memory_mapped_buffers=false
+    rebuild_idgenerators_fast=true
+    ephemeral=false
+    neostore.propertystore.db.index.keys.mapped_memory=1M
+    neostore.propertystore.db.strings.mapped_memory=47M
+    neostore.propertystore.db.arrays.mapped_memory=54M
+    neo_store=H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\neostore
+    neostore.propertystore.db.index.mapped_memory=1M
+    backup_slave=false
+    neostore.propertystore.db.mapped_memory=55M
+    gcr_cache_min_log_interval=60s
+    relationship_auto_indexing=false
+    relationship_grab_size=100
+    string_block_size=120
+    remote_shell_read_only=false
+    lucene_writer_cache_size=2147483647
+    grab_file_lock=true
+    node_cache_array_fraction=1.0
+    remote_logging_enabled=false
+    allow_store_upgrade=false
+    execution_guard_enabled=false
+    neo4j.ext.udc.enabled=true
+    relationship_cache_array_fraction=1.0
+2012-06-11 10:09:54.777+0000: Diagnostics providers:
+    org.neo4j.kernel.configuration.Config
+    org.neo4j.kernel.info.DiagnosticsManager
+    SYSTEM_MEMORY
+    JAVA_MEMORY
+    OPERATING_SYSTEM
+    JAVA_VIRTUAL_MACHINE
+    CLASSPATH
+    LIBRARY_PATH
+    SYSTEM_PROPERTIES
+2012-06-11 10:09:54.781+0000: System memory information:
+    Total Physical memory: 4.00 GB
+    Free Physical memory: 2.01 GB
+    Committed virtual memory: 106.33 MB
+    Total swap space: 7.99 GB
+    Free swap space: 5.46 GB
+2012-06-11 10:09:54.789+0000: JVM memory information:
+    Free  memory: 45.70 MB
+    Total memory: 61.38 MB
+    Max   memory: 910.25 MB
+    Garbage Collector: PS Scavenge: [PS Eden Space, PS Survivor Space]
+    Garbage Collector: PS MarkSweep: [PS Eden Space, PS Survivor Space, PS Old Gen, PS Perm Gen]
+    Memory Pool: Code Cache (Non-heap memory): committed=2.44 MB, used=567.00 kB, max=48.00 MB, threshold=0.00 B
+    Memory Pool: PS Eden Space (Heap memory): committed=16.06 MB, used=15.67 MB, max=336.06 MB, threshold=?
+    Memory Pool: PS Survivor Space (Heap memory): committed=2.63 MB, used=0.00 B, max=2.63 MB, threshold=?
+    Memory Pool: PS Old Gen (Heap memory): committed=42.69 MB, used=0.00 B, max=682.69 MB, threshold=0.00 B
+    Memory Pool: PS Perm Gen (Non-heap memory): committed=20.75 MB, used=9.66 MB, max=84.00 MB, threshold=0.00 B
+2012-06-11 10:09:54.796+0000: Operating system information:
+    Operating System: Windows 7; version: 6.1; arch: amd64; cpus: 4
+    Process id: 3264@PC1-109-W
+    Byte order: LITTLE_ENDIAN
+2012-06-11 10:09:54.805+0000: JVM information:
+    VM Name: Java HotSpot(TM) 64-Bit Server VM
+    VM Vendor: Sun Microsystems Inc.
+    VM Version: 16.3-b01
+    JIT compiler: HotSpot 64-Bit Server Compiler
+    VM Arguments: [-Dfile.encoding=Cp1252]
+2012-06-11 10:09:54.807+0000: Java classpath:
+     [classpath + loader.0] file:/C:/Users/iz2.CSAD.000/.eclipse/config/org.eclipse.osgi/bundles/151/1/.cp/
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\mysql-connector-java-5.1.20\mysql-connector-java-5.1.20-bin.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/lucene-core-3.5.0.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\scala-library-2.9.1-1.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\sunrsasign.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-udc-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/geronimo-jta_1.1_spec-1.1.1.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-jmx-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-kernel-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\lucene-core-3.5.0.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-lucene-index-1.8.M03.jar
+     [loader.1] file:/C:/Program%20Files/Java/jre6/lib/ext/dnsns.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/server-api-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\server-api-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/scala-library-2.9.1-1.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\geronimo-jta_1.1_spec-1.1.1.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\jce.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-kernel-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-lucene-index-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-graph-matching-1.8.M03.jar
+     [loader.1] file:/C:/Program%20Files/Java/jre6/lib/ext/localedata.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-cypher-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-shell-1.8.M03.jar
+     [loader.0] file:/C:/Program%20Files/eclipse-java-helios-win32-x86_64/eclipse/plugins/org.junit_4.8.1.v4_8_1_v20100427-1100/junit.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\resources.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-graph-algo-1.8.M03.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\jsse.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\org.apache.servicemix.bundles.jline-0.9.94_1.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\charsets.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-graph-algo-1.8.M03.jar
+     [classpath] C:\Program Files\eclipse-java-helios-win32-x86_64\eclipse\plugins\org.hamcrest.core_1.1.0.v20090501071000.jar
+     [bootstrap] C:\Program Files\Java\jre6\classes
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/mysql-connector-java-5.1.20/mysql-connector-java-5.1.20-bin.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-shell-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-graph-matching-1.8.M03.jar
+     [loader.1] file:/C:/Program%20Files/Java/jre6/lib/ext/sunjce_provider.jar
+     [classpath] H:\Graph databases\workspace\GraphForDB\bin
+     [classpath + loader.0] file:/C:/Users/iz2.CSAD.000/.eclipse/config/org.eclipse.osgi/bundles/153/1/.cp/
+     [bootstrap] C:\Program Files\Java\jre6\lib\rt.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/org.apache.servicemix.bundles.jline-0.9.94_1.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-cypher-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-udc-1.8.M03.jar
+     [classpath + loader.0] file:/C:/Users/iz2.CSAD.000/.eclipse/config/org.eclipse.osgi/bundles/152/1/.cp/
+     [classpath] C:\Program Files\eclipse-java-helios-win32-x86_64\eclipse\plugins\org.junit_4.8.1.v4_8_1_v20100427-1100\junit.jar
+     [loader.0] file:/C:/Program%20Files/eclipse-java-helios-win32-x86_64/eclipse/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar
+     [loader.0] file:/H:/Graph%20databases/workspace/GraphForDB/bin/
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-jmx-1.8.M03.jar
+2012-06-11 10:09:54.838+0000: Library path:
+    C:\Program Files\Java\jre6\bin
+    H:\Graph databases\workspace\GraphForDB
+    C:\Windows\Sun\Java\bin
+    C:\Windows\System32
+    C:\Windows
+    C:\Windows\System32
+    C:\Windows
+    C:\Windows\System32\wbem
+    C:\Windows\System32\WindowsPowerShell\v1.0
+    C:\Program Files (x86)\GNU\GnuPG\pub
+    C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn
+    C:\Program Files\Microsoft SQL Server\100\Tools\Binn
+    C:\Program Files\Microsoft SQL Server\100\DTS\Binn
+    C:\Program Files\TortoiseSVN\bin
+    C:\Program Files (x86)\QuickTime\QTSystem
+    C:\Program Files (x86)\TortoiseHg
+    C:\Program Files\Mercurial\bin
+    C:\Program Files (x86)\putty
+2012-06-11 10:09:54.849+0000: System.properties:
+    sun.boot.library.path = C:\Program Files\Java\jre6\bin
+    path.separator = ;
+    file.encoding.pkg = sun.io
+    sun.java.launcher = SUN_STANDARD
+    user.country = GB
+    sun.os.patch.level = Service Pack 1
+    user.dir = H:\Graph databases\workspace\GraphForDB
+    user.variant = 
+    sun.jnu.encoding = Cp1252
+    sun.management.compiler = HotSpot 64-Bit Server Compiler
+    user.home = C:\Users\iz2.CSAD.000
+    user.timezone = Europe/London
+    file.encoding = Cp1252
+    user.name = iz2
+    sun.arch.data.model = 64
+    user.language = en
+    awt.toolkit = sun.awt.windows.WToolkit
+    file.separator = \
+    sun.io.unicode.encoding = UnicodeLittle
+    sun.cpu.endian = little
+    sun.desktop = windows
+    sun.cpu.isalist = amd64
+2012-06-11 10:09:54.853+0000: --- STARTUP diagnostics END ---
+2012-06-11 10:09:54.949+0000: Extension org.neo4j.kernel.KernelExtension[kernel jmx] loaded ok
+2012-06-11 10:09:54.954+0000: Extension org.neo4j.kernel.KernelExtension[shell] loaded ok
+2012-06-11 10:09:54.977+0000: Extension org.neo4j.kernel.KernelExtension[kernel udc] loaded ok
+2012-06-11 10:09:54.988+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions START ---
+2012-06-11 10:09:54.991+0000: Graph Database: org.neo4j.kernel.EmbeddedGraphDatabase StoreId[time:1339405876530, id:-5425952750467893280, store version: 13561656364791302]
+2012-06-11 10:09:54.993+0000: Kernel version: Neo4j - Graph Database Kernel 1.8.M03
+2012-06-11 10:09:54.994+0000: Neo4j component versions:
+2012-06-11 10:09:54.999+0000:   Neo4j - Graph Database Kernel 1.8.M03
+2012-06-11 10:09:55.001+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions END ---
+2012-06-11 10:09:55.008+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS START ---
+2012-06-11 10:09:55.010+0000: Store versions:
+    Store versions:
+      NeoStore v0.A.0
+      NodeStore v0.A.0
+      RelationshipStore v0.A.0
+      RelationshipTypeStore v0.A.0
+      PropertyStore v0.A.0
+      PropertyIndexStore v0.A.0
+      StringPropertyStore v0.A.0
+      ArrayPropertyStore v0.A.0
+2012-06-11 10:09:55.013+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS END ---
+2012-06-11 10:09:55.014+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE START ---
+2012-06-11 10:09:55.016+0000: Id usage:
+    Id usage:
+      NodeStore: used=10012 high=10011
+      RelationshipStore: used=20021 high=20020
+      RelationshipTypeStore: used=3 high=2
+      PropertyStore: used=21 high=20
+      PropertyIndexStore: used=2 high=1
+      StringPropertyStore: used=1 high=0
+      ArrayPropertyStore: used=1 high=0
+2012-06-11 10:09:55.019+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE END ---
+2012-06-11 10:09:55.021+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles START ---
+2012-06-11 10:09:55.023+0000: Storage files:
+    neostore.relationshipstore.db.id: 9.00 B
+    neostore.propertystore.db.strings: 128.00 B
+    neostore.relationshiptypestore.db.id: 9.00 B
+    nioneo_logical.log.1: 16.00 B
+    neostore.propertystore.db.index.keys: 114.00 B
+    lock: 0.00 B
+    neostore.propertystore.db.index.keys.id: 9.00 B
+    messages.log: 81.67 kB
+    neostore.propertystore.db: 861.00 B
+    neostore.nodestore.db: 88.00 kB
+    neostore.propertystore.db.arrays: 128.00 B
+    tm_tx_log.2: 28.68 kB
+    neostore: 54.00 B
+    index:
+      lucene-store.db: 40.00 B
+      lucene.log.1: 16.00 B
+      lucene.log.active: 4.00 B
+      lucene:
+        node:
+          graphsIndex:
+            segments.gen: 20.00 B
+            _1.fdt: 19.00 B
+            _1.nrm: 6.00 B
+            _1.tis: 44.00 B
+            segments_1: 450.00 B
+            _0.tii: 35.00 B
+            _0.tis: 43.00 B
+            _0.nrm: 6.00 B
+            _0.fdt: 18.00 B
+            _1.tii: 35.00 B
+            _1.fdx: 12.00 B
+            _1.frq: 2.00 B
+            _1.fnm: 22.00 B
+            _1.prx: 2.00 B
+            _0.prx: 2.00 B
+            _0.frq: 2.00 B
+            _0.fnm: 22.00 B
+            _0.fdx: 12.00 B
+          - Total: 752.00 B
+          graph2NodeNames:
+            _a.tii: 35.00 B
+            _a.nrm: 24.00 B
+            _a.tis: 170.00 B
+            segments_1: 279.00 B
+            _a.fdt: 144.00 B
+            segments.gen: 20.00 B
+            _a.prx: 20.00 B
+            _a.fdx: 84.00 B
+            _a.fnm: 18.00 B
+            _a.frq: 20.00 B
+          - Total: 814.00 B
+          graph1NodeNames:
+            _8.prx: 2.00 B
+            _1.prx: 2.00 B
+            _6.prx: 2.00 B
+            _2.tii: 35.00 B
+            _8.frq: 2.00 B
+            _6.fdx: 12.00 B
+            _8.fnm: 18.00 B
+            _1.fdx: 12.00 B
+            _5.tii: 35.00 B
+            _1.frq: 2.00 B
+            _1.fnm: 18.00 B
+            _6.frq: 2.00 B
+            _8.fdx: 12.00 B
+            _6.fnm: 18.00 B
+            _3.fdt: 17.00 B
+            _4.fdt: 17.00 B
+            _3.tis: 42.00 B
+            _4.tis: 42.00 B
+            _3.nrm: 6.00 B
+            _4.nrm: 6.00 B
+            _7.frq: 2.00 B
+            _7.fnm: 18.00 B
+            _0.frq: 2.00 B
+            _0.fnm: 18.00 B
+            _0.fdx: 12.00 B
+            _4.tii: 35.00 B
+            _3.tii: 35.00 B
+            _7.fdx: 12.00 B
+            _7.prx: 2.00 B
+            _0.prx: 2.00 B
+            segments.gen: 20.00 B
+            _5.nrm: 6.00 B
+            _2.nrm: 6.00 B
+            _5.tis: 42.00 B
+            segments_1: 1.87 kB
+            _2.tis: 42.00 B
+            _5.fdt: 17.00 B
+            _2.fdt: 17.00 B
+            _8.tis: 43.00 B
+            _1.nrm: 6.00 B
+            _6.nrm: 6.00 B
+            _8.nrm: 6.00 B
+            _1.tis: 42.00 B
+            _6.tis: 42.00 B
+            _8.fdt: 18.00 B
+            _1.fdt: 17.00 B
+            _6.fdt: 17.00 B
+            _3.frq: 2.00 B
+            _3.fnm: 18.00 B
+            _4.frq: 2.00 B
+            _4.fnm: 18.00 B
+            _0.tii: 35.00 B
+            _4.fdx: 12.00 B
+            _3.fdx: 12.00 B
+            _7.tii: 35.00 B
+            _3.prx: 2.00 B
+            _4.prx: 2.00 B
+            _7.fdt: 17.00 B
+            _0.fdt: 17.00 B
+            _7.tis: 42.00 B
+            _0.tis: 42.00 B
+            _7.nrm: 6.00 B
+            _0.nrm: 6.00 B
+            _5.prx: 2.00 B
+            _2.prx: 2.00 B
+            _2.fdx: 12.00 B
+            _6.tii: 35.00 B
+            _1.tii: 35.00 B
+            _5.fdx: 12.00 B
+            _5.frq: 2.00 B
+            _5.fnm: 18.00 B
+            _2.frq: 2.00 B
+            _2.fnm: 18.00 B
+            _8.tii: 35.00 B
+          - Total: 3.07 kB
+        - Total: 4.60 kB
+      - Total: 4.60 kB
+    - Total: 4.66 kB
+    neostore.relationshipstore.db: 645.21 kB
+    neostore.propertystore.db.arrays.id: 9.00 B
+    neostore.nodestore.db.id: 9.00 B
+    tm_tx_log.1: 0.00 B
+    neostore.propertystore.db.index: 18.00 B
+    neostore.propertystore.db.index.id: 9.00 B
+    active_tx_log: 11.00 B
+    nioneo_logical.log.active: 4.00 B
+    neostore.relationshiptypestore.db.names.id: 9.00 B
+    neostore.relationshiptypestore.db: 15.00 B
+    neostore.propertystore.db.id: 9.00 B
+    index.db: 315.00 B
+    neostore.propertystore.db.strings.id: 9.00 B
+    neostore.relationshiptypestore.db.names: 152.00 B
+    neostore.id: 9.00 B
+2012-06-11 10:09:55.756+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles END ---
+2012-06-11 10:09:55.762+0000: Started - database is now available
+2012-06-11 10:09:55.764+0000: GC Monitor started. 
+2012-06-11 10:09:58.551+0000: Stopping - database is now unavailable
+2012-06-11 10:09:58.553+0000: TM shutting down
+2012-06-11 10:09:58.569+0000: GC Monitor stopped. 
+2012-06-11 10:09:58.783+0000: Closed log H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\index\lucene.log
+2012-06-11 10:09:58.811+0000: Closed log H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\nioneo_logical.log
+2012-06-11 10:09:58.881+0000: NeoStore closed
+2012-06-11 10:09:58.883+0000: --- SHUTDOWN diagnostics START ---
+2012-06-11 10:09:58.885+0000: --- SHUTDOWN diagnostics END ---
+2012-06-11 10:10:25.982+0000: Opened [H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\nioneo_logical.log.1] clean empty log, version=0, lastTxId=20025
+2012-06-11 10:10:26.018+0000: TM opening log: H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\tm_tx_log.1
+2012-06-11 10:10:26.448+0000: Opened [H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\index\lucene.log.1] clean empty log, version=0, lastTxId=25
+2012-06-11 10:10:26.457+0000: --- STARTUP diagnostics START ---
+2012-06-11 10:10:26.462+0000: Neo4j Kernel properties:
+    store_dir=H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db
+    remote_logging_host=127.0.0.1
+    read_only=false
+    neo4j.ext.udc.host=udc.neo4j.org
+    logical_log=H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\nioneo_logical.log
+    remote_logging_port=4560
+    gc_monitor_threshold=200ms
+    load_kernel_extensions=true
+    array_block_size=120
+    intercept_committing_transactions=false
+    node_auto_indexing=false
+    neostore.relationshipstore.db.mapped_memory=68M
+    remote_shell_name=shell
+    dump_configuration=false
+    gc_monitor_wait_time=100ms
+    cache_type=soft
+    intercept_deserialized_transactions=false
+    neostore.nodestore.db.mapped_memory=15M
+    neo4j.ext.udc.first_delay=600000
+    remote_shell_enabled=false
+    neo4j.ext.udc.reg=unreg
+    remote_shell_port=1337
+    lucene_searcher_cache_size=2147483647
+    neo4j.ext.udc.interval=86400000
+    use_memory_mapped_buffers=false
+    rebuild_idgenerators_fast=true
+    ephemeral=false
+    neostore.propertystore.db.index.keys.mapped_memory=1M
+    neostore.propertystore.db.strings.mapped_memory=47M
+    neostore.propertystore.db.arrays.mapped_memory=54M
+    neo_store=H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\neostore
+    neostore.propertystore.db.index.mapped_memory=1M
+    backup_slave=false
+    neostore.propertystore.db.mapped_memory=55M
+    gcr_cache_min_log_interval=60s
+    relationship_auto_indexing=false
+    relationship_grab_size=100
+    string_block_size=120
+    remote_shell_read_only=false
+    lucene_writer_cache_size=2147483647
+    grab_file_lock=true
+    node_cache_array_fraction=1.0
+    remote_logging_enabled=false
+    allow_store_upgrade=false
+    execution_guard_enabled=false
+    neo4j.ext.udc.enabled=true
+    relationship_cache_array_fraction=1.0
+2012-06-11 10:10:26.476+0000: Diagnostics providers:
+    org.neo4j.kernel.configuration.Config
+    org.neo4j.kernel.info.DiagnosticsManager
+    SYSTEM_MEMORY
+    JAVA_MEMORY
+    OPERATING_SYSTEM
+    JAVA_VIRTUAL_MACHINE
+    CLASSPATH
+    LIBRARY_PATH
+    SYSTEM_PROPERTIES
+2012-06-11 10:10:26.479+0000: System memory information:
+    Total Physical memory: 4.00 GB
+    Free Physical memory: 2.01 GB
+    Committed virtual memory: 106.39 MB
+    Total swap space: 7.99 GB
+    Free swap space: 5.45 GB
+2012-06-11 10:10:26.487+0000: JVM memory information:
+    Free  memory: 45.70 MB
+    Total memory: 61.38 MB
+    Max   memory: 910.25 MB
+    Garbage Collector: PS Scavenge: [PS Eden Space, PS Survivor Space]
+    Garbage Collector: PS MarkSweep: [PS Eden Space, PS Survivor Space, PS Old Gen, PS Perm Gen]
+    Memory Pool: Code Cache (Non-heap memory): committed=2.44 MB, used=567.00 kB, max=48.00 MB, threshold=0.00 B
+    Memory Pool: PS Eden Space (Heap memory): committed=16.06 MB, used=15.67 MB, max=336.06 MB, threshold=?
+    Memory Pool: PS Survivor Space (Heap memory): committed=2.63 MB, used=0.00 B, max=2.63 MB, threshold=?
+    Memory Pool: PS Old Gen (Heap memory): committed=42.69 MB, used=0.00 B, max=682.69 MB, threshold=0.00 B
+    Memory Pool: PS Perm Gen (Non-heap memory): committed=20.75 MB, used=9.66 MB, max=84.00 MB, threshold=0.00 B
+2012-06-11 10:10:26.495+0000: Operating system information:
+    Operating System: Windows 7; version: 6.1; arch: amd64; cpus: 4
+    Process id: 1904@PC1-109-W
+    Byte order: LITTLE_ENDIAN
+2012-06-11 10:10:26.503+0000: JVM information:
+    VM Name: Java HotSpot(TM) 64-Bit Server VM
+    VM Vendor: Sun Microsystems Inc.
+    VM Version: 16.3-b01
+    JIT compiler: HotSpot 64-Bit Server Compiler
+    VM Arguments: [-Dfile.encoding=Cp1252]
+2012-06-11 10:10:26.506+0000: Java classpath:
+     [classpath + loader.0] file:/C:/Users/iz2.CSAD.000/.eclipse/config/org.eclipse.osgi/bundles/151/1/.cp/
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\mysql-connector-java-5.1.20\mysql-connector-java-5.1.20-bin.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/lucene-core-3.5.0.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\scala-library-2.9.1-1.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\sunrsasign.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-udc-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/geronimo-jta_1.1_spec-1.1.1.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-jmx-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-kernel-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\lucene-core-3.5.0.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-lucene-index-1.8.M03.jar
+     [loader.1] file:/C:/Program%20Files/Java/jre6/lib/ext/dnsns.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/server-api-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\server-api-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/scala-library-2.9.1-1.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\geronimo-jta_1.1_spec-1.1.1.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\jce.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-kernel-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-lucene-index-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-graph-matching-1.8.M03.jar
+     [loader.1] file:/C:/Program%20Files/Java/jre6/lib/ext/localedata.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-cypher-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-shell-1.8.M03.jar
+     [loader.0] file:/C:/Program%20Files/eclipse-java-helios-win32-x86_64/eclipse/plugins/org.junit_4.8.1.v4_8_1_v20100427-1100/junit.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\resources.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-graph-algo-1.8.M03.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\jsse.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\org.apache.servicemix.bundles.jline-0.9.94_1.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\charsets.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-graph-algo-1.8.M03.jar
+     [classpath] C:\Program Files\eclipse-java-helios-win32-x86_64\eclipse\plugins\org.hamcrest.core_1.1.0.v20090501071000.jar
+     [bootstrap] C:\Program Files\Java\jre6\classes
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/mysql-connector-java-5.1.20/mysql-connector-java-5.1.20-bin.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-shell-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-graph-matching-1.8.M03.jar
+     [loader.1] file:/C:/Program%20Files/Java/jre6/lib/ext/sunjce_provider.jar
+     [classpath] H:\Graph databases\workspace\GraphForDB\bin
+     [classpath + loader.0] file:/C:/Users/iz2.CSAD.000/.eclipse/config/org.eclipse.osgi/bundles/153/1/.cp/
+     [bootstrap] C:\Program Files\Java\jre6\lib\rt.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/org.apache.servicemix.bundles.jline-0.9.94_1.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-cypher-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-udc-1.8.M03.jar
+     [classpath + loader.0] file:/C:/Users/iz2.CSAD.000/.eclipse/config/org.eclipse.osgi/bundles/152/1/.cp/
+     [classpath] C:\Program Files\eclipse-java-helios-win32-x86_64\eclipse\plugins\org.junit_4.8.1.v4_8_1_v20100427-1100\junit.jar
+     [loader.0] file:/C:/Program%20Files/eclipse-java-helios-win32-x86_64/eclipse/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar
+     [loader.0] file:/H:/Graph%20databases/workspace/GraphForDB/bin/
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-jmx-1.8.M03.jar
+2012-06-11 10:10:26.538+0000: Library path:
+    C:\Program Files\Java\jre6\bin
+    H:\Graph databases\workspace\GraphForDB
+    C:\Windows\Sun\Java\bin
+    C:\Windows\System32
+    C:\Windows
+    C:\Windows\System32
+    C:\Windows
+    C:\Windows\System32\wbem
+    C:\Windows\System32\WindowsPowerShell\v1.0
+    C:\Program Files (x86)\GNU\GnuPG\pub
+    C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn
+    C:\Program Files\Microsoft SQL Server\100\Tools\Binn
+    C:\Program Files\Microsoft SQL Server\100\DTS\Binn
+    C:\Program Files\TortoiseSVN\bin
+    C:\Program Files (x86)\QuickTime\QTSystem
+    C:\Program Files (x86)\TortoiseHg
+    C:\Program Files\Mercurial\bin
+    C:\Program Files (x86)\putty
+2012-06-11 10:10:26.549+0000: System.properties:
+    sun.boot.library.path = C:\Program Files\Java\jre6\bin
+    path.separator = ;
+    file.encoding.pkg = sun.io
+    sun.java.launcher = SUN_STANDARD
+    user.country = GB
+    sun.os.patch.level = Service Pack 1
+    user.dir = H:\Graph databases\workspace\GraphForDB
+    user.variant = 
+    sun.jnu.encoding = Cp1252
+    sun.management.compiler = HotSpot 64-Bit Server Compiler
+    user.home = C:\Users\iz2.CSAD.000
+    user.timezone = Europe/London
+    file.encoding = Cp1252
+    user.name = iz2
+    sun.arch.data.model = 64
+    user.language = en
+    awt.toolkit = sun.awt.windows.WToolkit
+    file.separator = \
+    sun.io.unicode.encoding = UnicodeLittle
+    sun.cpu.endian = little
+    sun.desktop = windows
+    sun.cpu.isalist = amd64
+2012-06-11 10:10:26.552+0000: --- STARTUP diagnostics END ---
+2012-06-11 10:10:26.651+0000: Extension org.neo4j.kernel.KernelExtension[kernel jmx] loaded ok
+2012-06-11 10:10:26.656+0000: Extension org.neo4j.kernel.KernelExtension[shell] loaded ok
+2012-06-11 10:10:26.680+0000: Extension org.neo4j.kernel.KernelExtension[kernel udc] loaded ok
+2012-06-11 10:10:26.691+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions START ---
+2012-06-11 10:10:26.693+0000: Graph Database: org.neo4j.kernel.EmbeddedGraphDatabase StoreId[time:1339405876530, id:-5425952750467893280, store version: 13561656364791302]
+2012-06-11 10:10:26.695+0000: Kernel version: Neo4j - Graph Database Kernel 1.8.M03
+2012-06-11 10:10:26.697+0000: Neo4j component versions:
+2012-06-11 10:10:26.702+0000:   Neo4j - Graph Database Kernel 1.8.M03
+2012-06-11 10:10:26.704+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions END ---
+2012-06-11 10:10:26.711+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS START ---
+2012-06-11 10:10:26.714+0000: Store versions:
+    Store versions:
+      NeoStore v0.A.0
+      NodeStore v0.A.0
+      RelationshipStore v0.A.0
+      RelationshipTypeStore v0.A.0
+      PropertyStore v0.A.0
+      PropertyIndexStore v0.A.0
+      StringPropertyStore v0.A.0
+      ArrayPropertyStore v0.A.0
+2012-06-11 10:10:26.717+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS END ---
+2012-06-11 10:10:26.719+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE START ---
+2012-06-11 10:10:26.721+0000: Id usage:
+    Id usage:
+      NodeStore: used=10012 high=10011
+      RelationshipStore: used=20021 high=20020
+      RelationshipTypeStore: used=3 high=2
+      PropertyStore: used=21 high=20
+      PropertyIndexStore: used=2 high=1
+      StringPropertyStore: used=1 high=0
+      ArrayPropertyStore: used=1 high=0
+2012-06-11 10:10:26.724+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE END ---
+2012-06-11 10:10:26.726+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles START ---
+2012-06-11 10:10:26.728+0000: Storage files:
+    neostore.relationshipstore.db.id: 9.00 B
+    neostore.propertystore.db.strings: 128.00 B
+    neostore.relationshiptypestore.db.id: 9.00 B
+    nioneo_logical.log.1: 16.00 B
+    neostore.propertystore.db.index.keys: 114.00 B
+    lock: 0.00 B
+    neostore.propertystore.db.index.keys.id: 9.00 B
+    messages.log: 99.71 kB
+    neostore.propertystore.db: 861.00 B
+    neostore.nodestore.db: 88.00 kB
+    neostore.propertystore.db.arrays: 128.00 B
+    tm_tx_log.2: 28.68 kB
+    neostore: 54.00 B
+    index:
+      lucene-store.db: 40.00 B
+      lucene.log.1: 16.00 B
+      lucene.log.active: 4.00 B
+      lucene:
+        node:
+          graphsIndex:
+            segments.gen: 20.00 B
+            _1.fdt: 19.00 B
+            _1.nrm: 6.00 B
+            _1.tis: 44.00 B
+            segments_1: 450.00 B
+            _0.tii: 35.00 B
+            _0.tis: 43.00 B
+            _0.nrm: 6.00 B
+            _0.fdt: 18.00 B
+            _1.tii: 35.00 B
+            _1.fdx: 12.00 B
+            _1.frq: 2.00 B
+            _1.fnm: 22.00 B
+            _1.prx: 2.00 B
+            _0.prx: 2.00 B
+            _0.frq: 2.00 B
+            _0.fnm: 22.00 B
+            _0.fdx: 12.00 B
+          - Total: 752.00 B
+          graph2NodeNames:
+            _a.tii: 35.00 B
+            _a.nrm: 24.00 B
+            _a.tis: 170.00 B
+            segments_1: 279.00 B
+            _a.fdt: 144.00 B
+            segments.gen: 20.00 B
+            _a.prx: 20.00 B
+            _a.fdx: 84.00 B
+            _a.fnm: 18.00 B
+            _a.frq: 20.00 B
+          - Total: 814.00 B
+          graph1NodeNames:
+            _8.prx: 2.00 B
+            _1.prx: 2.00 B
+            _6.prx: 2.00 B
+            _2.tii: 35.00 B
+            _8.frq: 2.00 B
+            _6.fdx: 12.00 B
+            _8.fnm: 18.00 B
+            _1.fdx: 12.00 B
+            _5.tii: 35.00 B
+            _1.frq: 2.00 B
+            _1.fnm: 18.00 B
+            _6.frq: 2.00 B
+            _8.fdx: 12.00 B
+            _6.fnm: 18.00 B
+            _3.fdt: 17.00 B
+            _4.fdt: 17.00 B
+            _3.tis: 42.00 B
+            _4.tis: 42.00 B
+            _3.nrm: 6.00 B
+            _4.nrm: 6.00 B
+            _7.frq: 2.00 B
+            _7.fnm: 18.00 B
+            _0.frq: 2.00 B
+            _0.fnm: 18.00 B
+            _0.fdx: 12.00 B
+            _4.tii: 35.00 B
+            _3.tii: 35.00 B
+            _7.fdx: 12.00 B
+            _7.prx: 2.00 B
+            _0.prx: 2.00 B
+            segments.gen: 20.00 B
+            _5.nrm: 6.00 B
+            _2.nrm: 6.00 B
+            _5.tis: 42.00 B
+            segments_1: 1.87 kB
+            _2.tis: 42.00 B
+            _5.fdt: 17.00 B
+            _2.fdt: 17.00 B
+            _8.tis: 43.00 B
+            _1.nrm: 6.00 B
+            _6.nrm: 6.00 B
+            _8.nrm: 6.00 B
+            _1.tis: 42.00 B
+            _6.tis: 42.00 B
+            _8.fdt: 18.00 B
+            _1.fdt: 17.00 B
+            _6.fdt: 17.00 B
+            _3.frq: 2.00 B
+            _3.fnm: 18.00 B
+            _4.frq: 2.00 B
+            _4.fnm: 18.00 B
+            _0.tii: 35.00 B
+            _4.fdx: 12.00 B
+            _3.fdx: 12.00 B
+            _7.tii: 35.00 B
+            _3.prx: 2.00 B
+            _4.prx: 2.00 B
+            _7.fdt: 17.00 B
+            _0.fdt: 17.00 B
+            _7.tis: 42.00 B
+            _0.tis: 42.00 B
+            _7.nrm: 6.00 B
+            _0.nrm: 6.00 B
+            _5.prx: 2.00 B
+            _2.prx: 2.00 B
+            _2.fdx: 12.00 B
+            _6.tii: 35.00 B
+            _1.tii: 35.00 B
+            _5.fdx: 12.00 B
+            _5.frq: 2.00 B
+            _5.fnm: 18.00 B
+            _2.frq: 2.00 B
+            _2.fnm: 18.00 B
+            _8.tii: 35.00 B
+          - Total: 3.07 kB
+        - Total: 4.60 kB
+      - Total: 4.60 kB
+    - Total: 4.66 kB
+    neostore.relationshipstore.db: 645.21 kB
+    neostore.propertystore.db.arrays.id: 9.00 B
+    neostore.nodestore.db.id: 9.00 B
+    tm_tx_log.1: 0.00 B
+    neostore.propertystore.db.index: 18.00 B
+    neostore.propertystore.db.index.id: 9.00 B
+    active_tx_log: 11.00 B
+    nioneo_logical.log.active: 4.00 B
+    neostore.relationshiptypestore.db.names.id: 9.00 B
+    neostore.relationshiptypestore.db: 15.00 B
+    neostore.propertystore.db.id: 9.00 B
+    index.db: 315.00 B
+    neostore.propertystore.db.strings.id: 9.00 B
+    neostore.relationshiptypestore.db.names: 152.00 B
+    neostore.id: 9.00 B
+2012-06-11 10:10:27.450+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles END ---
+2012-06-11 10:10:27.451+0000: Started - database is now available
+2012-06-11 10:10:27.451+0000: GC Monitor started. 
+2012-06-11 10:10:30.260+0000: Stopping - database is now unavailable
+2012-06-11 10:10:30.262+0000: TM shutting down
+2012-06-11 10:10:30.343+0000: GC Monitor stopped. 
+2012-06-11 10:10:30.496+0000: Closed log H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\index\lucene.log
+2012-06-11 10:10:30.526+0000: Closed log H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\nioneo_logical.log
+2012-06-11 10:10:30.595+0000: NeoStore closed
+2012-06-11 10:10:30.597+0000: --- SHUTDOWN diagnostics START ---
+2012-06-11 10:10:30.599+0000: --- SHUTDOWN diagnostics END ---
+2012-06-11 10:10:34.291+0000: Opened [H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\nioneo_logical.log.1] clean empty log, version=0, lastTxId=20025
+2012-06-11 10:10:34.320+0000: TM opening log: H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\tm_tx_log.1
+2012-06-11 10:10:34.654+0000: Opened [H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\index\lucene.log.1] clean empty log, version=0, lastTxId=25
+2012-06-11 10:10:34.662+0000: --- STARTUP diagnostics START ---
+2012-06-11 10:10:34.666+0000: Neo4j Kernel properties:
+    store_dir=H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db
+    remote_logging_host=127.0.0.1
+    read_only=false
+    neo4j.ext.udc.host=udc.neo4j.org
+    logical_log=H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\nioneo_logical.log
+    remote_logging_port=4560
+    gc_monitor_threshold=200ms
+    load_kernel_extensions=true
+    array_block_size=120
+    intercept_committing_transactions=false
+    node_auto_indexing=false
+    neostore.relationshipstore.db.mapped_memory=68M
+    remote_shell_name=shell
+    dump_configuration=false
+    gc_monitor_wait_time=100ms
+    cache_type=soft
+    intercept_deserialized_transactions=false
+    neostore.nodestore.db.mapped_memory=15M
+    neo4j.ext.udc.first_delay=600000
+    remote_shell_enabled=false
+    neo4j.ext.udc.reg=unreg
+    remote_shell_port=1337
+    lucene_searcher_cache_size=2147483647
+    neo4j.ext.udc.interval=86400000
+    use_memory_mapped_buffers=false
+    rebuild_idgenerators_fast=true
+    ephemeral=false
+    neostore.propertystore.db.index.keys.mapped_memory=1M
+    neostore.propertystore.db.strings.mapped_memory=47M
+    neostore.propertystore.db.arrays.mapped_memory=54M
+    neo_store=H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\neostore
+    neostore.propertystore.db.index.mapped_memory=1M
+    backup_slave=false
+    neostore.propertystore.db.mapped_memory=55M
+    gcr_cache_min_log_interval=60s
+    relationship_auto_indexing=false
+    relationship_grab_size=100
+    string_block_size=120
+    remote_shell_read_only=false
+    lucene_writer_cache_size=2147483647
+    grab_file_lock=true
+    node_cache_array_fraction=1.0
+    remote_logging_enabled=false
+    allow_store_upgrade=false
+    execution_guard_enabled=false
+    neo4j.ext.udc.enabled=true
+    relationship_cache_array_fraction=1.0
+2012-06-11 10:10:34.678+0000: Diagnostics providers:
+    org.neo4j.kernel.configuration.Config
+    org.neo4j.kernel.info.DiagnosticsManager
+    SYSTEM_MEMORY
+    JAVA_MEMORY
+    OPERATING_SYSTEM
+    JAVA_VIRTUAL_MACHINE
+    CLASSPATH
+    LIBRARY_PATH
+    SYSTEM_PROPERTIES
+2012-06-11 10:10:34.681+0000: System memory information:
+    Total Physical memory: 4.00 GB
+    Free Physical memory: 2.01 GB
+    Committed virtual memory: 106.11 MB
+    Total swap space: 7.99 GB
+    Free swap space: 5.45 GB
+2012-06-11 10:10:34.689+0000: JVM memory information:
+    Free  memory: 45.70 MB
+    Total memory: 61.38 MB
+    Max   memory: 910.25 MB
+    Garbage Collector: PS Scavenge: [PS Eden Space, PS Survivor Space]
+    Garbage Collector: PS MarkSweep: [PS Eden Space, PS Survivor Space, PS Old Gen, PS Perm Gen]
+    Memory Pool: Code Cache (Non-heap memory): committed=2.44 MB, used=567.00 kB, max=48.00 MB, threshold=0.00 B
+    Memory Pool: PS Eden Space (Heap memory): committed=16.06 MB, used=15.67 MB, max=336.06 MB, threshold=?
+    Memory Pool: PS Survivor Space (Heap memory): committed=2.63 MB, used=0.00 B, max=2.63 MB, threshold=?
+    Memory Pool: PS Old Gen (Heap memory): committed=42.69 MB, used=0.00 B, max=682.69 MB, threshold=0.00 B
+    Memory Pool: PS Perm Gen (Non-heap memory): committed=20.75 MB, used=9.66 MB, max=84.00 MB, threshold=0.00 B
+2012-06-11 10:10:34.697+0000: Operating system information:
+    Operating System: Windows 7; version: 6.1; arch: amd64; cpus: 4
+    Process id: 3496@PC1-109-W
+    Byte order: LITTLE_ENDIAN
+2012-06-11 10:10:34.705+0000: JVM information:
+    VM Name: Java HotSpot(TM) 64-Bit Server VM
+    VM Vendor: Sun Microsystems Inc.
+    VM Version: 16.3-b01
+    JIT compiler: HotSpot 64-Bit Server Compiler
+    VM Arguments: [-Dfile.encoding=Cp1252]
+2012-06-11 10:10:34.708+0000: Java classpath:
+     [classpath + loader.0] file:/C:/Users/iz2.CSAD.000/.eclipse/config/org.eclipse.osgi/bundles/151/1/.cp/
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\mysql-connector-java-5.1.20\mysql-connector-java-5.1.20-bin.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/lucene-core-3.5.0.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\scala-library-2.9.1-1.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\sunrsasign.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-udc-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/geronimo-jta_1.1_spec-1.1.1.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-jmx-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-kernel-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\lucene-core-3.5.0.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-lucene-index-1.8.M03.jar
+     [loader.1] file:/C:/Program%20Files/Java/jre6/lib/ext/dnsns.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/server-api-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\server-api-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/scala-library-2.9.1-1.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\geronimo-jta_1.1_spec-1.1.1.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\jce.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-kernel-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-lucene-index-1.8.M03.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-graph-matching-1.8.M03.jar
+     [loader.1] file:/C:/Program%20Files/Java/jre6/lib/ext/localedata.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-cypher-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-shell-1.8.M03.jar
+     [loader.0] file:/C:/Program%20Files/eclipse-java-helios-win32-x86_64/eclipse/plugins/org.junit_4.8.1.v4_8_1_v20100427-1100/junit.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\resources.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-graph-algo-1.8.M03.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\jsse.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\org.apache.servicemix.bundles.jline-0.9.94_1.jar
+     [bootstrap] C:\Program Files\Java\jre6\lib\charsets.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-graph-algo-1.8.M03.jar
+     [classpath] C:\Program Files\eclipse-java-helios-win32-x86_64\eclipse\plugins\org.hamcrest.core_1.1.0.v20090501071000.jar
+     [bootstrap] C:\Program Files\Java\jre6\classes
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/mysql-connector-java-5.1.20/mysql-connector-java-5.1.20-bin.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-shell-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-graph-matching-1.8.M03.jar
+     [loader.1] file:/C:/Program%20Files/Java/jre6/lib/ext/sunjce_provider.jar
+     [classpath] H:\Graph databases\workspace\GraphForDB\bin
+     [classpath + loader.0] file:/C:/Users/iz2.CSAD.000/.eclipse/config/org.eclipse.osgi/bundles/153/1/.cp/
+     [bootstrap] C:\Program Files\Java\jre6\lib\rt.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/org.apache.servicemix.bundles.jline-0.9.94_1.jar
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-cypher-1.8.M03.jar
+     [classpath] \\iz2.home.cs.st-andrews.ac.uk\iz2\Graph databases\neo4j-community-1.8.M03\lib\neo4j-udc-1.8.M03.jar
+     [classpath + loader.0] file:/C:/Users/iz2.CSAD.000/.eclipse/config/org.eclipse.osgi/bundles/152/1/.cp/
+     [classpath] C:\Program Files\eclipse-java-helios-win32-x86_64\eclipse\plugins\org.junit_4.8.1.v4_8_1_v20100427-1100\junit.jar
+     [loader.0] file:/C:/Program%20Files/eclipse-java-helios-win32-x86_64/eclipse/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar
+     [loader.0] file:/H:/Graph%20databases/workspace/GraphForDB/bin/
+     [loader.0] file://iz2.home.cs.st-andrews.ac.uk/iz2/Graph%20databases/neo4j-community-1.8.M03/lib/neo4j-jmx-1.8.M03.jar
+2012-06-11 10:10:34.748+0000: Library path:
+    C:\Program Files\Java\jre6\bin
+    H:\Graph databases\workspace\GraphForDB
+    C:\Windows\Sun\Java\bin
+    C:\Windows\System32
+    C:\Windows
+    C:\Windows\System32
+    C:\Windows
+    C:\Windows\System32\wbem
+    C:\Windows\System32\WindowsPowerShell\v1.0
+    C:\Program Files (x86)\GNU\GnuPG\pub
+    C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn
+    C:\Program Files\Microsoft SQL Server\100\Tools\Binn
+    C:\Program Files\Microsoft SQL Server\100\DTS\Binn
+    C:\Program Files\TortoiseSVN\bin
+    C:\Program Files (x86)\QuickTime\QTSystem
+    C:\Program Files (x86)\TortoiseHg
+    C:\Program Files\Mercurial\bin
+    C:\Program Files (x86)\putty
+2012-06-11 10:10:34.768+0000: System.properties:
+    sun.boot.library.path = C:\Program Files\Java\jre6\bin
+    path.separator = ;
+    file.encoding.pkg = sun.io
+    sun.java.launcher = SUN_STANDARD
+    user.country = GB
+    sun.os.patch.level = Service Pack 1
+    user.dir = H:\Graph databases\workspace\GraphForDB
+    user.variant = 
+    sun.jnu.encoding = Cp1252
+    sun.management.compiler = HotSpot 64-Bit Server Compiler
+    user.home = C:\Users\iz2.CSAD.000
+    user.timezone = Europe/London
+    file.encoding = Cp1252
+    user.name = iz2
+    sun.arch.data.model = 64
+    user.language = en
+    awt.toolkit = sun.awt.windows.WToolkit
+    file.separator = \
+    sun.io.unicode.encoding = UnicodeLittle
+    sun.cpu.endian = little
+    sun.desktop = windows
+    sun.cpu.isalist = amd64
+2012-06-11 10:10:34.768+0000: --- STARTUP diagnostics END ---
+2012-06-11 10:10:34.848+0000: Extension org.neo4j.kernel.KernelExtension[kernel jmx] loaded ok
+2012-06-11 10:10:34.851+0000: Extension org.neo4j.kernel.KernelExtension[shell] loaded ok
+2012-06-11 10:10:34.874+0000: Extension org.neo4j.kernel.KernelExtension[kernel udc] loaded ok
+2012-06-11 10:10:34.883+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions START ---
+2012-06-11 10:10:34.885+0000: Graph Database: org.neo4j.kernel.EmbeddedGraphDatabase StoreId[time:1339405876530, id:-5425952750467893280, store version: 13561656364791302]
+2012-06-11 10:10:34.887+0000: Kernel version: Neo4j - Graph Database Kernel 1.8.M03
+2012-06-11 10:10:34.889+0000: Neo4j component versions:
+2012-06-11 10:10:34.893+0000:   Neo4j - Graph Database Kernel 1.8.M03
+2012-06-11 10:10:34.895+0000: --- STARTUP diagnostics for KernelDiagnostics:Versions END ---
+2012-06-11 10:10:34.901+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS START ---
+2012-06-11 10:10:34.904+0000: Store versions:
+    Store versions:
+      NeoStore v0.A.0
+      NodeStore v0.A.0
+      RelationshipStore v0.A.0
+      RelationshipTypeStore v0.A.0
+      PropertyStore v0.A.0
+      PropertyIndexStore v0.A.0
+      StringPropertyStore v0.A.0
+      ArrayPropertyStore v0.A.0
+2012-06-11 10:10:34.907+0000: --- STARTUP diagnostics for NEO_STORE_VERSIONS END ---
+2012-06-11 10:10:34.908+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE START ---
+2012-06-11 10:10:34.910+0000: Id usage:
+    Id usage:
+      NodeStore: used=10012 high=10011
+      RelationshipStore: used=20021 high=20020
+      RelationshipTypeStore: used=3 high=2
+      PropertyStore: used=21 high=20
+      PropertyIndexStore: used=2 high=1
+      StringPropertyStore: used=1 high=0
+      ArrayPropertyStore: used=1 high=0
+2012-06-11 10:10:34.913+0000: --- STARTUP diagnostics for NEO_STORE_ID_USAGE END ---
+2012-06-11 10:10:34.915+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles START ---
+2012-06-11 10:10:34.917+0000: Storage files:
+    neostore.relationshipstore.db.id: 9.00 B
+    neostore.propertystore.db.strings: 128.00 B
+    neostore.relationshiptypestore.db.id: 9.00 B
+    nioneo_logical.log.1: 16.00 B
+    neostore.propertystore.db.index.keys: 114.00 B
+    lock: 0.00 B
+    neostore.propertystore.db.index.keys.id: 9.00 B
+    messages.log: 117.75 kB
+    neostore.propertystore.db: 861.00 B
+    neostore.nodestore.db: 88.00 kB
+    neostore.propertystore.db.arrays: 128.00 B
+    tm_tx_log.2: 28.68 kB
+    neostore: 54.00 B
+    index:
+      lucene-store.db: 40.00 B
+      lucene.log.1: 16.00 B
+      lucene.log.active: 4.00 B
+      lucene:
+        node:
+          graphsIndex:
+            segments.gen: 20.00 B
+            _1.fdt: 19.00 B
+            _1.nrm: 6.00 B
+            _1.tis: 44.00 B
+            segments_1: 450.00 B
+            _0.tii: 35.00 B
+            _0.tis: 43.00 B
+            _0.nrm: 6.00 B
+            _0.fdt: 18.00 B
+            _1.tii: 35.00 B
+            _1.fdx: 12.00 B
+            _1.frq: 2.00 B
+            _1.fnm: 22.00 B
+            _1.prx: 2.00 B
+            _0.prx: 2.00 B
+            _0.frq: 2.00 B
+            _0.fnm: 22.00 B
+            _0.fdx: 12.00 B
+          - Total: 752.00 B
+          graph2NodeNames:
+            _a.tii: 35.00 B
+            _a.nrm: 24.00 B
+            _a.tis: 170.00 B
+            segments_1: 279.00 B
+            _a.fdt: 144.00 B
+            segments.gen: 20.00 B
+            _a.prx: 20.00 B
+            _a.fdx: 84.00 B
+            _a.fnm: 18.00 B
+            _a.frq: 20.00 B
+          - Total: 814.00 B
+          graph1NodeNames:
+            _8.prx: 2.00 B
+            _1.prx: 2.00 B
+            _6.prx: 2.00 B
+            _2.tii: 35.00 B
+            _8.frq: 2.00 B
+            _6.fdx: 12.00 B
+            _8.fnm: 18.00 B
+            _1.fdx: 12.00 B
+            _5.tii: 35.00 B
+            _1.frq: 2.00 B
+            _1.fnm: 18.00 B
+            _6.frq: 2.00 B
+            _8.fdx: 12.00 B
+            _6.fnm: 18.00 B
+            _3.fdt: 17.00 B
+            _4.fdt: 17.00 B
+            _3.tis: 42.00 B
+            _4.tis: 42.00 B
+            _3.nrm: 6.00 B
+            _4.nrm: 6.00 B
+            _7.frq: 2.00 B
+            _7.fnm: 18.00 B
+            _0.frq: 2.00 B
+            _0.fnm: 18.00 B
+            _0.fdx: 12.00 B
+            _4.tii: 35.00 B
+            _3.tii: 35.00 B
+            _7.fdx: 12.00 B
+            _7.prx: 2.00 B
+            _0.prx: 2.00 B
+            segments.gen: 20.00 B
+            _5.nrm: 6.00 B
+            _2.nrm: 6.00 B
+            _5.tis: 42.00 B
+            segments_1: 1.87 kB
+            _2.tis: 42.00 B
+            _5.fdt: 17.00 B
+            _2.fdt: 17.00 B
+            _8.tis: 43.00 B
+            _1.nrm: 6.00 B
+            _6.nrm: 6.00 B
+            _8.nrm: 6.00 B
+            _1.tis: 42.00 B
+            _6.tis: 42.00 B
+            _8.fdt: 18.00 B
+            _1.fdt: 17.00 B
+            _6.fdt: 17.00 B
+            _3.frq: 2.00 B
+            _3.fnm: 18.00 B
+            _4.frq: 2.00 B
+            _4.fnm: 18.00 B
+            _0.tii: 35.00 B
+            _4.fdx: 12.00 B
+            _3.fdx: 12.00 B
+            _7.tii: 35.00 B
+            _3.prx: 2.00 B
+            _4.prx: 2.00 B
+            _7.fdt: 17.00 B
+            _0.fdt: 17.00 B
+            _7.tis: 42.00 B
+            _0.tis: 42.00 B
+            _7.nrm: 6.00 B
+            _0.nrm: 6.00 B
+            _5.prx: 2.00 B
+            _2.prx: 2.00 B
+            _2.fdx: 12.00 B
+            _6.tii: 35.00 B
+            _1.tii: 35.00 B
+            _5.fdx: 12.00 B
+            _5.frq: 2.00 B
+            _5.fnm: 18.00 B
+            _2.frq: 2.00 B
+            _2.fnm: 18.00 B
+            _8.tii: 35.00 B
+          - Total: 3.07 kB
+        - Total: 4.60 kB
+      - Total: 4.60 kB
+    - Total: 4.66 kB
+    neostore.relationshipstore.db: 645.21 kB
+    neostore.propertystore.db.arrays.id: 9.00 B
+    neostore.nodestore.db.id: 9.00 B
+    tm_tx_log.1: 0.00 B
+    neostore.propertystore.db.index: 18.00 B
+    neostore.propertystore.db.index.id: 9.00 B
+    active_tx_log: 11.00 B
+    nioneo_logical.log.active: 4.00 B
+    neostore.relationshiptypestore.db.names.id: 9.00 B
+    neostore.relationshiptypestore.db: 15.00 B
+    neostore.propertystore.db.id: 9.00 B
+    index.db: 315.00 B
+    neostore.propertystore.db.strings.id: 9.00 B
+    neostore.relationshiptypestore.db.names: 152.00 B
+    neostore.id: 9.00 B
+2012-06-11 10:10:35.519+0000: --- STARTUP diagnostics for KernelDiagnostics:StoreFiles END ---
+2012-06-11 10:10:35.524+0000: Started - database is now available
+2012-06-11 10:10:35.526+0000: GC Monitor started. 
+2012-06-11 10:10:38.033+0000: Stopping - database is now unavailable
+2012-06-11 10:10:38.036+0000: TM shutting down
+2012-06-11 10:10:38.041+0000: GC Monitor stopped. 
+2012-06-11 10:10:38.264+0000: Closed log H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\index\lucene.log
+2012-06-11 10:10:38.293+0000: Closed log H:\Graph databases\workspace\GraphForDB\neo4j-neighbour-finder-test-db\nioneo_logical.log
+2012-06-11 10:10:38.363+0000: NeoStore closed
+2012-06-11 10:10:38.365+0000: --- SHUTDOWN diagnostics START ---
+2012-06-11 10:10:38.367+0000: --- SHUTDOWN diagnostics END ---
