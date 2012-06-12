@@ -1,13 +1,14 @@
-package graphs;
+package graph;
 
-import graphsInterfaces.IEdge;
-import graphsInterfaces.IGraph;
-import graphsInterfaces.IVertex;
+import graphInterfaces.IEdge;
+import graphInterfaces.IGraph;
+import graphInterfaces.IVertex;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
+
+import scala.Int;
 
 /**
  * 
@@ -30,43 +31,39 @@ public class Graph implements IGraph {
 	}
 	
 	@Override
-	public IVertex addVertex(int id) {
+	public IVertex createVertex() {
 
-		// Checks if the id is already used.
-		IVertex vertex = vertices.get(id);
-		if (vertex != null) {
-			
-			// Returns the vertex specified by the id.
-			return vertex;
-		}
+		// Finds an unused id for the vertex. TODO : better id handling mechanism.
+		int id;
+		do {
+			id = (int) (Math.random() * Int.MaxValue());
+		} while (vertices.containsKey(id));
 		
-		// Creates an new vertex and adds to vertices with the id.
-		vertex = new Vertex(id);
+		// Creates a new vertex with the id, adds and returns it.
+		IVertex vertex = new Vertex(id);
 		vertices.put(id, vertex);
 		return vertex;
 	}
 
 	@Override
-	public IEdge createEdge(int id, IVertex start, IVertex end) {
+	public IEdge createEdge(IVertex start, IVertex end) throws IllegalArgumentException {
 
 		// Checks if both vertices are in the graph.
 		if (vertices.containsValue(start) && vertices.containsValue(end)) {
-
-			// Checks if the id is already used.
-			IEdge edge = edges.get(id);
-			if (edge != null) {
-				
-				// Returns the edge specified by the id.
-				return edge;
-			}
 			
-			// Creates an new edge and adds to vertices with the id.
-			edge = new Edge(start, end);
+			// Finds an unused id for the edge. TODO : better id handling mechanism.
+			int id;
+			do {
+				id = (int) (Math.random() * Int.MaxValue());
+			} while (edges.containsKey(id));
+			
+			// Creates a new edge with the id, adds and returns it.
+			IEdge edge = new Edge(id, start, end);
 			edges.put(id, edge);
 			return edge;
 		}
 		else {
-			throw new IllegalArgumentException("Attempting to create an edge between two vertices of which at least one doesn't belong to the graph");
+			throw new IllegalArgumentException("Vertex " + start + " or " + end + " doesn belong to the graph.");
 		}
 	}
 	
@@ -94,12 +91,12 @@ public class Graph implements IGraph {
 	}
 
 	@Override
-	public Set<Entry<Integer, IVertex>> getVertices() {
-		return vertices.entrySet();
+	public Set<IVertex> getVertices() {
+		return (Set<IVertex>) vertices.values();
 	}
 
 	@Override
-	public Set<Entry<Integer, IEdge>> getEdges() {
-		return edges.entrySet();
+	public Set<IEdge> getEdges() {
+		return (Set<IEdge>) edges.values();
 	}
 }

@@ -1,4 +1,5 @@
-package graphsInterfaces;
+package graphInterfaces;
+
 
 /**
  * 
@@ -12,7 +13,7 @@ package graphsInterfaces;
  * @author iz2
  *
  */
-public interface IEdge extends IPropertiesMap<String, String> {
+public interface IEdge extends IPropertyContainer<String, String> {
 	
 	/**
 	 * 
@@ -27,4 +28,14 @@ public interface IEdge extends IPropertiesMap<String, String> {
 	 * 
 	 */
 	public IVertex getEnd();
+	
+
+	/**
+	 * 
+	 * Gets the id of the edge.
+	 * 
+	 * @return - the id of the edge.
+	 * 
+	 */
+	public int getId();
 }

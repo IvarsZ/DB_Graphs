@@ -2,6 +2,8 @@ package test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
@@ -13,10 +15,8 @@ import converters.Neo4jConverter;
 import util.MySqlUtil;
 import util.Neo4jUtil;
 
-import graphs.*;
-import graphsInterfaces.IEdge;
-import graphsInterfaces.IGraph;
-import graphsInterfaces.IVertex;
+import graph.Graph;
+import graphInterfaces.*;
 
 
 public class TestGraphs {
@@ -32,14 +32,14 @@ public class TestGraphs {
 		IGraph graph = new Graph();
 
 		// Adds simple nodes and edges, where both have a name.
+		Map<Integer, IVertex> vertices = new HashMap<Integer, IVertex>(nodeCount);
 		for (int i = 0; i < nodeCount; i++) {
-			IVertex vertex = graph.addVertex(i);
-			vertex.getProperties().put("name", "node" + i);
-			
+			IVertex vertex = graph.createVertex();
+			vertex.setProperty("name", "node" + i);
 		}
 		for (int i = 0; i < edges.length; i++) {
-			IEdge edge = graph.createEdge(i, graph.getVertex(edges[i][0]), graph.getVertex(edges[i][1]));
-			edge.getProperties().put("name", "edge" + i);
+			IEdge edge = graph.createEdge(vertices.get(edges[i][0]), vertices.get(edges[i][1]));
+			edge.setProperty("name", "edge" + i);
 		}
 
 		return graph;
@@ -117,19 +117,21 @@ public class TestGraphs {
 			// Creates the graph used in testing. 
 			int count = 10000;			
 			IGraph graph2 = new Graph();
+			
+			
 
-			// Creates nodes and names the first 10 nodes.
-			for (int i = 0; i < count; i++) {
-				IVertex vertex = graph2.addVertex(i);
-
+			// Creates vertices and names the first 10 vertices, and links two subsequent vertices.
+			IVertex vertexPrev = graph2.createVertex();
+			vertexPrev.setProperty("name", "node" + 0);
+			
+			for (int i = 1; i < count; i++) {
+				IVertex vertexCur = graph2.createVertex();
+				
 				if (i < 10) {
-					vertex.getProperties().put("name", "node" + i);
+					vertexCur.setProperty("name", "node" + i);
 				}
-			}
-
-			// Creates edges to form a linked list - node 1, node 2, etc.
-			for (int i = 0; i < count - 1; i++) {
-				graph2.createEdge(i, graph2.getVertex(i), graph2.getVertex(i+1));
+				
+				graph2.createEdge(vertexPrev, vertexCur);
 			}
 
 			// Writes the graph to the database.

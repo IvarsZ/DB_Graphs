@@ -1,4 +1,4 @@
-package graphsInterfaces;
+package graphInterfaces;
 
 /**
  * 
@@ -8,7 +8,7 @@ package graphsInterfaces;
  * @author iz2
  *
  */
-public interface IVertex extends IPropertiesMap<String, String> {
+public interface IVertex extends IPropertyContainer<String, String> {
 
 	/**
 	 * 

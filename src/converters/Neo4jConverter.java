@@ -1,8 +1,8 @@
 package converters;
 
-import graphsInterfaces.IEdge;
-import graphsInterfaces.IGraph;
-import graphsInterfaces.IVertex;
+import graphInterfaces.IEdge;
+import graphInterfaces.IGraph;
+import graphInterfaces.IVertex;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +45,7 @@ public class Neo4jConverter implements INeo4jConverter  {
 	private static RelationshipType getRelationshipTypeOfEdge(IEdge iEdge) {
 		
 		// Gets the relationship type property.
-		String relationshipType = iEdge.getProperties().get(RELATIONSHIP_TYPE_PROPERTY);
+		String relationshipType = iEdge.getProperty(RELATIONSHIP_TYPE_PROPERTY);
 		
 		// The relationship type is undefined.
 		if (relationshipType == null) {
@@ -61,7 +61,7 @@ public class Neo4jConverter implements INeo4jConverter  {
 		// Attempts to register a root node with the rootName.
 		Node root = Neo4jUtil.registerNeo4jRoot(graphDb, rootName);
 		if (root == null) {
-
+			
 			// Couldn't register the root, so doesn't write anything.
 			return;
 		}
@@ -69,15 +69,15 @@ public class Neo4jConverter implements INeo4jConverter  {
 		// For all vertices in the graph,
 		Transaction tx;
 		Map<Integer, Node> nodes = new HashMap<Integer, Node>(graph.getVertices().size());
-		for (Entry<Integer, IVertex> vertex : graph.getVertices()) {
+		for (IVertex vertex : graph.getVertices()) {
 			
 			tx = graphDb.beginTx();
 			try {
 				
 				// creates a neo4j node with the properties of the vertex,
 				Node node = graphDb.createNode();
-				for (Entry<String, String> property : vertex.getValue().getProperties().entrySet()) {
-					node.setProperty(property.getKey(), property.getValue());
+				for (String key : vertex.getKeys()) {
+					node.setProperty(key, vertex.getProperty(key));
 				}
 				
 				// indexes the node.
@@ -85,7 +85,7 @@ public class Neo4jConverter implements INeo4jConverter  {
 				
 				// points the root to the node and saves the node.
 				root.createRelationshipTo(node, GraphRelationshipTypes.REFERENCE_TO_NODE);
-				nodes.put(vertex.getKey(), node);
+				nodes.put(vertex.getId(), node);
 
 				tx.success();
 			}
@@ -95,19 +95,19 @@ public class Neo4jConverter implements INeo4jConverter  {
 		}
 
 		// For all edges in the graph,
-		for (Entry<Integer, IEdge> edge : graph.getEdges()) {
+		for (IEdge edge : graph.getEdges()) {
 			
 			// Gets the neo4j node of the start and the end vertex.
-			Node start = nodes.get(edge.getValue().getStart().getId());
-			Node end = nodes.get(edge.getValue().getEnd().getId());
+			Node start = nodes.get(edge.getStart().getId());
+			Node end = nodes.get(edge.getEnd().getId());
 
 			tx = graphDb.beginTx();
 			try {
 				
 				// creates a neo4j relationship with the properties of the edge,
-				Relationship relationship = start.createRelationshipTo(end, getRelationshipTypeOfEdge(edge.getValue()));
-				for ( Entry<String, String> property : edge.getValue().getProperties().entrySet()) {
-					relationship.setProperty(property.getKey(), property.getValue());
+				Relationship relationship = start.createRelationshipTo(end, getRelationshipTypeOfEdge(edge));
+				for ( String key : edge.getKeys()) {
+					relationship.setProperty(key, edge.getProperty(key));
 				}
 				
 				tx.success();
@@ -128,11 +128,5 @@ public class Neo4jConverter implements INeo4jConverter  {
 		 * about the references and performance.
 		 * 
 		 */
-	}
-	
-	@Override
-	public IGraph readGraph(GraphDatabaseService graphDb, String rootName) {
-		// TODO : Implement
-		return null;
 	}
 }

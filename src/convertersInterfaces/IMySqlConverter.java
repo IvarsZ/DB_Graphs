@@ -1,6 +1,6 @@
 package convertersInterfaces;
 
-import graphsInterfaces.IGraph;
+import graphInterfaces.IGraph;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -29,18 +29,4 @@ public interface IMySqlConverter {
 	 */
 	public void writeGraph(Connection connection, IGraph graph, String name) throws SQLException;
 	
-	/**
-	 * 
-	 * Reads a graph from a MySql database,
-	 * where the graph to read is represented by the specified name.
-	 * 
-	 * @param connection - to the MySql database.
-	 * @param name - name of the graph to read in the MySql database.
-	 * 
-	 * @return the read graph.
-	 * 
-	 * @throws SQLException
-	 * 
-	 */
-	public IGraph readGraph(Connection connection, String name) throws SQLException;
 }

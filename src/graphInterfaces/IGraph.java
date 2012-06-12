@@ -1,6 +1,5 @@
-package graphsInterfaces;
+package graphInterfaces;
 
-import java.util.Map.Entry;
 import java.util.Set;
 
 
@@ -21,32 +20,27 @@ public interface IGraph {
 
 	/**
 	 * 
-	 * Adds a new vertex to the graph with the specified id,
-	 * if the id is already used by the graph, doesn't add a new vertex,
-	 * just returns the vertex specified by the id.
+	 * Creates a new vertex with no properties in the graph. 
 	 * 
-	 * @param id - integer identifier of the vertex to add.
-	 * 
-	 * @return the newly created vertex or the vertex specified by the id.
+	 * @return - the newly created vertex.
 	 * 
 	 */
-	public IVertex addVertex(int id);
+	public IVertex createVertex() throws IllegalArgumentException;
 	
 
 	/**
-	 * Creates and edge between the start and end vertex, only if both belong to the graph and
-	 * if the specified id of the edge isn't already used by another edge.
 	 * 
-	 * @param id - integer identifier of the edge to create.
+	 * Creates and edge between the start and end vertex, only if both belong to the graph.
+	 * 
 	 * @param start - the start vertex of the edge.
 	 * @param end - the end vertex of the edge.
 	 * 
-	 * @return the created Edge, or the edge specified by the id.
+	 * @return the created Edge, or null if an edge wasn't created.
 	 * 
-	 * @throws IllegalArgumentException
+	 * @throws IllegalArgumentException - if at least one of the vertexes doesn't belong to the graph.
 	 * 
 	 */
-	public IEdge createEdge(int id, IVertex start, IVertex end) throws IllegalArgumentException;
+	public IEdge createEdge(IVertex start, IVertex end) throws IllegalArgumentException;
 	
 
 	/**
@@ -76,19 +70,19 @@ public interface IGraph {
 	 * 
 	 * Gets all vertices in the graph.
 	 * 
-	 * @return set of integer id and vertex pairs.
+	 * @return a set of vertices.
 	 * 
 	 */
-	public Set<Entry<Integer, IVertex>> getVertices();
+	public Set<IVertex> getVertices();
 	
 	/**
 	 *
 	 * Gets all edges in the graph.
 	 * 
-	 * @return set of integer id and edge pairs.
+	 * @return a set of edges.
 	 *
 	 */
-	public Set<Entry<Integer, IEdge>> getEdges();
+	public Set<IEdge> getEdges();
 	
 	/**
 	 * 

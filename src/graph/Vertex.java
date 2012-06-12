@@ -1,6 +1,6 @@
-package graphs;
+package graph;
 
-import graphsInterfaces.IVertex;
+import graphInterfaces.IVertex;
 
 /**
  * 
@@ -9,7 +9,7 @@ import graphsInterfaces.IVertex;
  * @author iz2
  *
  */
-public class Vertex extends PropertiesMap implements IVertex {
+public class Vertex extends PropertyContainer implements IVertex {
 	
 	private int id;
 	

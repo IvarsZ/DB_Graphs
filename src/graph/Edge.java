@@ -1,7 +1,7 @@
-package graphs;
+package graph;
 
-import graphsInterfaces.IEdge;
-import graphsInterfaces.IVertex;
+import graphInterfaces.IEdge;
+import graphInterfaces.IVertex;
 
 /**
  * 
@@ -10,8 +10,9 @@ import graphsInterfaces.IVertex;
  * @author iz2
  *
  */
-public class Edge extends PropertiesMap implements IEdge {
+public class Edge extends PropertyContainer implements IEdge {
 	
+	int id;
 	IVertex start;
 	IVertex end;
 
@@ -25,9 +26,14 @@ public class Edge extends PropertiesMap implements IEdge {
 		return end;
 	}
 
-	public Edge(IVertex start, IVertex end) {
+	public Edge(int id, IVertex start, IVertex end) {
 		super();
 		this.start = start;
 		this.end = end;
+	}
+
+	@Override
+	public int getId() {
+		return id;
 	}
 }
