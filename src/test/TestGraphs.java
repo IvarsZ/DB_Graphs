@@ -36,6 +36,7 @@ public class TestGraphs {
 		for (int i = 0; i < nodeCount; i++) {
 			IVertex vertex = graph.createVertex();
 			vertex.setProperty("name", "node" + i);
+			vertices.put(i, vertex);
 		}
 		for (int i = 0; i < edges.length; i++) {
 			IEdge edge = graph.createEdge(vertices.get(edges[i][0]), vertices.get(edges[i][1]));
@@ -117,8 +118,6 @@ public class TestGraphs {
 			// Creates the graph used in testing. 
 			int count = 10000;			
 			IGraph graph2 = new Graph();
-			
-			
 
 			// Creates vertices and names the first 10 vertices, and links two subsequent vertices.
 			IVertex vertexPrev = graph2.createVertex();
@@ -132,6 +131,7 @@ public class TestGraphs {
 				}
 				
 				graph2.createEdge(vertexPrev, vertexCur);
+				vertexPrev = vertexCur;
 			}
 
 			// Writes the graph to the database.

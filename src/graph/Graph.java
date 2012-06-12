@@ -5,6 +5,7 @@ import graphInterfaces.IGraph;
 import graphInterfaces.IVertex;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -63,7 +64,7 @@ public class Graph implements IGraph {
 			return edge;
 		}
 		else {
-			throw new IllegalArgumentException("Vertex " + start + " or " + end + " doesn belong to the graph.");
+			throw new IllegalArgumentException("Vertex " + start + " or " + end + " doesn't belong to the graph.");
 		}
 	}
 	
@@ -92,11 +93,15 @@ public class Graph implements IGraph {
 
 	@Override
 	public Set<IVertex> getVertices() {
-		return (Set<IVertex>) vertices.values();
+		Set<IVertex> vertices = new HashSet<IVertex>();
+		vertices.addAll(this.vertices.values());
+		return vertices;
 	}
 
 	@Override
 	public Set<IEdge> getEdges() {
-		return (Set<IEdge>) edges.values();
+		Set<IEdge> edges = new HashSet<IEdge>();
+		edges.addAll(this.edges.values());
+		return edges;
 	}
 }

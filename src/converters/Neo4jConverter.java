@@ -6,7 +6,6 @@ import graphInterfaces.IVertex;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.neo4j.graphdb.DynamicRelationshipType;
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -16,8 +15,8 @@ import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.Transaction;
 
 import util.Neo4jUtil;
-import convertersInterfaces.INeo4jIndexer;
 import convertersInterfaces.INeo4jConverter;
+import convertersInterfaces.INeo4jIndexer;
 
 public class Neo4jConverter implements INeo4jConverter  {
 	
