@@ -93,6 +93,7 @@ public class Graph implements IGraph {
 
 	@Override
 	public Set<IVertex> getVertices() {
+		
 		Set<IVertex> vertices = new HashSet<IVertex>();
 		vertices.addAll(this.vertices.values());
 		return vertices;
