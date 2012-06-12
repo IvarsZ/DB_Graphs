@@ -2,8 +2,20 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/NEO4J"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="//iz2.home.cs.st-andrews.ac.uk/iz2/Graph databases/mysql-connector-java-5.1.20/mysql-connector-java-5.1.20-bin.jar"/>
+	<classpathentry kind="lib" path="Neo4jLibraries/geronimo-jta_1.1_spec-1.1.1.jar"/>
+	<classpathentry kind="lib" path="Neo4jLibraries/lucene-core-3.5.0.jar"/>
+	<classpathentry kind="lib" path="Neo4jLibraries/neo4j-cypher-1.8.M03.jar"/>
+	<classpathentry kind="lib" path="Neo4jLibraries/neo4j-graph-algo-1.8.M03.jar"/>
+	<classpathentry kind="lib" path="Neo4jLibraries/neo4j-graph-matching-1.8.M03.jar"/>
+	<classpathentry kind="lib" path="Neo4jLibraries/neo4j-jmx-1.8.M03.jar"/>
+	<classpathentry kind="lib" path="Neo4jLibraries/neo4j-kernel-1.8.M03.jar"/>
+	<classpathentry kind="lib" path="Neo4jLibraries/neo4j-lucene-index-1.8.M03.jar"/>
+	<classpathentry kind="lib" path="Neo4jLibraries/neo4j-shell-1.8.M03.jar"/>
+	<classpathentry kind="lib" path="Neo4jLibraries/neo4j-udc-1.8.M03.jar"/>
+	<classpathentry kind="lib" path="Neo4jLibraries/org.apache.servicemix.bundles.jline-0.9.94_1.jar"/>
+	<classpathentry kind="lib" path="Neo4jLibraries/scala-library-2.9.1-1.jar"/>
+	<classpathentry kind="lib" path="Neo4jLibraries/server-api-1.8.M03.jar"/>
+	<classpathentry kind="lib" path="MyConnector/mysql-connector-java-5.1.20-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
