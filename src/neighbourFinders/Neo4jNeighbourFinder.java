@@ -1,7 +1,5 @@
 package neighbourFinders;
 
-import graphs.PropertyGraph;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +11,8 @@ import org.neo4j.graphdb.traversal.Evaluator;
 import org.neo4j.graphdb.traversal.Evaluators;
 import org.neo4j.graphdb.traversal.TraversalDescription;
 import org.neo4j.kernel.Traversal;
+
+import converters.Neo4jConverter;
 
 public class Neo4jNeighbourFinder {
 
@@ -39,7 +39,7 @@ public class Neo4jNeighbourFinder {
 	}
 	
 	private boolean isReference(Relationship relationship) {
-		return relationship.isType(PropertyGraph.GraphRelationshipTypes.REFERENCE_TO_NODE);
+		return relationship.isType(Neo4jConverter.GraphRelationshipTypes.REFERENCE_TO_NODE);
 	}
 
 	private class PruneNodeReferences implements Evaluator {

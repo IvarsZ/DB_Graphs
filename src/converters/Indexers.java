@@ -3,6 +3,8 @@ package converters;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.index.Index;
 
+import convertersInterfaces.INeo4jIndexer;
+
 public class Indexers {
 	
 	/**
@@ -20,7 +22,6 @@ public class Indexers {
 		};
 	}
 	
-
 	/**
 	 * Creates and returns an indexer that indexes the specified property in the specified index.
 	 * 

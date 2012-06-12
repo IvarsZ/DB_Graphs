@@ -6,12 +6,15 @@ import java.sql.SQLException;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 
-import convertersInterfaces.Indexers;
+import converters.Indexers;
+import converters.MySqlConverter;
+import converters.Neo4jConverter;
 
 import util.MySqlUtil;
 import util.Neo4jUtil;
 
 import graphs.*;
+import graphsInterfaces.IEdge;
 import graphsInterfaces.IGraph;
 import graphsInterfaces.IVertex;
 
@@ -26,17 +29,17 @@ public class TestGraphs {
 
 	private static IGraph createSimpleGraph(int nodeCount, int[][] edges) {
 
-		IGraph graph = new PropertyGraph();
+		IGraph graph = new Graph();
 
 		// Adds simple nodes and edges, where both have a name.
 		for (int i = 0; i < nodeCount; i++) {
-			IVertex vertex = new PropertyVertex();
+			IVertex vertex = graph.addVertex(i);
 			vertex.getProperties().put("name", "node" + i);
-			graph.addVertex(vertex);
+			
 		}
 		for (int i = 0; i < edges.length; i++) {
-			graph.createEdge(graph.getVertex(edges[i][0]), graph.getVertex(edges[i][1]));
-			graph.getEdge(i).getProperties().put("name", "edge" + i);
+			IEdge edge = graph.createEdge(i, graph.getVertex(edges[i][0]), graph.getVertex(edges[i][1]));
+			edge.getProperties().put("name", "edge" + i);
 		}
 
 		return graph;
@@ -56,7 +59,8 @@ public class TestGraphs {
 			IGraph graph1 = createTestGraph1();
 
 			// Writes the graph to the database.
-			graph1.writeToNeo4j(graphDb, graph1Name, Indexers.indexNodeProperty(graph1IndexName, "name"));
+			Neo4jConverter neo4jConverter = new Neo4jConverter();
+			neo4jConverter.writeGraph(graphDb, graph1, graph1Name, Indexers.indexNodeProperty(graph1IndexName, "name"));
 		}
 	}
 
@@ -73,7 +77,8 @@ public class TestGraphs {
 			IGraph graph1 = createTestGraph1();
 
 			// Writes the graph to the database.
-			graph1.writeToMySql(connection, graph1Name);
+			MySqlConverter mySqlConverter = new MySqlConverter();
+			mySqlConverter.writeGraph(connection, graph1, graph1Name);
 		}
 	}
 
@@ -86,7 +91,8 @@ public class TestGraphs {
 		IGraph graph1 = createTestGraph1();
 
 		// Writes the graph to the database.
-		graph1.writeToMySql(connection, graph1Name);
+		MySqlConverter mySqlConverter = new MySqlConverter();
+		mySqlConverter.writeGraph(connection, graph1, graph1Name);
 		
 		return graph1;
 	}
@@ -110,25 +116,25 @@ public class TestGraphs {
 
 			// Creates the graph used in testing. 
 			int count = 10000;			
-			IGraph graph2 = new PropertyGraph();
+			IGraph graph2 = new Graph();
 
 			// Creates nodes and names the first 10 nodes.
 			for (int i = 0; i < count; i++) {
-				IVertex vertex = new PropertyVertex();
-				graph2.addVertex(vertex);
+				IVertex vertex = graph2.addVertex(i);
 
 				if (i < 10) {
-					graph2.getVertex(i).getProperties().put("name", "node" + i);
+					vertex.getProperties().put("name", "node" + i);
 				}
 			}
 
 			// Creates edges to form a linked list - node 1, node 2, etc.
 			for (int i = 0; i < count - 1; i++) {
-				graph2.createEdge(graph2.getVertex(i), graph2.getVertex(i+1));
+				graph2.createEdge(i, graph2.getVertex(i), graph2.getVertex(i+1));
 			}
 
 			// Writes the graph to the database.
-			graph2.writeToNeo4j(graphDb, graph2Name, Indexers.indexNodeProperty(graph2IndexName, "name"));
+			Neo4jConverter neo4jConverter = new Neo4jConverter();
+			neo4jConverter.writeGraph(graphDb, graph2, graph2Name, Indexers.indexNodeProperty(graph2IndexName, "name"));
 		}
 	}
 
