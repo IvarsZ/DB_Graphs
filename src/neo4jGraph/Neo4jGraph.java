@@ -1,8 +1,11 @@
 package neo4jGraph;
 
-import java.util.Set;
+import java.util.Iterator;
 
 import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
+import org.neo4j.tooling.GlobalGraphOperations;
 
 import graphInterfaces.IEdge;
 import graphInterfaces.IGraph;
@@ -39,15 +42,64 @@ public class Neo4jGraph implements IGraph {
 	}
 
 	@Override
-	public Set<IVertex> getVertices() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<IVertex> getVertices() {
+		return new VertexIterator();
+	}
+	
+	private class VertexIterator implements Iterator<IVertex> {
+		
+		Iterator<Node> nodeIterator;
+		
+		public VertexIterator() {
+			nodeIterator = GlobalGraphOperations.at(graphDb).getAllNodes().iterator();
+		}
+
+		@Override
+		public boolean hasNext() {
+			return nodeIterator.hasNext();
+		}
+
+		@Override
+		public IVertex next() {
+			return new Neo4jVertex(nodeIterator.next());
+			
+		}
+
+		@Override
+		public void remove() {
+			nodeIterator.remove();
+		}
+		
 	}
 
 	@Override
-	public Set<IEdge> getEdges() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<IEdge> getEdges() {
+		return new EdgeIterator();
+	}
+	
+	private class EdgeIterator implements Iterator<IEdge> {
+		
+		Iterator<Relationship> edgeIterator;
+		
+		public EdgeIterator() {
+			edgeIterator = GlobalGraphOperations.at(graphDb).getAllRelationships().iterator();
+		}
+
+		@Override
+		public boolean hasNext() {
+			return edgeIterator.hasNext();
+		}
+
+		@Override
+		public IEdge next() {
+			return new Neo4jEdge(edgeIterator.next());
+		}
+
+		@Override
+		public void remove() {
+			edgeIterator.remove();
+		}
+		
 	}
 
 	@Override
