@@ -5,6 +5,7 @@ import java.util.Iterator;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.tooling.GlobalGraphOperations;
 
 import graphInterfaces.IEdge;
@@ -12,6 +13,10 @@ import graphInterfaces.IGraph;
 import graphInterfaces.IVertex;
 
 public class Neo4jGraph implements IGraph {
+	
+	protected static enum RelTypes implements RelationshipType {
+		UNDEFINED
+	}
 	
 	private GraphDatabaseService graphDb;
 	
@@ -27,8 +32,30 @@ public class Neo4jGraph implements IGraph {
 	public IEdge createEdge(IVertex start, IVertex end)
 			throws IllegalArgumentException {
 		
-		// TODO: solve incompatible vertices problem (not in the graph), node equality problematic in embedded db's.
-		return null;
+		// If both start and end are from this graph,
+		if (belongToGraph(start) && belongToGraph(end)) {
+			
+			// Creates a new relationship, and returns its edge.
+			Node startNode = ((Neo4jVertex) start).getNode();
+			Node endNode = ((Neo4jVertex) end).getNode();
+			Relationship edge = startNode.createRelationshipTo(endNode, RelTypes.UNDEFINED);
+			return new Neo4jEdge(edge);
+		}
+		
+		throw new IllegalArgumentException("Vertex " + start + " or " + end + " doesn't belong the the graph");
+	}
+
+	private boolean belongToGraph(IVertex vertex) {
+		
+		// If it is Neo4j vertex, 
+		if (vertex instanceof Neo4jVertex) {
+			
+			// and belongs to the same graphDb, then the it is from this graph
+			Node node = ((Neo4jVertex) vertex).getNode();
+			return node.getGraphDatabase().equals(graphDb);
+		}
+		
+		return false;
 	}
 
 	@Override
@@ -104,7 +131,6 @@ public class Neo4jGraph implements IGraph {
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
 		
 	}
 
