@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.NotFoundException;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.Transaction;
@@ -32,15 +33,18 @@ public class Neo4jGraph implements IGraph {
 	 */
 	public Neo4jGraph(String graphDbPath) {
 		graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(graphDbPath);
+		deleteReferenceNode();
+		
+		//System.out.println(graphDb.getReferenceNode().getId());
 		this.graphDbPath = graphDbPath;
 	}
 
 	@Override
 	public IVertex createVertex() {
 		
-		// TODO : what happens in error cases.
-		Transaction tx = graphDb.beginTx();
+		// TODO : what happens in error cases, and same for edges.
 		
+		Transaction tx = graphDb.beginTx();
 		try {
 			Node node = graphDb.createNode();
 			tx.success();
@@ -60,8 +64,16 @@ public class Neo4jGraph implements IGraph {
 			// Creates a new relationship, and returns its edge.
 			Node startNode = ((Neo4jVertex) start).getNode();
 			Node endNode = ((Neo4jVertex) end).getNode();
-			Relationship edge = startNode.createRelationshipTo(endNode, RelTypes.UNDEFINED);
-			return new Neo4jEdge(edge);
+			
+			
+			Transaction tx = graphDb.beginTx();
+			try {
+				Relationship edge = startNode.createRelationshipTo(endNode, RelTypes.UNDEFINED);
+				tx.success();
+				return new Neo4jEdge(edge);
+			} finally {
+				tx.finish();
+			}
 		}
 		
 		throw new IllegalArgumentException("Vertex " + start + " or " + end + " doesn't belong the the graph");
@@ -91,10 +103,13 @@ public class Neo4jGraph implements IGraph {
 	}
 
 	@Override
+	public void close() {
+		graphDb.shutdown();
+	}
+	
+	@Override
 	public Iterable<IVertex> getVertices() {
-		
-		// FIXME : gets the reference node too.
-		
+			
 		return new Iterable<IVertex>() {
 
 			@Override
@@ -177,6 +192,7 @@ public class Neo4jGraph implements IGraph {
 		
 		// Recreates the database.
 		graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(graphDbPath);
+		deleteReferenceNode();
 	}
 	
 	private static void deleteFileOrDirectory( final File file ) {
@@ -188,5 +204,21 @@ public class Neo4jGraph implements IGraph {
 	        }
 	        file.delete();
 	    }
+	}
+	
+	/**
+	 * Deletes the reference node (as not used).
+	 */
+	protected void deleteReferenceNode() {
+		
+		Transaction tx = graphDb.beginTx();
+		try {
+			graphDb.getReferenceNode().delete();
+			tx.success();
+		} catch (NotFoundException e) {
+			
+		} finally {
+			tx.finish();
+		}
 	}
 }

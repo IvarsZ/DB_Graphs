@@ -1,8 +1,8 @@
 package neo4jGraphTests;
 
-import neo4jGraph.Neo4jGraph;
 import graphInterfaces.IGraph;
 import graphTests.GraphTest;
+import neo4jGraph.Neo4jGraph;
 
 public class Neo4jGraphTest extends GraphTest {
 	
@@ -16,5 +16,4 @@ public class Neo4jGraphTest extends GraphTest {
 		graph.clear();
 		return graph;
 	}
-
 }

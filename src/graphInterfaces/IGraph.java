@@ -91,4 +91,9 @@ public interface IGraph {
 	 * 
 	 */
 	public void clear();
+	
+	/**
+	 * Properly closes the graph. TODO : create persistence interface and move there.
+	 */
+	public void close();
 }

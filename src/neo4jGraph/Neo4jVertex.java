@@ -6,31 +6,31 @@ import org.neo4j.graphdb.Node;
 
 public class Neo4jVertex implements IVertex {
 	
-	private Node node;
+	private Node vertex;
 	
 	protected Neo4jVertex(Node node) {
-		this.node = node;
+		this.vertex = node;
 	}
 
 	@Override
 	public void setProperty(String key, String value) {
-		node.setProperty(key, value);
+		vertex.setProperty(key, value);
 	}
 
 	@Override
 	public Iterable<String> getKeys() {
-		return node.getPropertyKeys();
+		return vertex.getPropertyKeys();
 	}
 
 	@Override
 	public String getProperty(String key) {
-		return (String) node.getProperty(key);
+		return (String) vertex.getProperty(key);
 	}
 
 	@Override
 	public long getId() {
 		
-		return node.getId();
+		return vertex.getId();
 	}
 	
 	@Override
@@ -38,17 +38,16 @@ public class Neo4jVertex implements IVertex {
 		
 		// Two Neo4jVertices are equal, if their nodes have equal id's and belong to the same database.
 		if (obj instanceof Neo4jVertex) {
-			Node node = ((Neo4jVertex) obj).node;
+			Node vertex = ((Neo4jVertex) obj).vertex;
 			
-			// TODO : test graph db equality.
-			return this.node.getId() == node.getId() && this.node.getGraphDatabase().equals(node.getGraphDatabase());
+			return this.vertex.getId() == vertex.getId() && this.vertex.getGraphDatabase().equals(vertex.getGraphDatabase());
 		}
 		
 		return false;
 	}
 	
 	protected Node getNode() {
-		return node;
+		return vertex;
 	}
 
 }

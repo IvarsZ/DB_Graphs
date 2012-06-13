@@ -5,12 +5,13 @@ import graphInterfaces.IEdge;
 import graphInterfaces.IGraph;
 import graphInterfaces.IVertex;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public abstract class GraphTest {
 
-	private IGraph graph;
+	protected IGraph graph;
 
 	public abstract IGraph createEmptyGraph();
 
@@ -18,16 +19,21 @@ public abstract class GraphTest {
 	public void setup(){
 		graph = createEmptyGraph();
 	}
+	
+	@After
+	public void cleanup() {
+		graph.close();
+	}
 
 	@Test
-	public void createGraph() {
+	public void createEmptyGraphTest() {
 
 		// TODO : better test?
 		
 		// Checks that the graph is empty.
 		for (IVertex v : graph.getVertices()) {
 			System.out.println(v.getId());
-			//fail("empty graph has a vertex " + v);
+			fail("empty graph has a vertex " + v + " " + v.getId());
 		}
 
 		// Checks that the graph is empty.
