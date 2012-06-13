@@ -7,6 +7,7 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.RelationshipType;
+import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.tooling.GlobalGraphOperations;
 
@@ -35,9 +36,18 @@ public class Neo4jGraph implements IGraph {
 	}
 
 	@Override
-	public IVertex createVertex() throws IllegalArgumentException {
+	public IVertex createVertex() {
 		
-		return new Neo4jVertex(graphDb.createNode());
+		// TODO : what happens in error cases.
+		Transaction tx = graphDb.beginTx();
+		
+		try {
+			Node node = graphDb.createNode();
+			tx.success();
+			return new Neo4jVertex(node);
+		} finally {
+			tx.finish();
+		}
 	}
 
 	@Override
@@ -71,12 +81,12 @@ public class Neo4jGraph implements IGraph {
 	}
 
 	@Override
-	public IVertex getVertex(int id) {
+	public IVertex getVertex(long id) {
 		return new Neo4jVertex(graphDb.getNodeById(id));
 	}
 
 	@Override
-	public IEdge getEdge(int id) {
+	public IEdge getEdge(long id) {
 		return new Neo4jEdge(graphDb.getRelationshipById(id));
 	}
 
@@ -176,5 +186,4 @@ public class Neo4jGraph implements IGraph {
 	        file.delete();
 	    }
 	}
-
 }

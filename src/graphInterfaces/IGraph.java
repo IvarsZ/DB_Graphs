@@ -25,7 +25,7 @@ public interface IGraph {
 	 * @return - the newly created vertex.
 	 * 
 	 */
-	public IVertex createVertex() throws IllegalArgumentException;
+	public IVertex createVertex();
 	
 
 	/**
@@ -52,7 +52,7 @@ public interface IGraph {
 	 * @return the vertex with the index, or null if there is no vertex with the index.
 	 * 
 	 */
-	public IVertex getVertex(int id);
+	public IVertex getVertex(long id);
 
 	/**
 	 * 
@@ -63,7 +63,8 @@ public interface IGraph {
 	 * @return the vertex with the index, or null if there is no vertex with the index.
 	 * 
 	 */
-	public IEdge getEdge(int id);
+	public IEdge getEdge(long id);
+	
 	
 
 	/**

@@ -69,12 +69,12 @@ public class Graph implements IGraph {
 	}
 	
 	@Override
-	public IVertex getVertex(int index) {
+	public IVertex getVertex(long index) {
 		return vertices.get(index);
 	}
 	
 	@Override
-	public IEdge getEdge(int i) {
+	public IEdge getEdge(long i) {
 		return edges.get(i);
 	}
 	
