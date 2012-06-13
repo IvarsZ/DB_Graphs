@@ -11,14 +11,14 @@ import graphInterfaces.IVertex;
  */
 public class Vertex extends PropertyContainer implements IVertex {
 	
-	private int id;
+	private long id;
 	
-	public Vertex(int id) {
+	public Vertex(long id) {
 		this.id = id;
 	}
 	
 	@Override
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 }

@@ -92,7 +92,7 @@ public class Graph implements IGraph {
 	}
 
 	@Override
-	public Set<IVertex> getVertices() {
+	public Iterable<IVertex> getVertices() {
 		
 		Set<IVertex> vertices = new HashSet<IVertex>();
 		vertices.addAll(this.vertices.values());
@@ -100,7 +100,7 @@ public class Graph implements IGraph {
 	}
 
 	@Override
-	public Set<IEdge> getEdges() {
+	public Iterable<IEdge> getEdges() {
 		Set<IEdge> edges = new HashSet<IEdge>();
 		edges.addAll(this.edges.values());
 		return edges;

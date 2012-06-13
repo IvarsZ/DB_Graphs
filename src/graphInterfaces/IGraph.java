@@ -1,6 +1,6 @@
 package graphInterfaces;
 
-import java.util.Set;
+
 
 
 /**
@@ -73,7 +73,7 @@ public interface IGraph {
 	 * @return a set of vertices.
 	 * 
 	 */
-	public Set<IVertex> getVertices();
+	public Iterable<IVertex> getVertices();
 	
 	/**
 	 *
@@ -82,7 +82,7 @@ public interface IGraph {
 	 * @return a set of edges.
 	 *
 	 */
-	public Set<IEdge> getEdges();
+	public Iterable<IEdge> getEdges();
 	
 	/**
 	 * 

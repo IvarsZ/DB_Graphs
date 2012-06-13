@@ -6,7 +6,7 @@ import org.neo4j.graphdb.Node;
 
 public class Neo4jVertex implements IVertex {
 	
-	Node node;
+	private Node node;
 	
 	protected Neo4jVertex(Node node) {
 		this.node = node;
@@ -45,6 +45,10 @@ public class Neo4jVertex implements IVertex {
 		}
 		
 		return false;
+	}
+	
+	protected Node getNode() {
+		return node;
 	}
 
 }

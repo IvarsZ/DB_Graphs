@@ -12,7 +12,7 @@ import graphInterfaces.IVertex;
  */
 public class Edge extends PropertyContainer implements IEdge {
 	
-	int id;
+	long id;
 	IVertex start;
 	IVertex end;
 
@@ -26,7 +26,7 @@ public class Edge extends PropertyContainer implements IEdge {
 		return end;
 	}
 
-	public Edge(int id, IVertex start, IVertex end) {
+	public Edge(long id, IVertex start, IVertex end) {
 		super();
 		this.start = start;
 		this.end = end;

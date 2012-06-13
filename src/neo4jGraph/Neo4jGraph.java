@@ -69,8 +69,15 @@ public class Neo4jGraph implements IGraph {
 	}
 
 	@Override
-	public Iterator<IVertex> getVertices() {
-		return new VertexIterator();
+	public Iterable<IVertex> getVertices() {
+		return new Iterable<IVertex>() {
+
+			@Override
+			public Iterator<IVertex> iterator() {
+				return new VertexIterator();
+			}
+			
+		};
 	}
 	
 	private class VertexIterator implements Iterator<IVertex> {
@@ -100,8 +107,15 @@ public class Neo4jGraph implements IGraph {
 	}
 
 	@Override
-	public Iterator<IEdge> getEdges() {
-		return new EdgeIterator();
+	public Iterable<IEdge> getEdges() {
+		return new Iterable<IEdge>() {
+
+			@Override
+			public Iterator<IEdge> iterator() {
+				return new EdgeIterator();
+			}
+			
+		};
 	}
 	
 	private class EdgeIterator implements Iterator<IEdge> {

@@ -67,7 +67,7 @@ public class Neo4jConverter implements INeo4jConverter  {
 
 		// For all vertices in the graph,
 		Transaction tx;
-		Map<Integer, Node> nodes = new HashMap<Integer, Node>(graph.getVertices().size());
+		Map<Long, Node> nodes = new HashMap<Long, Node>();
 		for (IVertex vertex : graph.getVertices()) {
 			
 			tx = graphDb.beginTx();

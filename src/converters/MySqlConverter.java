@@ -78,8 +78,8 @@ public class MySqlConverter implements IMySqlConverter {
 		for (IEdge edge : graph.getEdges()) {
 
 			// Gets the id of the start and the end node.
-			int start = edge.getStart().getId();
-			int end = edge.getEnd().getId();
+			long start = edge.getStart().getId();
+			long end = edge.getEnd().getId();
 
 			// Writes the edge,
 			
