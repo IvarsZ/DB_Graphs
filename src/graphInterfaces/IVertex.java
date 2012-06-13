@@ -17,5 +17,5 @@ public interface IVertex extends IPropertyContainer<String, String> {
 	 * @return the id of the vertex.
 	 * 
 	 */
-	public int getId();
+	public long getId();
 }

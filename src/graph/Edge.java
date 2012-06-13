@@ -33,7 +33,7 @@ public class Edge extends PropertyContainer implements IEdge {
 	}
 
 	@Override
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 }

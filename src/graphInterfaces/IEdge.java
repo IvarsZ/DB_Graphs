@@ -37,5 +37,5 @@ public interface IEdge extends IPropertyContainer<String, String> {
 	 * @return - the id of the edge.
 	 * 
 	 */
-	public int getId();
+	public long getId();
 }

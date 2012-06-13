@@ -25,6 +25,8 @@ public class MySqlConverter implements IMySqlConverter {
 
 	@Override
 	public void writeGraph(Connection connection, IGraph graph, String name) throws SQLException {
+		
+		// TODO : fix long ids.
 
 		// Attempts to register the graphs name in the database.
 		if (MySqlUtil.registerMySqlName(connection, name) == false) {
@@ -80,6 +82,7 @@ public class MySqlConverter implements IMySqlConverter {
 			int end = edge.getEnd().getId();
 
 			// Writes the edge,
+			
 			insertEdge.setInt(1, edge.getId());
 			insertEdge.setInt(2, start);
 			insertEdge.setInt(3, end);
