@@ -1,5 +1,6 @@
 package neo4jGraph;
 
+import java.io.File;
 import java.util.Iterator;
 
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -18,9 +19,9 @@ public class Neo4jGraph implements IGraph {
 	protected static enum RelTypes implements RelationshipType {
 		UNDEFINED
 	}
-	
+		
 	private GraphDatabaseService graphDb;
-	
+	private String graphDbPath;
 	
 	/**
 	 * 
@@ -28,8 +29,9 @@ public class Neo4jGraph implements IGraph {
 	 * 
 	 * @param path - path to the the Neo4j database.
 	 */
-	public Neo4jGraph(String path) {
-		graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(path);
+	public Neo4jGraph(String graphDbPath) {
+		graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(graphDbPath);
+		this.graphDbPath = graphDbPath;
 	}
 
 	@Override
@@ -97,7 +99,7 @@ public class Neo4jGraph implements IGraph {
 		public VertexIterator() {
 			nodeIterator = GlobalGraphOperations.at(graphDb).getAllNodes().iterator();
 		}
-
+		
 		@Override
 		public boolean hasNext() {
 			return nodeIterator.hasNext();
@@ -156,6 +158,23 @@ public class Neo4jGraph implements IGraph {
 	@Override
 	public void clear() {
 		
+		// Closes the database, deletes all its files.
+		graphDb.shutdown();
+		deleteFileOrDirectory(new File(graphDbPath));
+		
+		// Recreates the database.
+		graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(graphDbPath);
+	}
+	
+	private static void deleteFileOrDirectory( final File file ) {
+	    if ( file.exists() ) {
+	        if ( file.isDirectory() ) {
+	            for ( File child : file.listFiles() ) {
+	                deleteFileOrDirectory( child );
+	            }
+	        }
+	        file.delete();
+	    }
 	}
 
 }
