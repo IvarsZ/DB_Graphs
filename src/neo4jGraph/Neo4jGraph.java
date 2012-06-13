@@ -92,6 +92,9 @@ public class Neo4jGraph implements IGraph {
 
 	@Override
 	public Iterable<IVertex> getVertices() {
+		
+		// FIXME : gets the reference node too.
+		
 		return new Iterable<IVertex>() {
 
 			@Override
