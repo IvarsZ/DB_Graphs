@@ -32,5 +32,19 @@ public class Neo4jVertex implements IVertex {
 		
 		return node.getId();
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		// Two Neo4jVertices are equal, if their nodes have equal id's and belong to the same database.
+		if (obj instanceof Neo4jVertex) {
+			Node node = ((Neo4jVertex) obj).node;
+			
+			// TODO : test graph db equality.
+			return this.node.getId() == node.getId() && this.node.getGraphDatabase().equals(node.getGraphDatabase());
+		}
+		
+		return false;
+	}
 
 }
