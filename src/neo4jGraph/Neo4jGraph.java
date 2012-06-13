@@ -6,6 +6,7 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.RelationshipType;
+import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.tooling.GlobalGraphOperations;
 
 import graphInterfaces.IEdge;
@@ -20,7 +21,16 @@ public class Neo4jGraph implements IGraph {
 	
 	private GraphDatabaseService graphDb;
 	
-	// TODO : constructor.
+	
+	/**
+	 * 
+	 * Creates a new Neo4j graph, by creating a new embedded database or opening existing one.
+	 * 
+	 * @param path - path to the the Neo4j database.
+	 */
+	public Neo4jGraph(String path) {
+		graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(path);
+	}
 
 	@Override
 	public IVertex createVertex() throws IllegalArgumentException {

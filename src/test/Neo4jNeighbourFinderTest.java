@@ -19,7 +19,6 @@ public class Neo4jNeighbourFinderTest {
 
 	private static final String DB_PATH = "neo4j-neighbour-finder-test-db";
 
-
 	private static GraphDatabaseService graphDb;
 	private static Neo4jNeighbourFinder neo4jNeighbourFinder;
 
