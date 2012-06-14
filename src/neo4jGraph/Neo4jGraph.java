@@ -42,7 +42,7 @@ public class Neo4jGraph implements IGraph {
 	@Override
 	public IVertex createVertex() {
 		
-		// TODO : what happens in error cases, and same for edges.
+		// TODO : what happens in neo4j error cases, and same for edges.
 		
 		Transaction tx = graphDb.beginTx();
 		try {
