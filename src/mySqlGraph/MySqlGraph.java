@@ -26,11 +26,7 @@ public class MySqlGraph implements IGraph {
 		this.graphName = graphName;
 
 		// Connects to the database.
-		try {
-			mySql = connector.connect();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		mySql = connector.connect();
 
 		statements = new MySqlStatementPrecompiler(this);
 
@@ -42,22 +38,22 @@ public class MySqlGraph implements IGraph {
 	public IVertex createVertex() {
 
 		try {
-			
+
 			// Creates the vertex in MySql database.
 			PreparedStatement createVertex = getStatements().getCreateVertex();
 			createVertex.executeUpdate();
-			
+
 			// Gets its id and creates MySqlVertex.
 			ResultSet rs = createVertex.getGeneratedKeys();
 			if (rs.next()){
-	            long id = rs.getInt(1);
-	            return new MySqlVertex(id, this);
-	        }
-	        rs.close();
+				long id = rs.getInt(1);
+				return new MySqlVertex(id, this);
+			}
+			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
 
@@ -74,21 +70,21 @@ public class MySqlGraph implements IGraph {
 				createEdge.setLong(1, start.getId());
 				createEdge.setLong(2, end.getId());
 				createEdge.executeUpdate();
-				
-				
+
+
 				// Gets its id and creates MySqlEdge.
 				ResultSet rs = createEdge.getGeneratedKeys();
 				if (rs.next()){
-		            long id = rs.getInt(1);
-		            return new MySqlEdge(id, (MySqlVertex) start, (MySqlVertex) end, this);
-		        }
-		        rs.close();
-				
-				
+					long id = rs.getInt(1);
+					return new MySqlEdge(id, (MySqlVertex) start, (MySqlVertex) end, this);
+				}
+				rs.close();
+
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
+
 			return null;
 		}
 
@@ -180,7 +176,7 @@ public class MySqlGraph implements IGraph {
 		public boolean hasNext() {
 
 			try {
-				
+
 				boolean hasNext = vertexIterator.next();
 				if(hasNext) {
 
@@ -204,7 +200,7 @@ public class MySqlGraph implements IGraph {
 				if (vertexIterator.next()) {
 					new MySqlVertex(vertexIterator.getLong(1), MySqlGraph.this);
 				}
-				
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -239,14 +235,14 @@ public class MySqlGraph implements IGraph {
 		ResultSet edgeIterator;
 
 		public EdgeIterator() {
-			
-			
+
+
 			try {
-				
+
 				// Query all edges.
 				PreparedStatement st = getStatements().getGetAllEdges();
 				edgeIterator = st.executeQuery();
-				
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -255,9 +251,9 @@ public class MySqlGraph implements IGraph {
 		@Override
 		public boolean hasNext() {
 
-			
+
 			try {
-				
+
 				boolean hasNext = edgeIterator.next();
 				if(hasNext) {
 
@@ -266,7 +262,7 @@ public class MySqlGraph implements IGraph {
 				}
 
 				return hasNext;
-				
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 				return false;
@@ -276,9 +272,9 @@ public class MySqlGraph implements IGraph {
 		@Override
 		public IEdge next() {
 
-			
+
 			try {
-				
+
 				// If there is a next edge creates and returns it.
 				if (edgeIterator.next()) {
 
@@ -373,7 +369,7 @@ public class MySqlGraph implements IGraph {
 		PreparedStatement st = getStatements().getGetVertex();
 		st.setLong(1, id);
 		ResultSet rs = st.executeQuery();
-		
-		return rs.next();
+
+		return rs.next(); 
 	}
 }

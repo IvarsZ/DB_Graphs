@@ -108,7 +108,6 @@ public class Graph implements IGraph {
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
-		
+		// TODO remove.
 	}
 }

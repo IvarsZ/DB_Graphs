@@ -28,8 +28,6 @@ public abstract class GraphTest {
 	@Test
 	public void createEmptyGraphTest() {
 
-		// TODO : better test?
-		
 		// Checks that the graph is empty.
 		for (IVertex v : graph.getVertices()) {
 			System.out.println(v.getId());
@@ -48,7 +46,7 @@ public abstract class GraphTest {
 		// Creates a vertex.
 		IVertex newVertex = graph.createVertex();
 
-		// Checks it can be retrieved by id, and
+		// Checks it can be retrieved by id.
 		assertTrue(graph.getVertex(newVertex.getId()).equals(newVertex));
 		
 		// TODO: test something else?
@@ -60,9 +58,9 @@ public abstract class GraphTest {
 		// Creates two vertices and edge between them.
 		IVertex start = graph.createVertex();
 		IVertex end = graph.createVertex();
-		IEdge newEdge= graph.createEdge(start, end);
+		IEdge newEdge = graph.createEdge(start, end);
 
-		// Checks it can be retrieved by id, and
+		// Checks it can be retrieved by id.
 		assertTrue(graph.getEdge(newEdge.getId()).equals(newEdge));
 		
 		// TODO: test something else?

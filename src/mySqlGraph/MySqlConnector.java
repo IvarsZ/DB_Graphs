@@ -18,10 +18,9 @@ public class MySqlConnector {
 		this.password = password;
 	}
 
-	protected Connection connect() throws ClassNotFoundException, SQLException {
+	protected Connection connect() throws SQLException {
 
 		// Opens a connection to a mySql database from parameters.
-		Class.forName("com.mysql.jdbc.Driver");
 		return DriverManager.getConnection(url, user, password);
 	}
 }
