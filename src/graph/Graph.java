@@ -105,9 +105,4 @@ public class Graph implements IGraph {
 		edges.addAll(this.edges.values());
 		return edges;
 	}
-
-	@Override
-	public void close() {
-		// TODO remove.
-	}
 }

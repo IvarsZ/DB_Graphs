@@ -1,19 +1,20 @@
 package graphTests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import graphInterfaces.IEdge;
-import graphInterfaces.IGraph;
+import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IVertex;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public abstract class GraphTest {
+public abstract class PersistentGraphTest {
 
-	protected IGraph graph;
+	protected IPersistentGraph graph;
 
-	public abstract IGraph createEmptyGraph();
+	public abstract IPersistentGraph createEmptyGraph();
 
 	@Before
 	public void setup(){

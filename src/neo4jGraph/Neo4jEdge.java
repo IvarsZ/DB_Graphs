@@ -14,18 +14,22 @@ public class Neo4jEdge implements IEdge {
 	 */
 	public static final String EDGE_TYPE = "EdgeType";
 
-	Relationship edge;
-	Neo4jVertex start;
-	Neo4jVertex end;
+	private Relationship edge;
+	private Neo4jVertex start;
+	private Neo4jVertex end;
+	private Neo4jGraph graph;
 
-	protected Neo4jEdge(Relationship edge) {
+	protected Neo4jEdge(Relationship edge, Neo4jGraph graph) {
 		this.edge = edge;
-		start = new Neo4jVertex(edge.getStartNode());
-		end = new Neo4jVertex(edge.getEndNode());
+		this.graph = graph;
+		start = new Neo4jVertex(edge.getStartNode(), graph);
+		end = new Neo4jVertex(edge.getEndNode(), graph);
 	}
 
 	@Override
 	public void setProperty(String key, String value) {
+		
+		graph.ensureInTransaction();
 
 		// If the property is the type of the edge,
 		if (key.equals(EDGE_TYPE)) {

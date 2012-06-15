@@ -1,18 +1,18 @@
 package neo4jGraphTests;
 
-import graphInterfaces.IGraph;
-import graphTests.GraphTest;
+import graphInterfaces.IPersistentGraph;
+import graphTests.PersistentGraphTest;
 import neo4jGraph.Neo4jGraph;
 
-public class Neo4jGraphTest extends GraphTest {
+public class Neo4jGraphTest extends PersistentGraphTest {
 	
 	private static final String path = "neo4j-graph-test";
 
 	@Override
-	public IGraph createEmptyGraph() {
+	public IPersistentGraph createEmptyGraph() {
 		
 		// Creates a graph an clears it.
-		IGraph graph = new Neo4jGraph(path);
+		IPersistentGraph graph = new Neo4jGraph(path);
 		graph.clear();
 		return graph;
 	}

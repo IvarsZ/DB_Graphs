@@ -7,13 +7,16 @@ import org.neo4j.graphdb.Node;
 public class Neo4jVertex implements IVertex {
 	
 	private Node vertex;
+	private Neo4jGraph graph;
 	
-	protected Neo4jVertex(Node node) {
+	protected Neo4jVertex(Node node, Neo4jGraph graph) {
 		this.vertex = node;
+		this.graph = graph;
 	}
 
 	@Override
 	public void setProperty(String key, String value) {
+		graph.ensureInTransaction();
 		vertex.setProperty(key, value);
 	}
 

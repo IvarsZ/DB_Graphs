@@ -1,7 +1,7 @@
 package mySqlGraph;
 
 import graphInterfaces.IEdge;
-import graphInterfaces.IGraph;
+import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IVertex;
 
 import java.sql.Connection;
@@ -13,7 +13,7 @@ import java.util.Iterator;
 
 import util.MySqlUtil;
 
-public class MySqlGraph implements IGraph {
+public class MySqlGraph implements IPersistentGraph {
 
 	private String graphName;
 
@@ -25,8 +25,9 @@ public class MySqlGraph implements IGraph {
 
 		this.graphName = graphName;
 
-		// Connects to the database.
+		// Connects to the database, and cancels auto commit.
 		mySql = connector.connect();
+		mySql.setAutoCommit(false);
 
 		statements = new MySqlStatementPrecompiler(this);
 
@@ -307,15 +308,6 @@ public class MySqlGraph implements IGraph {
 		}
 	}
 
-	@Override
-	public void close() {
-		try {
-			mySql.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 	protected Connection getMySqlConnection() {
 		return mySql;
 	}
@@ -371,5 +363,33 @@ public class MySqlGraph implements IGraph {
 		ResultSet rs = st.executeQuery();
 
 		return rs.next(); 
+	}
+	
+	@Override
+	public void close() {
+		try {
+			mySql.rollback();
+			mySql.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void commit() {
+		try {
+			mySql.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void rollback() {
+		try {
+			mySql.rollback();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

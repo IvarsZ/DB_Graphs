@@ -1,5 +1,9 @@
 package neo4jGraph;
 
+import graphInterfaces.IEdge;
+import graphInterfaces.IPersistentGraph;
+import graphInterfaces.IVertex;
+
 import java.io.File;
 import java.util.Iterator;
 
@@ -12,19 +16,16 @@ import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.tooling.GlobalGraphOperations;
 
-import graphInterfaces.IEdge;
-import graphInterfaces.IGraph;
-import graphInterfaces.IVertex;
+public class Neo4jGraph implements IPersistentGraph {
 
-public class Neo4jGraph implements IGraph {
-	
 	protected static enum RelTypes implements RelationshipType {
 		UNDEFINED
 	}
-		
+
 	private GraphDatabaseService graphDb;
 	private String graphDbPath;
-	
+	private Transaction transaction;
+
 	/**
 	 * 
 	 * Creates a new Neo4j graph, by creating a new embedded database or opening existing one.
@@ -32,102 +33,87 @@ public class Neo4jGraph implements IGraph {
 	 * @param path - path to the the Neo4j database.
 	 */
 	public Neo4jGraph(String graphDbPath) {
+
+		// Sets the path for the database and starts it.
+		this.graphDbPath = graphDbPath;
+		createDatabase();
+	}
+
+	private void createDatabase() {
 		graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(graphDbPath);
 		deleteReferenceNode();
-		
-		//System.out.println(graphDb.getReferenceNode().getId());
-		this.graphDbPath = graphDbPath;
 	}
 
 	@Override
 	public IVertex createVertex() {
-		
-		// TODO : what happens in neo4j error cases, and same for edges.
-		
-		Transaction tx = graphDb.beginTx();
-		try {
-			Node node = graphDb.createNode();
-			tx.success();
-			return new Neo4jVertex(node);
-		} finally {
-			tx.finish();
-		}
+		ensureInTransaction();
+		Node node = graphDb.createNode();
+		return new Neo4jVertex(node, this);
 	}
 
 	@Override
 	public IEdge createEdge(IVertex start, IVertex end)
 			throws IllegalArgumentException {
-		
+
 		// If both start and end are from this graph,
 		if (belongToGraph(start) && belongToGraph(end)) {
-			
+
 			// Creates a new relationship, and returns its edge.
 			Node startNode = ((Neo4jVertex) start).getNode();
 			Node endNode = ((Neo4jVertex) end).getNode();
-			
-			
-			Transaction tx = graphDb.beginTx();
-			try {
-				Relationship edge = startNode.createRelationshipTo(endNode, RelTypes.UNDEFINED);
-				tx.success();
-				return new Neo4jEdge(edge);
-			} finally {
-				tx.finish();
-			}
+
+			ensureInTransaction();
+			Relationship edge = startNode.createRelationshipTo(endNode, RelTypes.UNDEFINED);
+			return new Neo4jEdge(edge, this);
 		}
-		
+
 		throw new IllegalArgumentException("Vertex " + start + " or " + end + " doesn't belong the the graph");
 	}
 
 	private boolean belongToGraph(IVertex vertex) {
-		
+
 		// If it is Neo4j vertex, 
 		if (vertex instanceof Neo4jVertex) {
-			
+
 			// and belongs to the same graphDb, then the it is from this graph
 			Node node = ((Neo4jVertex) vertex).getNode();
 			return node.getGraphDatabase().equals(graphDb);
 		}
-		
+
 		return false;
 	}
 
 	@Override
 	public IVertex getVertex(long id) {
-		return new Neo4jVertex(graphDb.getNodeById(id));
+		return new Neo4jVertex(graphDb.getNodeById(id), this);
 	}
 
 	@Override
 	public IEdge getEdge(long id) {
-		return new Neo4jEdge(graphDb.getRelationshipById(id));
+		return new Neo4jEdge(graphDb.getRelationshipById(id), this);
 	}
 
 	@Override
-	public void close() {
-		graphDb.shutdown();
-	}
-	
-	@Override
 	public Iterable<IVertex> getVertices() {
-			
+
 		return new Iterable<IVertex>() {
 
 			@Override
 			public Iterator<IVertex> iterator() {
 				return new VertexIterator();
 			}
-			
+
 		};
 	}
-	
+
 	private class VertexIterator implements Iterator<IVertex> {
-		
+
 		Iterator<Node> nodeIterator;
-		
+
 		public VertexIterator() {
 			nodeIterator = GlobalGraphOperations.at(graphDb).getAllNodes().iterator();
 		}
-		
+
 		@Override
 		public boolean hasNext() {
 			return nodeIterator.hasNext();
@@ -135,15 +121,15 @@ public class Neo4jGraph implements IGraph {
 
 		@Override
 		public IVertex next() {
-			return new Neo4jVertex(nodeIterator.next());
-			
+			return new Neo4jVertex(nodeIterator.next(), Neo4jGraph.this);
+
 		}
 
 		@Override
 		public void remove() {
 			nodeIterator.remove();
 		}
-		
+
 	}
 
 	@Override
@@ -154,14 +140,14 @@ public class Neo4jGraph implements IGraph {
 			public Iterator<IEdge> iterator() {
 				return new EdgeIterator();
 			}
-			
+
 		};
 	}
-	
+
 	private class EdgeIterator implements Iterator<IEdge> {
-		
+
 		Iterator<Relationship> edgeIterator;
-		
+
 		public EdgeIterator() {
 			edgeIterator = GlobalGraphOperations.at(graphDb).getAllRelationships().iterator();
 		}
@@ -173,52 +159,87 @@ public class Neo4jGraph implements IGraph {
 
 		@Override
 		public IEdge next() {
-			return new Neo4jEdge(edgeIterator.next());
+			return new Neo4jEdge(edgeIterator.next(), Neo4jGraph.this);
 		}
 
 		@Override
 		public void remove() {
 			edgeIterator.remove();
 		}
-		
+
 	}
 
-	@Override
-	public void clear() {
-		
-		// Closes the database, deletes all its files.
-		graphDb.shutdown();
-		deleteFileOrDirectory(new File(graphDbPath));
-		
-		// Recreates the database.
-		graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(graphDbPath);
-		deleteReferenceNode();
-	}
-	
 	private static void deleteFileOrDirectory( final File file ) {
-	    if ( file.exists() ) {
-	        if ( file.isDirectory() ) {
-	            for ( File child : file.listFiles() ) {
-	                deleteFileOrDirectory( child );
-	            }
-	        }
-	        file.delete();
-	    }
+		if ( file.exists() ) {
+			if ( file.isDirectory() ) {
+				for ( File child : file.listFiles() ) {
+					deleteFileOrDirectory( child );
+				}
+			}
+			file.delete();
+		}
 	}
-	
+
 	/**
 	 * Deletes the reference node (as not used).
 	 */
 	protected void deleteReferenceNode() {
-		
+
+		// Commits the deletion as soon as done.
 		Transaction tx = graphDb.beginTx();
 		try {
 			graphDb.getReferenceNode().delete();
 			tx.success();
 		} catch (NotFoundException e) {
-			
+
 		} finally {
 			tx.finish();
+		}
+	}
+
+	@Override
+	public void clear() {
+
+		// Closes the database, deletes all its files.
+		graphDb.shutdown();
+		deleteFileOrDirectory(new File(graphDbPath));
+
+		// Recreates the database.
+		createDatabase();
+	}
+
+	@Override
+	public void close() {
+
+		rollback(); // Should I commit or rollback or let the user decide? What neo4j does if there is unclosed transaction?
+		graphDb.shutdown();
+	}
+
+	@Override
+	public void commit() {
+
+		if (transaction != null) {
+			transaction.success();
+			transaction.finish();
+		}
+
+		transaction = null;
+	}
+
+	@Override
+	public void rollback() {
+		
+		if (transaction != null) {
+			transaction.failure();
+			transaction.finish();
+		}
+
+		transaction = null;
+	}
+
+	protected void ensureInTransaction() {
+		if (transaction == null) {
+			transaction = graphDb.beginTx();
 		}
 	}
 }
