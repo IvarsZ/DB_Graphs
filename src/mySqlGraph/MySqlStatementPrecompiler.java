@@ -16,10 +16,6 @@ public class MySqlStatementPrecompiler {
 	private PreparedStatement getEdgeProperty;
 	private PreparedStatement setEdgeProperty;
 	
-	// TODO : remove
-	private PreparedStatement getEdgeStartId;
-	private PreparedStatement getEdgeEndId;
-	
 	private PreparedStatement getVertex;
 	private PreparedStatement getEdge;
 	
@@ -33,18 +29,39 @@ public class MySqlStatementPrecompiler {
 		
 		getVertexProperty = graph.getMySqlConnection().prepareStatement("SELECT p_value FROM " + graph.getNodesPropertiesTableName() + " WHERE id = ?, p_key = ?");
 		setVertexProperty = graph.getMySqlConnection().prepareStatement("INSERT INTO " + graph.getNodesPropertiesTableName() + " (id, p_key, p_value) VALUES(?, ?, ?)");
-		
+
 		getEdgeProperty = graph.getMySqlConnection().prepareStatement("SELECT p_value FROM " + graph.getEdgesPropertiesTableName() + " WHERE id = ?, p_key = ?");
 		setEdgeProperty = graph.getMySqlConnection().prepareStatement("INSERT INTO " + graph.getEdgesPropertiesTableName() + " (id, p_key, p_value) VALUES(?, ?, ?)");
-		
-		getEdgeStartId = graph.getMySqlConnection().prepareStatement("SELECT start FROM " + graph.getEdgesTableName() + " WHERE id = ?");
-		getEdgeEndId = graph.getMySqlConnection().prepareStatement("SELECT end FROM " + graph.getEdgesTableName() + " WHERE id = ?");
 		
 		getVertex = graph.getMySqlConnection().prepareStatement("SELECT * FROM " + graph.getNodesTableName() + " WHERE id = ?");
 		getEdge = graph.getMySqlConnection().prepareStatement("SELECT * FROM " + graph.getEdgesTableName() + " WHERE id = ?");
 		
 		getAllVertices = graph.getMySqlConnection().prepareStatement("SELECT * FROM " + graph.getNodesTableName());
 		getAllEdges = graph.getMySqlConnection().prepareStatement("SELECT * FROM " + graph.getEdgesTableName());
+	}
+	
+	/**
+	 * 
+	 * Closes all precompiled statements.
+	 * 
+	 * @throws SQLException
+	 */
+	protected void close() throws SQLException {
+		
+		createVertex.close();
+		createEdge.close();
+		
+		getVertexProperty.close();
+		setVertexProperty.close();
+		
+		getEdgeProperty.close();
+		setEdgeProperty.close();
+		
+		getVertex.close();
+		getEdge.close();
+		
+		getAllVertices.close();
+		getAllEdges.close();
 	}
 	
 	protected PreparedStatement getCreateVertex() {
@@ -69,14 +86,6 @@ public class MySqlStatementPrecompiler {
 
 	protected PreparedStatement getSetEdgeProperty() {
 		return setEdgeProperty;
-	}
-
-	protected PreparedStatement getGetEdgeStartId() {
-		return getEdgeStartId;
-	}
-
-	protected PreparedStatement getGetEdgeEndId() {
-		return getEdgeEndId;
 	}
 
 	protected PreparedStatement getGetVertex() {
