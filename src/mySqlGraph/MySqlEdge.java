@@ -1,5 +1,6 @@
 package mySqlGraph;
 
+import exceptions.DataAccessException;
 import graphInterfaces.IEdge;
 import graphInterfaces.IVertex;
 
@@ -24,9 +25,14 @@ public class MySqlEdge implements IEdge {
 	 * 
 	 * @param graph
 	 * 
-	 * @throws SQLException
+	 * @throws IllegalArgumentException - if at least one of the vertices is null.
 	 */
-	protected MySqlEdge(long id, MySqlVertex start, MySqlVertex end, MySqlGraph graph) throws SQLException {
+	protected MySqlEdge(long id, MySqlVertex start, MySqlVertex end, MySqlGraph graph) throws IllegalArgumentException {
+		
+		// Start and end vertices can't be null.
+		if (start == null || end == null) {
+			throw new IllegalArgumentException();
+		}
 
 		this.id = id;
 		this.start = start;
@@ -58,10 +64,10 @@ public class MySqlEdge implements IEdge {
 	}
 
 	@Override
-	public String getProperty(String key) {
-
+	public String getProperty(String key) throws DataAccessException {
 		try {
 
+			
 			// Makes the query.
 			PreparedStatement st = graph.getStatements().getGetEdgeProperty();
 			st.setLong(1, id);
@@ -75,9 +81,11 @@ public class MySqlEdge implements IEdge {
 			else {
 				return null;
 			}
+			// TODO : result set not closed.
+			
+			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return null; // TODO : better error handling mechanism, should interface allow exceptions?
+			throw new DataAccessException(e);
 		}
 	}
 
@@ -101,7 +109,7 @@ public class MySqlEdge implements IEdge {
 		
 		if (obj instanceof MySqlEdge) {
 			
-			// TODO : check properties (or better graphs).
+			// TODO : check graphs.
 			MySqlEdge edge = (MySqlEdge) obj;
 			return id == edge.id;
 		}

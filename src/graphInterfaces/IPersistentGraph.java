@@ -1,8 +1,10 @@
 package graphInterfaces;
 
+import exceptions.DataAccessException;
+
 /**
  * 
- * An interface for a property graph that can be converted to neo4j and MySql.
+ * An interface for a persistent property graph that can be converted to neo4j and MySql.
  * 
  * A graph is set of objects called vertices, where pairs of vertices can be connected.
  * Such connection is called edge. An edge has a direction, so one vertex is the start and one is the 
@@ -48,7 +50,7 @@ public interface IPersistentGraph {
 	 * @return the vertex with the index, or null if there is no vertex with the index.
 	 * 
 	 */
-	public IVertex getVertex(long id);
+	public IVertex getVertex(long id) throws DataAccessException;
 
 	/**
 	 * 
@@ -59,7 +61,7 @@ public interface IPersistentGraph {
 	 * @return the vertex with the index, or null if there is no vertex with the index.
 	 * 
 	 */
-	public IEdge getEdge(long id);
+	public IEdge getEdge(long id) throws DataAccessException;
 
 	/**
 	 * 

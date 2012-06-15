@@ -1,5 +1,7 @@
 package graphInterfaces;
 
+import exceptions.DataAccessException;
+
 
 
 /**
@@ -39,5 +41,5 @@ public interface IPropertyContainer<K, V> {
 	 * 
 	 * @return the value associated with the key, or null if there is no value associated with this key.
 	 */
-	public V getProperty(K key);
+	public V getProperty(K key) throws DataAccessException;
 }

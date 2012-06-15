@@ -1,5 +1,6 @@
 package mySqlGraph;
 
+import exceptions.DataAccessException;
 import graphInterfaces.IVertex;
 
 import java.sql.PreparedStatement;
@@ -50,10 +51,10 @@ public class MySqlVertex implements IVertex {
 	}
 
 	@Override
-	public String getProperty(String key) {
-		
+	public String getProperty(String key) throws DataAccessException {
 		try {
 
+			
 			// Makes the query.
 			PreparedStatement st = graph.getStatements().getGetVertexProperty();
 			st.setLong(1, id);
@@ -62,14 +63,17 @@ public class MySqlVertex implements IVertex {
 
 			// If there was a result returns it, otherwise null.
 			if (rs.next()) {
-				return rs.getString("p_value");
+				return rs.getString(1);
 			}
 			else {
 				return null;
 			}
+			
+			// TODO : close properly.
+			
+			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return null; // TODO : better error handling mechanism, should interface allow exceptions?
+			throw new DataAccessException(e);
 		}
 	}
 
@@ -81,7 +85,7 @@ public class MySqlVertex implements IVertex {
 	@Override
 	public boolean equals(Object obj) {
 		
-		// TODO : full property check.
+		// TODO : check graphs as well.
 		
 		if (obj instanceof MySqlVertex) {
 			MySqlVertex vertex = (MySqlVertex) obj;

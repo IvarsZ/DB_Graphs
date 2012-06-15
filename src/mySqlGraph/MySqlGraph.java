@@ -1,5 +1,6 @@
 package mySqlGraph;
 
+import exceptions.DataAccessException;
 import graphInterfaces.IEdge;
 import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IVertex;
@@ -12,7 +13,7 @@ import java.sql.Statement;
 import java.util.Iterator;
 
 public class MySqlGraph implements IPersistentGraph {
-	
+
 	private static final String MYSQL_STRING = " VARCHAR(50) ";
 
 	private String graphName;
@@ -36,8 +37,7 @@ public class MySqlGraph implements IPersistentGraph {
 	}
 
 	@Override
-	public IVertex createVertex() {
-
+	public IVertex createVertex() throws DataAccessException {
 		try {
 
 			// Creates the vertex in MySql database.
@@ -46,16 +46,14 @@ public class MySqlGraph implements IPersistentGraph {
 
 			// Gets its id and creates MySqlVertex.
 			ResultSet rs = createVertex.getGeneratedKeys();
-			if (rs.next()){
-				long id = rs.getInt(1);
-				return new MySqlVertex(id, this);
-			}
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			rs.next();
+			long id = rs.getInt(1);
+			return new MySqlVertex(id, this);
 
-		return null;
+
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		}
 	}
 
 	@Override
@@ -84,9 +82,8 @@ public class MySqlGraph implements IPersistentGraph {
 
 			} catch (SQLException e) {
 				e.printStackTrace();
+				return null;
 			}
-
-			return null;
 		}
 
 		throw new IllegalArgumentException("Vertex " + start + " or " + end + " doesn't belong the the graph");
@@ -105,42 +102,72 @@ public class MySqlGraph implements IPersistentGraph {
 	}
 
 	@Override
-	public IVertex getVertex(long id) {
-
-		// If there is a vertex with the id in the graph.
+	public IVertex getVertex(long id) throws DataAccessException {
 		try {
+
+
+			// If there is a vertex with the id in the graph.
 			if (containsVertex(id)) {
 
 				// creates and returns it.
 				return new MySqlVertex(id, this);
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			else {
 
-		return null;
+				// Otherwise returns null.
+				return null;
+			}
+
+
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		}
 	}
 
 	@Override
 	public IEdge getEdge(long id) {
 
+		/*
+		// Gets the edge row with the id.
+		PreparedStatement st = getStatements().getGetEdge();
+		st.setLong(1, id);
+		ResultSet rs = st.executeQuery();
+		if (rs.next()) {
+
+			// Creates and returns the MySqlEdge.
+			return new MySqlEdge(id, (MySqlVertex) getVertex(rs.getLong(2)), (MySqlVertex) getVertex(rs.getLong(3)), this);
+		}
+
+		// No edge row had the id, so there is no edge with the id.
+		else {
+			return null;
+		}*/
+
+
+		ResultSet rs = null;
 		try {
 
-			// Gets the edge row with the id.
 			PreparedStatement st = getStatements().getGetEdge();
 			st.setLong(1, id);
-			ResultSet rs = st.executeQuery();
+			rs = st.executeQuery();
 
 			if (rs.next()) {
 
-				// Creates the MySqlEdge. // TODO : the start or end could be null.
+				// Creates and returns the MySqlEdge.
 				return new MySqlEdge(id, (MySqlVertex) getVertex(rs.getLong(2)), (MySqlVertex) getVertex(rs.getLong(3)), this);
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 
-		return null;
+			// No edge row had the id, so there is no edge with the id.
+			else {
+				return null;
+			}
+
+
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		} finally {
+			try { if (rs != null) rs.close();} catch (SQLException e) { /* Ignored */ }
+		}
 	}
 
 	@Override
@@ -181,7 +208,7 @@ public class MySqlGraph implements IPersistentGraph {
 				boolean hasNext = vertexIterator.next();
 				if(hasNext) {
 
-					//reset the cursor back to its previous position
+					// Reset the cursor back to its previous position.
 					vertexIterator.previous();
 				}
 
@@ -278,7 +305,6 @@ public class MySqlGraph implements IPersistentGraph {
 				// If there is a next edge creates and returns it.
 				if (edgeIterator.next()) {
 
-					// TODO : the start or end could be null.
 					return new MySqlEdge(edgeIterator.getLong(1), (MySqlVertex) getVertex(edgeIterator.getLong(2)), (MySqlVertex) getVertex(edgeIterator.getLong(3)), MySqlGraph.this);
 				}
 			} catch (SQLException e) {
@@ -336,31 +362,39 @@ public class MySqlGraph implements IPersistentGraph {
 	}
 
 	private void createTables() throws SQLException {
-
 		Statement st = mySql.createStatement();
-		st.executeUpdate("CREATE TABLE IF NOT EXISTS "  + getNodesTableName() + " (id BIGINT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id))");
-		st.executeUpdate("CREATE TABLE IF NOT EXISTS "  + getNodesPropertiesTableName() + 
-				" (id BIGINT NOT NULL, PRIMARY KEY(id), p_key" + MYSQL_STRING + "NOT NULL, p_value" + MYSQL_STRING + "NOT NULL)");
-		st.executeUpdate("CREATE TABLE IF NOT EXISTS " + getEdgesTableName() + " (id BIGINT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id), start BIGINT NOT NULL, end BIGINT NOT NULL)");
-		st.executeUpdate("CREATE TABLE IF NOT EXISTS "  + getEdgesPropertiesTableName() + 
-				" (id BIGINT NOT NULL, PRIMARY KEY(id), p_key" + MYSQL_STRING + "NOT NULL, p_value" + MYSQL_STRING + "NOT NULL)");
-		st.close();
-		
-		// Commits the created tables. TODO : manage exception to roll back if didn't create.
-		commit();
+		try {
+
+			
+			// Creates tables for vertices, edges an their properties.
+			st.executeUpdate("CREATE TABLE IF NOT EXISTS "  + getNodesTableName() + " (id BIGINT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id))");
+			st.executeUpdate("CREATE TABLE IF NOT EXISTS "  + getNodesPropertiesTableName() + 
+					" (id BIGINT NOT NULL, PRIMARY KEY(id), p_key" + MYSQL_STRING + "NOT NULL, p_value" + MYSQL_STRING + "NOT NULL)");
+			st.executeUpdate("CREATE TABLE IF NOT EXISTS " + getEdgesTableName() + " (id BIGINT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id), start BIGINT NOT NULL, end BIGINT NOT NULL)");
+			st.executeUpdate("CREATE TABLE IF NOT EXISTS "  + getEdgesPropertiesTableName() + 
+					" (id BIGINT NOT NULL, PRIMARY KEY(id), p_key" + MYSQL_STRING + "NOT NULL, p_value" + MYSQL_STRING + "NOT NULL)");
+
+
+		} finally {
+			st.close();
+		}	
 	}
 
 	private void dropTables() throws SQLException {
-
 		Statement st = mySql.createStatement();
-		st.executeUpdate("DROP TABLE " + getNodesTableName());
-		st.executeUpdate("DROP TABLE " + getNodesPropertiesTableName());
-		st.executeUpdate("DROP TABLE " + getEdgesTableName());
-		st.executeUpdate("DROP TABLE " + getEdgesPropertiesTableName());
-		st.close();
-		
-		// Commits the drop.
-		commit();
+		try {
+			
+
+			// Drops all tables.
+			st.executeUpdate("DROP TABLE " + getNodesTableName());
+			st.executeUpdate("DROP TABLE " + getNodesPropertiesTableName());
+			st.executeUpdate("DROP TABLE " + getEdgesTableName());
+			st.executeUpdate("DROP TABLE " + getEdgesPropertiesTableName());
+			
+			
+		} finally {
+			st.close();
+		}
 	}
 
 	private boolean containsVertex(long id) throws SQLException {
@@ -374,7 +408,7 @@ public class MySqlGraph implements IPersistentGraph {
 		rs.close();
 		return contains;
 	}
-	
+
 	@Override
 	public void close() {
 		try {
