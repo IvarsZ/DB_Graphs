@@ -67,7 +67,7 @@ public class MySqlStatementPrecompiler {
 	protected PreparedStatement getCreateVertex() {
 		return createVertex;
 	}
-	
+
 	protected PreparedStatement getCreateEdge() {
 		return createEdge;
 	}

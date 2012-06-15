@@ -10,7 +10,6 @@ public class MySqlConnector {
 	private String user;
 	private String password;
 
-
 	public MySqlConnector(String url, String user, String password) {
 		super();
 		this.url = url;
