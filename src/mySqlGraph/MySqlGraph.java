@@ -344,6 +344,7 @@ public class MySqlGraph implements IPersistentGraph {
 		st.executeUpdate("CREATE TABLE IF NOT EXISTS " + getEdgesTableName() + " (id BIGINT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id), start BIGINT NOT NULL, end BIGINT NOT NULL)");
 		st.executeUpdate("CREATE TABLE IF NOT EXISTS "  + getEdgesPropertiesTableName() + 
 				" (id BIGINT NOT NULL, PRIMARY KEY(id), p_key" + MYSQL_STRING + "NOT NULL, p_value" + MYSQL_STRING + "NOT NULL)");
+		st.close();
 		
 		// Commits the created tables. TODO : manage exception to roll back if didn't create.
 		commit();
@@ -356,6 +357,7 @@ public class MySqlGraph implements IPersistentGraph {
 		st.executeUpdate("DROP TABLE " + getNodesPropertiesTableName());
 		st.executeUpdate("DROP TABLE " + getEdgesTableName());
 		st.executeUpdate("DROP TABLE " + getEdgesPropertiesTableName());
+		st.close();
 		
 		// Commits the drop.
 		commit();

@@ -85,12 +85,28 @@ public class Neo4jGraph implements IPersistentGraph {
 
 	@Override
 	public IVertex getVertex(long id) {
-		return new Neo4jVertex(graphDb.getNodeById(id), this);
+
+		try {
+			return new Neo4jVertex(graphDb.getNodeById(id), this);
+		}
+
+		// If the vertex wasn't found return null, to conform to the interface.
+		catch (NotFoundException e) {
+			return null;
+		}
 	}
 
 	@Override
 	public IEdge getEdge(long id) {
-		return new Neo4jEdge(graphDb.getRelationshipById(id), this);
+		
+		try {
+			return new Neo4jEdge(graphDb.getRelationshipById(id), this);
+		}
+
+		// If the edge wasn't found return null, to conform to the interface.
+		catch (NotFoundException e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -228,7 +244,7 @@ public class Neo4jGraph implements IPersistentGraph {
 
 	@Override
 	public void rollback() {
-		
+
 		if (transaction != null) {
 			transaction.failure();
 			transaction.finish();

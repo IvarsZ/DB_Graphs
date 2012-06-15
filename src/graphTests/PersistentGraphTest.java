@@ -1,7 +1,6 @@
 package graphTests;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import graphInterfaces.IEdge;
 import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IVertex;
@@ -24,12 +23,16 @@ public abstract class PersistentGraphTest {
 
 	@Before
 	public void setup(){
+
+		// Creates empty graph.
 		graph = createGraph();
 		graph.clear();
 	}
 
 	@After
 	public void cleanup() {
+
+		// Clears the graph and closes it.
 		graph.clear();
 		graph.close();
 	}
@@ -73,6 +76,17 @@ public abstract class PersistentGraphTest {
 	}
 
 	@Test
+	public void rollbackCreatedVertex() {
+
+		// Creates a vertex, and rolls back the changes.
+		IVertex newVertex = graph.createVertex();
+		graph.rollback();
+
+		// Checks that the vertex isn't there.
+		assertEquals(null, graph.getVertex(newVertex.getId()));
+	}
+
+	@Test
 	public void createEdge() {
 
 		// Creates two vertices and edge between them.
@@ -97,6 +111,19 @@ public abstract class PersistentGraphTest {
 		// Reopens the graph, checks that the edge is there.
 		graph = createGraph();
 		assertTrue(graph.getEdge(newEdge.getId()).equals(newEdge));
+	}
+
+	@Test
+	public void rollbackCreatedEdge() {
+
+		// Creates two vertices and edge between them, then rolls back the changes.
+		IVertex start = graph.createVertex();
+		IVertex end = graph.createVertex();
+		IEdge newEdge = graph.createEdge(start, end);
+		graph.rollback();
+
+		// Checks that the edge isn't there.
+		assertEquals(null, graph.getEdge(newEdge.getId()));
 	}
 
 }
