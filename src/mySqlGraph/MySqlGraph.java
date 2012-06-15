@@ -11,9 +11,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
 
-import util.MySqlUtil;
-
 public class MySqlGraph implements IPersistentGraph {
+	
+	private static final String MYSQL_STRING = " VARCHAR(50) ";
 
 	private String graphName;
 
@@ -341,10 +341,10 @@ public class MySqlGraph implements IPersistentGraph {
 		Statement st = mySql.createStatement();
 		st.executeUpdate("CREATE TABLE IF NOT EXISTS "  + getNodesTableName() + " (id BIGINT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id))");
 		st.executeUpdate("CREATE TABLE IF NOT EXISTS "  + getNodesPropertiesTableName() + 
-				" (id BIGINT NOT NULL, PRIMARY KEY(id), p_key" + MySqlUtil.MYSQL_STRING + "NOT NULL, p_value" + MySqlUtil.MYSQL_STRING + "NOT NULL)");
+				" (id BIGINT NOT NULL, PRIMARY KEY(id), p_key" + MYSQL_STRING + "NOT NULL, p_value" + MYSQL_STRING + "NOT NULL)");
 		st.executeUpdate("CREATE TABLE IF NOT EXISTS " + getEdgesTableName() + " (id BIGINT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id), start BIGINT NOT NULL, end BIGINT NOT NULL)");
 		st.executeUpdate("CREATE TABLE IF NOT EXISTS "  + getEdgesPropertiesTableName() + 
-				" (id BIGINT NOT NULL, PRIMARY KEY(id), p_key" + MySqlUtil.MYSQL_STRING + "NOT NULL, p_value" + MySqlUtil.MYSQL_STRING + "NOT NULL)");
+				" (id BIGINT NOT NULL, PRIMARY KEY(id), p_key" + MYSQL_STRING + "NOT NULL, p_value" + MYSQL_STRING + "NOT NULL)");
 	}
 
 	private void dropTables() throws SQLException {

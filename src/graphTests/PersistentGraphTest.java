@@ -14,15 +14,23 @@ public abstract class PersistentGraphTest {
 
 	protected IPersistentGraph graph;
 
-	public abstract IPersistentGraph createEmptyGraph();
+	/**
+	 * 
+	 * Might just reopen, not guaranteed to be empty.
+	 * 
+	 * @return
+	 */
+	public abstract IPersistentGraph createGraph();
 
 	@Before
 	public void setup(){
-		graph = createEmptyGraph();
+		graph = createGraph();
+		graph.clear();
 	}
-	
+
 	@After
 	public void cleanup() {
+		graph.clear();
 		graph.close();
 	}
 
@@ -49,13 +57,24 @@ public abstract class PersistentGraphTest {
 
 		// Checks it can be retrieved by id.
 		assertTrue(graph.getVertex(newVertex.getId()).equals(newVertex));
-		
-		// TODO: test something else?
+	}
+
+	@Test
+	public void createPersistentVertex() {
+
+		// Creates a vertex, and closes the graph.
+		IVertex newVertex = graph.createVertex();
+		graph.commit();
+		graph.close();
+
+		// Reopens the graph, checks that the vertex is there.
+		graph = createGraph();
+		assertTrue(graph.getVertex(newVertex.getId()).equals(newVertex));
 	}
 
 	@Test
 	public void createEdge() {
-		
+
 		// Creates two vertices and edge between them.
 		IVertex start = graph.createVertex();
 		IVertex end = graph.createVertex();
@@ -63,8 +82,21 @@ public abstract class PersistentGraphTest {
 
 		// Checks it can be retrieved by id.
 		assertTrue(graph.getEdge(newEdge.getId()).equals(newEdge));
-		
-		// TODO: test something else?
+	}
+
+	@Test
+	public void createPersistentEdge() {
+
+		// Creates two vertices and edge between them.
+		IVertex start = graph.createVertex();
+		IVertex end = graph.createVertex();
+		IEdge newEdge = graph.createEdge(start, end);
+		graph.commit();
+		graph.close();
+
+		// Reopens the graph, checks that the edge is there.
+		graph = createGraph();
+		assertTrue(graph.getEdge(newEdge.getId()).equals(newEdge));
 	}
 
 }

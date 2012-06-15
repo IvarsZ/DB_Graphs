@@ -8,18 +8,17 @@ import graphInterfaces.IPersistentGraph;
 import graphTests.PersistentGraphTest;
 
 public class MySqlGraphTest extends PersistentGraphTest {
-	
+
 	private static MySqlConnector getConnector() {
 		return new MySqlConnector("jdbc:mysql://iz2.host.cs.st-andrews.ac.uk:3306/iz2_db","iz2","2mH6=H-5");
 	}
 
 	@Override
-	public IPersistentGraph createEmptyGraph() {
-		
+	public IPersistentGraph createGraph() {
+
 		// TODO : can return null.
 		try {
 			IPersistentGraph graph = new MySqlGraph("mysql_graph_test", getConnector());
-			graph.clear();
 			return graph;
 		} catch (SQLException e) {
 			e.printStackTrace();

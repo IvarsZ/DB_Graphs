@@ -5,15 +5,14 @@ import graphTests.PersistentGraphTest;
 import neo4jGraph.Neo4jGraph;
 
 public class Neo4jGraphTest extends PersistentGraphTest {
-	
+
 	private static final String path = "neo4j-graph-test";
 
 	@Override
-	public IPersistentGraph createEmptyGraph() {
-		
-		// Creates a graph an clears it.
+	public IPersistentGraph createGraph() {
+
+		// Creates a graph.
 		IPersistentGraph graph = new Neo4jGraph(path);
-		graph.clear();
 		return graph;
 	}
 }

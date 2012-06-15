@@ -19,6 +19,7 @@ public interface IPersistentGraph extends IGraph {
 	 * 
 	 * Commits the last changes made to the graph.
 	 * Makes all changes since the last commit persistent.
+	 * Only operation that does not require a commit is clear.
 	 * 
 	 * Other instances of the same graph, see the changes only
 	 * when they are committed.
@@ -36,6 +37,9 @@ public interface IPersistentGraph extends IGraph {
 	
 	/**
 	 * Properly closes the graph, releasing its resources.
+	 * 
+	 * All uncommitted changes are rolled back.
+	 * 
 	 */
 	public void close();
 }

@@ -201,6 +201,7 @@ public class Neo4jGraph implements IPersistentGraph {
 	public void clear() {
 
 		// Closes the database, deletes all its files.
+		rollback();
 		graphDb.shutdown();
 		deleteFileOrDirectory(new File(graphDbPath));
 
@@ -210,8 +211,7 @@ public class Neo4jGraph implements IPersistentGraph {
 
 	@Override
 	public void close() {
-
-		rollback(); // Should I commit or rollback or let the user decide? What neo4j does if there is unclosed transaction?
+		rollback();
 		graphDb.shutdown();
 	}
 
