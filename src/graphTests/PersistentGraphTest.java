@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public abstract class PersistentGraphTest {
 
-	protected IPersistentGraph graph;
+	private IPersistentGraph graph;
 
 	/**
 	 * 

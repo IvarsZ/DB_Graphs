@@ -110,5 +110,10 @@ public class MySqlEdge implements IEdge {
 		
 		return false;
 	}
+	
+	@Override
+	public int hashCode() {
+		return (int) id;
+	}
 
 }

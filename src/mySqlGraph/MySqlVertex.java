@@ -88,5 +88,10 @@ public class MySqlVertex implements IVertex {
 		
 		return false;
 	}
+	
+	@Override
+	public int hashCode() {
+		return (int) id;
+	}
 
 }

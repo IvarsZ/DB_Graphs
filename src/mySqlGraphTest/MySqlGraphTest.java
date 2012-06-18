@@ -11,7 +11,7 @@ import graphTests.PersistentGraphTest;
 
 public class MySqlGraphTest extends PersistentGraphTest {
 
-	private static MySqlConnector getConnector() {
+	protected static MySqlConnector getConnector() {
 		return new MySqlConnector("jdbc:mysql://iz2.host.cs.st-andrews.ac.uk:3306/iz2_db","iz2","2mH6=H-5");
 	}
 
@@ -21,8 +21,7 @@ public class MySqlGraphTest extends PersistentGraphTest {
 			
 			
 			// Creates and returns new graph.
-			IPersistentGraph graph = new MySqlGraph("mysql_graph_test", getConnector());
-			return graph;
+			return new MySqlGraph("mysql_graph_test", getConnector());
 			
 			
 		} catch (SQLException e) {

@@ -8,7 +8,7 @@ import graphInterfaces.IVertex;
 
 import java.util.Set;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 public abstract class GraphOperatorTest {
@@ -17,17 +17,19 @@ public abstract class GraphOperatorTest {
 	private static IGraphOperator operator;
 	private static IVertex vertices[];
 	
-	private static IPersistentGraph createGraph() {
-		// Just for overriding.
-		return null;
-	}
+	public abstract IPersistentGraph createGraph();
 	
-	@BeforeClass
-	public static void setup() {
+	public abstract IGraphOperator createOperator(IPersistentGraph graph);
+	
+	
+	@Before
+	public void setup() {
 		
-		// Initialise the graph.
-		createGraph();
+		// Initialise the graph and operator.
+		graph = createGraph();
 		graph.clear();
+		
+		operator = createOperator(graph);
 		
 		/*
 		 * Build graph with vertices 0, 1, ..., 8 and
@@ -46,6 +48,7 @@ public abstract class GraphOperatorTest {
 		for (int i = 0; i < edges.length; i++) {
 			graph.createEdge(vertices[edges[i][0]], vertices[edges[i][1]]);
 		}
+		graph.commit();
 	}
 	
 	@Test
