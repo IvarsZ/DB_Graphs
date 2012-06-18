@@ -49,6 +49,11 @@ public class Neo4jVertex implements IVertex {
 		return false;
 	}
 	
+	@Override
+	public int hashCode() {
+		return (int) vertex.getId();
+	}
+	
 	protected Node getNode() {
 		return vertex;
 	}

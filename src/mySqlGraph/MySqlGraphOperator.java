@@ -39,7 +39,7 @@ public class MySqlGraphOperator implements IGraphOperator {
 			getDepthStatement = graph.getMySqlConnection().prepareStatement("SELECT " + MARK_DEPTH_COLUMN + " FROM "  + graph.getNodesTableName() + " WHERE id = ? ;" );
 		}
 		else {
-			throw new IllegalArgumentException("Accepts only mysql graphs");
+			throw new IllegalArgumentException("Graph " + mySqlGraph + " isn't mysql graph");
 		}
 	}
 

@@ -8,6 +8,7 @@ import graphInterfaces.IVertex;
 
 import java.util.Set;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -49,6 +50,11 @@ public abstract class GraphOperatorTest {
 			graph.createEdge(vertices[edges[i][0]], vertices[edges[i][1]]);
 		}
 		graph.commit();
+	}
+	
+	@After
+	public void cleanup() {
+		graph.close();
 	}
 	
 	@Test

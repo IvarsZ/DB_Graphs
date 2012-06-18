@@ -12,7 +12,6 @@ public class Neo4jGraphTest extends PersistentGraphTest {
 	public IPersistentGraph createGraph() {
 
 		// Creates a graph.
-		IPersistentGraph graph = new Neo4jGraph(path);
-		return graph;
+		return new Neo4jGraph(path);
 	}
 }
