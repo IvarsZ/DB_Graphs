@@ -28,10 +28,10 @@ public class MySqlStatementPrecompiler {
 		createVertex = graph.getMySqlConnection().prepareStatement("INSERT INTO " + graph.getNodesTableName() + " (id) VALUES (DEFAULT)", Statement.RETURN_GENERATED_KEYS);
 		createEdge = graph.getMySqlConnection().prepareStatement("INSERT INTO " + graph.getEdgesTableName() + " (id, start, end) VALUES (DEFAULT, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
-		getVertexProperty = graph.getMySqlConnection().prepareStatement("SELECT p_value FROM " + graph.getNodesPropertiesTableName() + " WHERE id = ?, p_key = ?");
+		getVertexProperty = graph.getMySqlConnection().prepareStatement("SELECT p_value FROM " + graph.getNodesPropertiesTableName() + " WHERE id = ? AND p_key = ?");
 		setVertexProperty = graph.getMySqlConnection().prepareStatement("INSERT INTO " + graph.getNodesPropertiesTableName() + " (id, p_key, p_value) VALUES(?, ?, ?)");
 
-		getEdgeProperty = graph.getMySqlConnection().prepareStatement("SELECT p_value FROM " + graph.getEdgesPropertiesTableName() + " WHERE id = ?, p_key = ?");
+		getEdgeProperty = graph.getMySqlConnection().prepareStatement("SELECT p_value FROM " + graph.getEdgesPropertiesTableName() + " WHERE id = ? AND p_key = ?");
 		setEdgeProperty = graph.getMySqlConnection().prepareStatement("INSERT INTO " + graph.getEdgesPropertiesTableName() + " (id, p_key, p_value) VALUES(?, ?, ?)");
 
 		getVertex = graph.getMySqlConnection().prepareStatement("SELECT * FROM " + graph.getNodesTableName() + " WHERE id = ?");

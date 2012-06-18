@@ -19,6 +19,7 @@ public class MySqlGraphTest extends PersistentGraphTest {
 	public IPersistentGraph createGraph() {
 		try {
 			
+			
 			// Creates and returns new graph.
 			IPersistentGraph graph = new MySqlGraph("mysql_graph_test", getConnector());
 			return graph;

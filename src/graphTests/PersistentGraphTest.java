@@ -126,4 +126,40 @@ public abstract class PersistentGraphTest {
 		assertEquals(null, graph.getEdge(newEdge.getId()));
 	}
 
+	@Test
+	public void createVertexWithProperties() {
+
+		// Creates a vertex with name and age, and closes the graph.
+		IVertex newVertex = graph.createVertex();
+		newVertex.setProperty("name", "test node 1");
+		newVertex.setProperty("age", "20");
+		graph.commit();
+		graph.close();
+
+		// Reopens the graph, checks the properties.
+		graph = createGraph();
+		newVertex = graph.getVertex(newVertex.getId());
+		assertEquals("test node 1", newVertex.getProperty("name"));
+		assertEquals("20", newVertex.getProperty("age"));
+	}
+	
+	@Test
+	public void createEdgeWithProperties() {
+
+		// Creates an edge with type and age, and closes the graph.
+		IVertex start = graph.createVertex();
+		IVertex end = graph.createVertex();
+		IEdge newEdge = graph.createEdge(start, end);
+		newEdge.setProperty("EdgeType", "Knows");
+		newEdge.setProperty("age", "2");
+		graph.commit();
+		graph.close();
+
+		// Reopens the graph, checks the properties.
+		graph = createGraph();
+		newEdge = graph.getEdge(newEdge.getId());
+		assertEquals("Knows", newEdge.getProperty("EdgeType"));
+		assertEquals("2", newEdge.getProperty("age"));
+	}
+
 }

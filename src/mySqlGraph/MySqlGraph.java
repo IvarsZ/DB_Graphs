@@ -392,10 +392,10 @@ public class MySqlGraph implements IPersistentGraph {
 			// Creates tables for vertices, edges an their properties.
 			st.executeUpdate("CREATE TABLE IF NOT EXISTS "  + getNodesTableName() + " (id BIGINT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id))");
 			st.executeUpdate("CREATE TABLE IF NOT EXISTS "  + getNodesPropertiesTableName() + 
-					" (id BIGINT NOT NULL, PRIMARY KEY(id), p_key" + MYSQL_STRING + "NOT NULL, p_value" + MYSQL_STRING + "NOT NULL)");
+					" (id BIGINT NOT NULL, p_key" + MYSQL_STRING + "NOT NULL, p_value" + MYSQL_STRING + "NOT NULL)");
 			st.executeUpdate("CREATE TABLE IF NOT EXISTS " + getEdgesTableName() + " (id BIGINT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id), start BIGINT NOT NULL, end BIGINT NOT NULL)");
 			st.executeUpdate("CREATE TABLE IF NOT EXISTS "  + getEdgesPropertiesTableName() + 
-					" (id BIGINT NOT NULL, PRIMARY KEY(id), p_key" + MYSQL_STRING + "NOT NULL, p_value" + MYSQL_STRING + "NOT NULL)");
+					" (id BIGINT NOT NULL, p_key" + MYSQL_STRING + "NOT NULL, p_value" + MYSQL_STRING + "NOT NULL)");
 
 
 		} finally {
