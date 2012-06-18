@@ -3,7 +3,6 @@ package mySqlGraph;
 import exceptions.DataAccessException;
 import graphInterfaces.IVertex;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -28,19 +27,16 @@ public class MySqlVertex implements IVertex {
 	}
 
 	@Override
-	public void setProperty(String key, String value) {
-
+	public void setProperty(String key, String value) throws DataAccessException {
 		try {
 
-			// Makes the update statement and executes it.
-			PreparedStatement st = graph.getStatements().getSetVertexProperty();
-			st.setLong(1, id);
-			st.setString(2, key);
-			st.setString(3, value);
-			st.executeUpdate();
+			
+			// Executes the update statement.
+			graph.getStatements().executeSetVertexProperty(id, key, value);
+			
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException(e);
 		}
 	}
 
@@ -52,14 +48,12 @@ public class MySqlVertex implements IVertex {
 
 	@Override
 	public String getProperty(String key) throws DataAccessException {
+		ResultSet rs = null;
 		try {
 
 			
 			// Makes the query.
-			PreparedStatement st = graph.getStatements().getGetVertexProperty();
-			st.setLong(1, id);
-			st.setString(2, key);
-			ResultSet rs = st.executeQuery();
+			rs = graph.getStatements().executeGetVertexProperty(id, key);
 
 			// If there was a result returns it, otherwise null.
 			if (rs.next()) {
@@ -69,11 +63,11 @@ public class MySqlVertex implements IVertex {
 				return null;
 			}
 			
-			// TODO : close properly.
-			
 			
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
+		} finally {
+			if (rs != null) try { rs.close(); } catch (SQLException e) { /* Ignore */ };
 		}
 	}
 

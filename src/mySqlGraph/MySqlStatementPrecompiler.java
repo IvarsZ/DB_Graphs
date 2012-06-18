@@ -65,48 +65,70 @@ public class MySqlStatementPrecompiler {
 		getAllVertices.close();
 		getAllEdges.close();
 	}
-
-	protected PreparedStatement getCreateVertex() {
-		return createVertex;
-	}
-
-	protected PreparedStatement getCreateEdge() {
-		return createEdge;
-	}
-
-	protected PreparedStatement getGetVertexProperty() {
-		return getVertexProperty;
-	}
-
-	protected PreparedStatement getSetVertexProperty() {
-		return setVertexProperty;
-	}
-
-	protected PreparedStatement getGetEdgeProperty() {
-		return getEdgeProperty;
-	}
-
-	protected PreparedStatement getSetEdgeProperty() {
-		return setEdgeProperty;
-	}
-
-	protected PreparedStatement getGetVertex() {
-		return getVertex;
-	}
-
-	protected PreparedStatement getGetEdge() {
-		return getEdge;
+	
+	protected ResultSet executeCreateVertex() throws SQLException {
+		
+		// Executes the create vertex statement and returns result set with inserted id's.
+		createVertex.executeUpdate();
+		
+		return createVertex.getGeneratedKeys();
 	}
 	
-	protected ResultSet getEdge() throws SQLException {
-		return null;
+	protected ResultSet executeCreateEdge(long startId, long endId) throws SQLException {
+		
+		// Sets start and end ids, executes the create edge, and returns inserted id's.
+		createEdge.setLong(1, startId);
+		createEdge.setLong(2, endId);
+		createEdge.executeUpdate();
+		
+		return createEdge.getGeneratedKeys();
+	}
+	
+	protected ResultSet executeGetVertex(long vertexId) throws SQLException {
+		
+		getVertex.setLong(1, vertexId);
+		return getVertex.executeQuery();
+	}
+	
+	protected ResultSet executeGetEdge(long edgeId) throws SQLException {
+		
+		getEdge.setLong(1, edgeId);
+		return getEdge.executeQuery();
 	}
 
-	protected PreparedStatement getGetAllVertices() {
-		return getAllVertices;
+	protected ResultSet executeGetVertexProperty(long id, String key) throws SQLException {
+		getVertexProperty.setLong(1, id);
+		getVertexProperty.setString(2, key);
+		return getVertexProperty.executeQuery();
 	}
 
-	protected PreparedStatement getGetAllEdges() {
-		return getAllEdges;
+	protected void executeSetVertexProperty(long id, String key, String value) throws SQLException {
+		setVertexProperty.setLong(1, id);
+		setVertexProperty.setString(2, key);
+		setVertexProperty.setString(3, value);
+		setVertexProperty.executeUpdate();
+	}
+
+	protected ResultSet executeGetEdgeProperty(long id, String key) throws SQLException {
+		getEdgeProperty.setLong(1, id);
+		getEdgeProperty.setString(2, key);
+		return getEdgeProperty.executeQuery();
+	}
+
+	protected void executeSetEdgeProperty(long id, String key, String value) throws SQLException {
+		
+		// Sets id, key and value, then executes.
+		setEdgeProperty.setLong(1, id);
+		setEdgeProperty.setString(2, key);
+		setEdgeProperty.setString(3, value);
+		setEdgeProperty.executeUpdate();
+	}
+
+	protected ResultSet executeGetAllVertices() throws SQLException {
+		return getAllVertices.executeQuery();
+	}
+
+	protected ResultSet executeGetAllEdges() throws SQLException {
+		return getAllEdges.executeQuery();
 	}
 }

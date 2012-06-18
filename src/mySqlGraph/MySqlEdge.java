@@ -4,7 +4,6 @@ import exceptions.DataAccessException;
 import graphInterfaces.IEdge;
 import graphInterfaces.IVertex;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -41,19 +40,15 @@ public class MySqlEdge implements IEdge {
 	}
 
 	@Override
-	public void setProperty(String key, String value) {
-
+	public void setProperty(String key, String value) throws DataAccessException {
 		try {
+			
+			
+			graph.getStatements().executeSetEdgeProperty(id, key, value);
 
-			// Makes the update statement and executes it.
-			PreparedStatement st = graph.getStatements().getSetEdgeProperty();
-			st.setLong(1, id);
-			st.setString(2, key);
-			st.setString(3, value);
-			st.executeUpdate();
-
+			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException(e);
 		}
 	}
 
@@ -65,27 +60,26 @@ public class MySqlEdge implements IEdge {
 
 	@Override
 	public String getProperty(String key) throws DataAccessException {
+		ResultSet rs = null;
 		try {
 
 			
 			// Makes the query.
-			PreparedStatement st = graph.getStatements().getGetEdgeProperty();
-			st.setLong(1, id);
-			st.setString(2, key);
-			ResultSet rs = st.executeQuery();
+			rs = graph.getStatements().executeGetEdgeProperty(id, key);
 
 			// If there was a result returns it, otherwise null.
 			if (rs.next()) {
-				return rs.getString("p_value");
+				return rs.getString(1);
 			}
 			else {
 				return null;
 			}
-			// TODO : result set not closed.
 			
 			
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
+		} finally {
+			if (rs != null) try { rs.close(); } catch (SQLException e) { /* Ignore */ };
 		}
 	}
 

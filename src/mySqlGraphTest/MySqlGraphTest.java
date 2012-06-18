@@ -2,6 +2,8 @@ package mySqlGraphTest;
 
 import java.sql.SQLException;
 
+import exceptions.DataAccessException;
+
 import mySqlGraph.MySqlConnector;
 import mySqlGraph.MySqlGraph;
 import graphInterfaces.IPersistentGraph;
@@ -15,14 +17,15 @@ public class MySqlGraphTest extends PersistentGraphTest {
 
 	@Override
 	public IPersistentGraph createGraph() {
-
-		// TODO : can return null.
 		try {
+			
+			// Creates and returns new graph.
 			IPersistentGraph graph = new MySqlGraph("mysql_graph_test", getConnector());
 			return graph;
+			
+			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			throw new DataAccessException(e);
 		}
 	}
 }

@@ -22,8 +22,10 @@ public interface IPropertyContainer<K, V> {
 	 * 
 	 * @param key - the key identifying the value.
 	 * @param value - the value associated with the key.
+	 * 
+	 * @throws DataAccessException 
 	 */
-	public void setProperty(K key, V value);
+	public void setProperty(K key, V value) throws DataAccessException;
 	
 	/**
 	 * 

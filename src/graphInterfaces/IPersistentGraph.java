@@ -23,8 +23,10 @@ public interface IPersistentGraph {
 	 * 
 	 * @return - the newly created vertex.
 	 * 
+	 * @throws DataAccessException 
+	 * 
 	 */
-	public IVertex createVertex();
+	public IVertex createVertex() throws DataAccessException;
 
 	/**
 	 * 
@@ -37,8 +39,10 @@ public interface IPersistentGraph {
 	 * 
 	 * @throws IllegalArgumentException - if at least one of the vertexes doesn't belong to the graph.
 	 * 
+	 * @throws DataAccessException 
+	 * 
 	 */
-	public IEdge createEdge(IVertex start, IVertex end) throws IllegalArgumentException;
+	public IEdge createEdge(IVertex start, IVertex end) throws IllegalArgumentException, DataAccessException;
 	
 
 	/**
@@ -85,8 +89,10 @@ public interface IPersistentGraph {
 	 * 
 	 * Deletes all nodes and edges.
 	 * 
+	 * @throws DataAccessException 
+	 * 
 	 */
-	public void clear();
+	public void clear() throws DataAccessException;
 	
 	/**
 	 * 
@@ -97,22 +103,28 @@ public interface IPersistentGraph {
 	 * Other instances of the same graph, see the changes only
 	 * when they are committed.
 	 * 
+	 * @throws DataAccessException 
+	 * 
 	 */
-	public void commit();
+	public void commit() throws DataAccessException;
 	
 	/**
 	 * 
 	 * Rolls back the last changes made to the graph.
 	 * Cancels all changes done since the last commit.
 	 * 
+	 * @throws DataAccessException 
+	 * 
 	 */
-	public void rollback();
+	public void rollback() throws DataAccessException;
 	
 	/**
 	 * Properly closes the graph, releasing its resources.
 	 * 
 	 * All uncommitted changes are rolled back.
 	 * 
+	 * @throws DataAccessException 
+	 * 
 	 */
-	public void close();
+	public void close() throws DataAccessException;
 }
