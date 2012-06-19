@@ -11,9 +11,17 @@ public class Neo4jVertexIndex implements IIndex<Neo4jVertex> {
 	
 	private Index<Node> index;
 	private Neo4jGraph graph;
+	
+	
+
+	protected Neo4jVertexIndex(Index<Node> index, Neo4jGraph graph) {
+		this.index = index;
+		this.graph = graph;
+	}
 
 	@Override
 	public void add(Neo4jVertex vertex, String key, String value) {
+		graph.ensureInTransaction();
 		index.add(vertex.getNode(), key, value);
 	}
 

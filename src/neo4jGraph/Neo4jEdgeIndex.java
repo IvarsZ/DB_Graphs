@@ -12,8 +12,14 @@ public class Neo4jEdgeIndex implements IIndex<Neo4jEdge> {
 	private Index<Relationship> index;
 	private Neo4jGraph graph;
 
+	protected Neo4jEdgeIndex(Index<Relationship> index, Neo4jGraph graph) {
+		this.index = index;
+		this.graph = graph;
+	}
+
 	@Override
 	public void add(Neo4jEdge edge, String key, String value) {
+		graph.ensureInTransaction();
 		index.add(edge.getRelationship(), key, value);
 	}
 

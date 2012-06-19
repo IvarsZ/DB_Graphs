@@ -38,7 +38,7 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 		// Sets the path for the database and starts it.
 		this.graphDbPath = graphDbPath;
 		createDatabase();
-		index = new Neo4jIndexManager();
+		index = new Neo4jIndexManager(this);
 	}
 
 	private void createDatabase() {
@@ -145,35 +145,7 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 	public IIndexManager<Neo4jVertex, Neo4jEdge> index() {
 		return index;
 	}
-
-	private static void deleteFileOrDirectory( final File file ) {
-		if ( file.exists() ) {
-			if ( file.isDirectory() ) {
-				for ( File child : file.listFiles() ) {
-					deleteFileOrDirectory( child );
-				}
-			}
-			file.delete();
-		}
-	}
-
-	/**
-	 * Deletes the reference node (as not used).
-	 */
-	private void deleteReferenceNode() {
-
-		// Commits the deletion as soon as done.
-		Transaction tx = graphDb.beginTx();
-		try {
-			graphDb.getReferenceNode().delete();
-			tx.success();
-		} catch (NotFoundException e) {
-
-		} finally {
-			tx.finish();
-		}
-	}
-
+	
 	@Override
 	public void clear() {
 
@@ -219,4 +191,38 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 			transaction = graphDb.beginTx();
 		}
 	}
+	
+	protected GraphDatabaseService getNeo4jDatabase() {
+		return graphDb;
+	}
+
+	private static void deleteFileOrDirectory( final File file ) {
+		if ( file.exists() ) {
+			if ( file.isDirectory() ) {
+				for ( File child : file.listFiles() ) {
+					deleteFileOrDirectory( child );
+				}
+			}
+			file.delete();
+		}
+	}
+
+	/**
+	 * Deletes the reference node (as not used).
+	 */
+	private void deleteReferenceNode() {
+
+		// Commits the deletion as soon as done.
+		Transaction tx = graphDb.beginTx();
+		try {
+			graphDb.getReferenceNode().delete();
+			tx.success();
+		} catch (NotFoundException e) {
+
+		} finally {
+			tx.finish();
+		}
+	}
+
+
 }
