@@ -118,37 +118,12 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 
 			@Override
 			public Iterator<Neo4jVertex> iterator() {
-				return new VertexIterator();
+				return new Neo4jVertexIterator(GlobalGraphOperations.at(graphDb).getAllNodes().iterator(), Neo4jGraph.this);
 			}
-
 		};
 	}
 
-	private class VertexIterator implements Iterator<Neo4jVertex> {
-
-		Iterator<Node> nodeIterator;
-
-		public VertexIterator() {
-			nodeIterator = GlobalGraphOperations.at(graphDb).getAllNodes().iterator();
-		}
-
-		@Override
-		public boolean hasNext() {
-			return nodeIterator.hasNext();
-		}
-
-		@Override
-		public Neo4jVertex next() {
-			return new Neo4jVertex(nodeIterator.next(), Neo4jGraph.this);
-
-		}
-
-		@Override
-		public void remove() {
-			nodeIterator.remove();
-		}
-
-	}
+	
 
 	@Override
 	public Iterable<Neo4jEdge> getEdges() {
@@ -156,35 +131,9 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 
 			@Override
 			public Iterator<Neo4jEdge> iterator() {
-				return new EdgeIterator();
+				return new Neo4jEdgeIterator(GlobalGraphOperations.at(graphDb).getAllRelationships().iterator(), Neo4jGraph.this);
 			}
-
 		};
-	}
-
-	private class EdgeIterator implements Iterator<Neo4jEdge> {
-
-		Iterator<Relationship> edgeIterator;
-
-		public EdgeIterator() {
-			edgeIterator = GlobalGraphOperations.at(graphDb).getAllRelationships().iterator();
-		}
-
-		@Override
-		public boolean hasNext() {
-			return edgeIterator.hasNext();
-		}
-
-		@Override
-		public Neo4jEdge next() {
-			return new Neo4jEdge(edgeIterator.next(), Neo4jGraph.this);
-		}
-
-		@Override
-		public void remove() {
-			edgeIterator.remove();
-		}
-
 	}
 	
 	@Override
@@ -245,7 +194,7 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 
 	@Override
 	public void commit() {
-
+		
 		if (transaction != null) {
 			transaction.success();
 			transaction.finish();

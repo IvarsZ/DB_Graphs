@@ -97,4 +97,8 @@ public class Neo4jEdge implements IEdge {
 
 		return false;
 	}
+	
+	protected Relationship getRelationship() {
+		return edge;
+	}
 }
