@@ -1,19 +1,19 @@
 package mySqlGraphTest;
 
-import java.sql.SQLException;
-
 import exceptions.DataAccessException;
-
-import mySqlGraph.MySqlGraph;
-import mySqlGraph.MySqlGraphOperator;
-import graphInterfaces.IGraphOperator;
 import graphInterfaces.IPersistentGraph;
 import graphTests.GraphOperatorTest;
 
-public class MySqlGraphOperatorTest extends GraphOperatorTest {
+import java.sql.SQLException;
+
+import mySqlGraph.MySqlEdge;
+import mySqlGraph.MySqlGraph;
+import mySqlGraph.MySqlVertex;
+
+public class MySqlGraphOperatorTest extends GraphOperatorTest<MySqlVertex, MySqlEdge> {
 	
 	@Override
-	public IPersistentGraph createGraph() {
+	public IPersistentGraph<MySqlVertex, MySqlEdge> createGraph() {
 		try {
 			
 			
@@ -24,18 +24,4 @@ public class MySqlGraphOperatorTest extends GraphOperatorTest {
 			throw new DataAccessException(e);
 		}
 	}
-
-	@Override
-	public IGraphOperator createOperator(IPersistentGraph graph) {
-		try {
-			
-			
-			return new MySqlGraphOperator(graph);
-			
-			
-		} catch (SQLException e) {
-			throw new DataAccessException(e);
-		}
-	}
-
 }

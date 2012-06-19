@@ -1,8 +1,7 @@
 package neo4jGraph;
 
-import graphInterfaces.IEdge;
+import graphInterfaces.IGraphOperator;
 import graphInterfaces.IPersistentGraph;
-import graphInterfaces.IVertex;
 
 import java.io.File;
 import java.util.Iterator;
@@ -16,7 +15,7 @@ import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.tooling.GlobalGraphOperations;
 
-public class Neo4jGraph implements IPersistentGraph {
+public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 
 	protected static enum RelTypes implements RelationshipType {
 		UNDEFINED
@@ -45,14 +44,14 @@ public class Neo4jGraph implements IPersistentGraph {
 	}
 
 	@Override
-	public IVertex createVertex() {
+	public Neo4jVertex createVertex() {
 		ensureInTransaction();
 		Node node = graphDb.createNode();
 		return new Neo4jVertex(node, this);
 	}
 
 	@Override
-	public IEdge createEdge(IVertex start, IVertex end)
+	public Neo4jEdge createEdge(Neo4jVertex start, Neo4jVertex end)
 			throws IllegalArgumentException {
 
 		// If both start and end are from this graph,
@@ -70,7 +69,7 @@ public class Neo4jGraph implements IPersistentGraph {
 		throw new IllegalArgumentException("Vertex " + start + " or " + end + " doesn't belong the the graph");
 	}
 
-	private boolean belongToGraph(IVertex vertex) {
+	private boolean belongToGraph(Neo4jVertex vertex) {
 
 		// If it is Neo4j vertex, 
 		if (vertex instanceof Neo4jVertex) {
@@ -84,7 +83,7 @@ public class Neo4jGraph implements IPersistentGraph {
 	}
 
 	@Override
-	public IVertex getVertex(long id) {
+	public Neo4jVertex getVertex(long id) {
 
 		try {
 			return new Neo4jVertex(graphDb.getNodeById(id), this);
@@ -97,32 +96,32 @@ public class Neo4jGraph implements IPersistentGraph {
 	}
 
 	@Override
-	public IEdge getEdge(long id) {
+	public Neo4jEdge getEdge(long id) {
 		
 		try {
 			return new Neo4jEdge(graphDb.getRelationshipById(id), this);
 		}
 
-		// If the edge wasn't found return null, to conform to the interface.
+		// If the edge wasn't fNeo4jEdgeound return null, to conform to the interface.
 		catch (NotFoundException e) {
 			return null;
 		}
 	}
 
 	@Override
-	public Iterable<IVertex> getVertices() {
+	public Iterable<Neo4jVertex> getVertices() {
 
-		return new Iterable<IVertex>() {
+		return new Iterable<Neo4jVertex>() {
 
 			@Override
-			public Iterator<IVertex> iterator() {
+			public Iterator<Neo4jVertex> iterator() {
 				return new VertexIterator();
 			}
 
 		};
 	}
 
-	private class VertexIterator implements Iterator<IVertex> {
+	private class VertexIterator implements Iterator<Neo4jVertex> {
 
 		Iterator<Node> nodeIterator;
 
@@ -136,7 +135,7 @@ public class Neo4jGraph implements IPersistentGraph {
 		}
 
 		@Override
-		public IVertex next() {
+		public Neo4jVertex next() {
 			return new Neo4jVertex(nodeIterator.next(), Neo4jGraph.this);
 
 		}
@@ -149,18 +148,18 @@ public class Neo4jGraph implements IPersistentGraph {
 	}
 
 	@Override
-	public Iterable<IEdge> getEdges() {
-		return new Iterable<IEdge>() {
+	public Iterable<Neo4jEdge> getEdges() {
+		return new Iterable<Neo4jEdge>() {
 
 			@Override
-			public Iterator<IEdge> iterator() {
+			public Iterator<Neo4jEdge> iterator() {
 				return new EdgeIterator();
 			}
 
 		};
 	}
 
-	private class EdgeIterator implements Iterator<IEdge> {
+	private class EdgeIterator implements Iterator<Neo4jEdge> {
 
 		Iterator<Relationship> edgeIterator;
 
@@ -174,7 +173,7 @@ public class Neo4jGraph implements IPersistentGraph {
 		}
 
 		@Override
-		public IEdge next() {
+		public Neo4jEdge next() {
 			return new Neo4jEdge(edgeIterator.next(), Neo4jGraph.this);
 		}
 
@@ -183,6 +182,11 @@ public class Neo4jGraph implements IPersistentGraph {
 			edgeIterator.remove();
 		}
 
+	}
+	
+	@Override
+	public IGraphOperator<Neo4jVertex, Neo4jEdge> getOperator() {
+		return new Neo4jGraphOperator(this);
 	}
 
 	private static void deleteFileOrDirectory( final File file ) {
@@ -199,7 +203,7 @@ public class Neo4jGraph implements IPersistentGraph {
 	/**
 	 * Deletes the reference node (as not used).
 	 */
-	protected void deleteReferenceNode() {
+	private void deleteReferenceNode() {
 
 		// Commits the deletion as soon as done.
 		Transaction tx = graphDb.beginTx();

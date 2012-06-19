@@ -2,15 +2,17 @@ package graphInterfaces;
 
 import java.util.Set;
 
-public interface IGraphOperator {
+public interface IGraphOperator<V extends IVertex, E extends IEdge> {
 
 	/**
+	 * 
 	 * Finds all neighbours of a given vertex. The neighbours are all vertices that have
 	 * either ingoing or outgoing relationship with the vertex.
 	 * 
 	 * @param start - vertex whose neighbours are found.
+	 * 
 	 */
-	public Set<IVertex> findNeighbours(IVertex start);
+	public Set<V> findNeighbours(V start);
 	
 	/**
 	 * 
@@ -21,7 +23,8 @@ public interface IGraphOperator {
 	 * @param atDepth
 	 * 
 	 * @return
+	 * 
 	 */
-	public Set<IVertex> findNeighbours(IVertex start, int atDepth);
+	public Set<V> findNeighbours(V start, int atDepth);
 	
 }

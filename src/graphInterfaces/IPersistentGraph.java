@@ -15,7 +15,7 @@ import exceptions.DataAccessException;
  * @author iz2
  *
  */
-public interface IPersistentGraph {
+public interface IPersistentGraph<V extends IVertex, E extends IEdge> {
 	
 	/**
 	 * 
@@ -26,7 +26,7 @@ public interface IPersistentGraph {
 	 * @throws DataAccessException 
 	 * 
 	 */
-	public IVertex createVertex() throws DataAccessException;
+	public V createVertex() throws DataAccessException;
 
 	/**
 	 * 
@@ -42,7 +42,7 @@ public interface IPersistentGraph {
 	 * @throws DataAccessException 
 	 * 
 	 */
-	public IEdge createEdge(IVertex start, IVertex end) throws IllegalArgumentException, DataAccessException;
+	public E createEdge(V start, V end) throws IllegalArgumentException, DataAccessException;
 	
 
 	/**
@@ -54,7 +54,7 @@ public interface IPersistentGraph {
 	 * @return the vertex with the index, or null if there is no vertex with the index.
 	 * 
 	 */
-	public IVertex getVertex(long id) throws DataAccessException;
+	public V getVertex(long id) throws DataAccessException;
 
 	/**
 	 * 
@@ -65,7 +65,7 @@ public interface IPersistentGraph {
 	 * @return the vertex with the index, or null if there is no vertex with the index.
 	 * 
 	 */
-	public IEdge getEdge(long id) throws DataAccessException;
+	public E getEdge(long id) throws DataAccessException;
 
 	/**
 	 * 
@@ -74,7 +74,7 @@ public interface IPersistentGraph {
 	 * @return a set of vertices.
 	 * 
 	 */
-	public Iterable<IVertex> getVertices();
+	public Iterable<V> getVertices();
 	
 	/**
 	 *
@@ -83,7 +83,15 @@ public interface IPersistentGraph {
 	 * @return a set of edges.
 	 *
 	 */
-	public Iterable<IEdge> getEdges();
+	public Iterable<E> getEdges();
+	
+	/**
+	 * 
+	 * Creates and returns a new instance of graph operator. TODO : new operator (?).
+	 * 
+	 * @return
+	 */
+	public IGraphOperator<V, E> getOperator();
 	
 	/**
 	 * 

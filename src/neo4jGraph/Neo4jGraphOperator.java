@@ -1,8 +1,6 @@
 package neo4jGraph;
 
 import graphInterfaces.IGraphOperator;
-import graphInterfaces.IPersistentGraph;
-import graphInterfaces.IVertex;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,30 +12,22 @@ import org.neo4j.graphdb.traversal.Evaluators;
 import org.neo4j.graphdb.traversal.TraversalDescription;
 import org.neo4j.kernel.Traversal;
 
-public class Neo4jGraphOperator implements IGraphOperator {
+public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge> {
 
 	private Neo4jGraph graph;
 
-	public Neo4jGraphOperator(IPersistentGraph neo4jGraph) {
-
-		if (neo4jGraph instanceof Neo4jGraph) {
-
-			graph = (Neo4jGraph) neo4jGraph;
-
-		}
-		else {
-			throw new IllegalArgumentException("Graph " + neo4jGraph + " isn't neo4j graph");
-		}
+	protected Neo4jGraphOperator(Neo4jGraph neo4jGraph) {
+		graph = (Neo4jGraph) neo4jGraph;
 	}
 
 	@Override
-	public Set<IVertex> findNeighbours(IVertex start) {
+	public Set<Neo4jVertex> findNeighbours(Neo4jVertex start) {
 
 		if (start instanceof Neo4jVertex) {
 
 			Node node = ((Neo4jVertex) start).getNode();
 
-			Set<IVertex> neighbours = new HashSet<IVertex>();
+			Set<Neo4jVertex> neighbours = new HashSet<Neo4jVertex>();
 
 			// Iterates over all relationships of this node,
 			for (Relationship r : node.getRelationships()) {
@@ -54,11 +44,11 @@ public class Neo4jGraphOperator implements IGraphOperator {
 	}
 
 	@Override
-	public Set<IVertex> findNeighbours(IVertex start, int atDepth) {
+	public Set<Neo4jVertex> findNeighbours(Neo4jVertex start, int atDepth) {
 
 		if (start instanceof Neo4jVertex) {
 
-			Set<IVertex> neighbours = new HashSet<IVertex>();
+			Set<Neo4jVertex> neighbours = new HashSet<Neo4jVertex>();
 
 			Node node = ((Neo4jVertex) start).getNode();
 

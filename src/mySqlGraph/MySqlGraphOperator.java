@@ -2,8 +2,6 @@ package mySqlGraph;
 
 import exceptions.DataAccessException;
 import graphInterfaces.IGraphOperator;
-import graphInterfaces.IPersistentGraph;
-import graphInterfaces.IVertex;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +12,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
-public class MySqlGraphOperator implements IGraphOperator {
+public class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 
 	private static final String MARK_DEPTH_COLUMN = "depth_in_findNeighbours";
 
@@ -26,9 +24,7 @@ public class MySqlGraphOperator implements IGraphOperator {
 	private PreparedStatement markDepthStatement;
 	private PreparedStatement getDepthStatement;
 
-	public MySqlGraphOperator(IPersistentGraph mySqlGraph) throws SQLException, IllegalArgumentException {
-
-		if (mySqlGraph instanceof MySqlGraph) {
+	protected MySqlGraphOperator(MySqlGraph mySqlGraph) throws SQLException {
 
 			this.graph = (MySqlGraph) mySqlGraph;
 
@@ -37,20 +33,16 @@ public class MySqlGraphOperator implements IGraphOperator {
 
 			markDepthStatement = graph.getMySqlConnection().prepareStatement("UPDATE " + graph.getNodesTableName() + " SET " + MARK_DEPTH_COLUMN + " = ? WHERE id = ? ;");
 			getDepthStatement = graph.getMySqlConnection().prepareStatement("SELECT " + MARK_DEPTH_COLUMN + " FROM "  + graph.getNodesTableName() + " WHERE id = ? ;" );
-		}
-		else {
-			throw new IllegalArgumentException("Graph " + mySqlGraph + " isn't mysql graph");
-		}
 	}
 
 	@Override
-	public Set<IVertex> findNeighbours(IVertex start) {
+	public Set<MySqlVertex> findNeighbours(MySqlVertex start) {
 		ResultSet outgoing = null;
 		ResultSet ingoing = null;
 		try {
 
 
-			Set<IVertex> neighbours = new HashSet<IVertex>();
+			Set<MySqlVertex> neighbours = new HashSet<MySqlVertex>();
 
 			// Queries all nodes that are connected to the node and adds their ids to the neighbours set.
 			outgoing = executeGetOutgoingEdges(start.getId());
@@ -76,10 +68,10 @@ public class MySqlGraphOperator implements IGraphOperator {
 	}
 
 	@Override
-	public Set<IVertex> findNeighbours(IVertex start, int atDepth) {
+	public Set<MySqlVertex> findNeighbours(MySqlVertex start, int atDepth) {
 		try {
 
-		Set<IVertex> neighbours = new HashSet<IVertex>();
+		Set<MySqlVertex> neighbours = new HashSet<MySqlVertex>();
 
 		createMarkDepthColumn();
 

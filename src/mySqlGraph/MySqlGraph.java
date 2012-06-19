@@ -1,9 +1,8 @@
 package mySqlGraph;
 
 import exceptions.DataAccessException;
-import graphInterfaces.IEdge;
+import graphInterfaces.IGraphOperator;
 import graphInterfaces.IPersistentGraph;
-import graphInterfaces.IVertex;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,7 +11,7 @@ import java.sql.Statement;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class MySqlGraph implements IPersistentGraph {
+public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 
 	private static final String MYSQL_STRING = " VARCHAR(50) ";
 
@@ -37,7 +36,7 @@ public class MySqlGraph implements IPersistentGraph {
 	}
 
 	@Override
-	public IVertex createVertex() throws DataAccessException {
+	public MySqlVertex createVertex() throws DataAccessException {
 		ResultSet rs = null;
 		try {
 
@@ -59,7 +58,7 @@ public class MySqlGraph implements IPersistentGraph {
 	}
 
 	@Override
-	public IEdge createEdge(IVertex start, IVertex end)
+	public MySqlEdge createEdge(MySqlVertex start, MySqlVertex end)
 			throws IllegalArgumentException, DataAccessException {
 		ResultSet rs = null;
 		try {
@@ -91,7 +90,7 @@ public class MySqlGraph implements IPersistentGraph {
 	}
 
 	@Override
-	public IVertex getVertex(long id) throws DataAccessException {
+	public MySqlVertex getVertex(long id) throws DataAccessException {
 		try {
 
 
@@ -114,7 +113,7 @@ public class MySqlGraph implements IPersistentGraph {
 	}
 
 	@Override
-	public IEdge getEdge(long id) throws DataAccessException {
+	public MySqlEdge getEdge(long id) throws DataAccessException {
 		ResultSet rs = null;
 		try {
 
@@ -140,10 +139,10 @@ public class MySqlGraph implements IPersistentGraph {
 	}
 
 	@Override
-	public Iterable<IVertex> getVertices() {
-		return new Iterable<IVertex>() {
+	public Iterable<MySqlVertex> getVertices() {
+		return new Iterable<MySqlVertex>() {
 			@Override
-			public Iterator<IVertex> iterator() {
+			public Iterator<MySqlVertex> iterator() {
 				try {
 
 
@@ -158,7 +157,7 @@ public class MySqlGraph implements IPersistentGraph {
 		};
 	}
 
-	private class VertexIterator implements Iterator<IVertex> {
+	private class VertexIterator implements Iterator<MySqlVertex> {
 
 		// TODO : resource closure.
 
@@ -192,7 +191,7 @@ public class MySqlGraph implements IPersistentGraph {
 		}
 
 		@Override
-		public IVertex next() {
+		public MySqlVertex next() {
 			try {
 
 				// If there is a next vertex creates and returns it.
@@ -220,10 +219,10 @@ public class MySqlGraph implements IPersistentGraph {
 	}
 
 	@Override
-	public Iterable<IEdge> getEdges() {
-		return new Iterable<IEdge>() {
+	public Iterable<MySqlEdge> getEdges() {
+		return new Iterable<MySqlEdge>() {
 			@Override
-			public Iterator<IEdge> iterator() {
+			public Iterator<MySqlEdge> iterator() {
 				try {
 
 					// Returns new edge iterator.
@@ -238,7 +237,7 @@ public class MySqlGraph implements IPersistentGraph {
 		};
 	}
 
-	private class EdgeIterator implements Iterator<IEdge> {
+	private class EdgeIterator implements Iterator<MySqlEdge> {
 
 		// TODO : resource closure.
 
@@ -272,7 +271,7 @@ public class MySqlGraph implements IPersistentGraph {
 		}
 
 		@Override
-		public IEdge next() {
+		public MySqlEdge next() {
 			try {
 
 
@@ -297,6 +296,19 @@ public class MySqlGraph implements IPersistentGraph {
 
 			// TODO : Implement?
 			throw new UnsupportedOperationException("Removal not supported");
+		}
+	}
+	
+	@Override
+	public IGraphOperator<MySqlVertex, MySqlEdge> getOperator() {
+		try {
+			
+			
+			return new MySqlGraphOperator(this);
+			
+		// TODO : is this really necessary.
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
 		}
 	}
 
@@ -433,7 +445,7 @@ public class MySqlGraph implements IPersistentGraph {
 		}
 	}
 
-	private boolean belongToGraph(IVertex vertex) throws DataAccessException {
+	private boolean belongToGraph(MySqlVertex vertex) throws DataAccessException {
 		try {
 
 			// If it is MySql vertex, 
