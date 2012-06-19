@@ -2,6 +2,7 @@ package mySqlGraph;
 
 import exceptions.DataAccessException;
 import graphInterfaces.IGraphOperator;
+import graphInterfaces.IIndexManager;
 import graphInterfaces.IPersistentGraph;
 
 import java.sql.Connection;
@@ -20,6 +21,8 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 	private Connection mySql;
 
 	private MySqlStatementPrecompiler statements;
+	
+	private MySqlIndexManager index;
 
 	public MySqlGraph(String graphName, MySqlConnector connector) throws SQLException {
 
@@ -30,6 +33,7 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 		mySql.setAutoCommit(false);
 
 		statements = new MySqlStatementPrecompiler(this);
+		index = new MySqlIndexManager();
 
 		// Creates the tables for representing the graph.
 		createTables();
@@ -311,6 +315,11 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 			throw new DataAccessException(e);
 		}
 	}
+	
+	@Override
+	public IIndexManager<MySqlVertex, MySqlEdge> index() {
+		return index;
+	}
 
 	@Override
 	public void clear() throws DataAccessException {
@@ -408,7 +417,6 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 			st.executeUpdate("CREATE TABLE IF NOT EXISTS " + getEdgesTableName() + " (id BIGINT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id), start BIGINT NOT NULL, end BIGINT NOT NULL)");
 			st.executeUpdate("CREATE TABLE IF NOT EXISTS "  + getEdgesPropertiesTableName() + 
 					" (id BIGINT NOT NULL, p_key" + MYSQL_STRING + "NOT NULL, p_value" + MYSQL_STRING + "NOT NULL)");
-
 
 		} finally {
 			st.close();

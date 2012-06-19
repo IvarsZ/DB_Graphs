@@ -1,6 +1,7 @@
 package neo4jGraph;
 
 import graphInterfaces.IGraphOperator;
+import graphInterfaces.IIndexManager;
 import graphInterfaces.IPersistentGraph;
 
 import java.io.File;
@@ -24,6 +25,7 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 	private GraphDatabaseService graphDb;
 	private String graphDbPath;
 	private Transaction transaction;
+	private Neo4jIndexManager index;
 
 	/**
 	 * 
@@ -36,6 +38,7 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 		// Sets the path for the database and starts it.
 		this.graphDbPath = graphDbPath;
 		createDatabase();
+		index = new Neo4jIndexManager();
 	}
 
 	private void createDatabase() {
@@ -187,6 +190,11 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 	@Override
 	public IGraphOperator<Neo4jVertex, Neo4jEdge> getOperator() {
 		return new Neo4jGraphOperator(this);
+	}
+	
+	@Override
+	public IIndexManager<Neo4jVertex, Neo4jEdge> index() {
+		return index;
 	}
 
 	private static void deleteFileOrDirectory( final File file ) {

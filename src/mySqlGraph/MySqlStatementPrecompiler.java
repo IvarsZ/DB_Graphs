@@ -5,7 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
+/**
+ * 
+ * TODO : better name.
+ * 
+ * @author iz2
+ *
+ */
 public class MySqlStatementPrecompiler {
 
 	private PreparedStatement createVertex;

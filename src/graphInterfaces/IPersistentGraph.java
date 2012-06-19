@@ -77,6 +77,15 @@ public interface IPersistentGraph<V extends IVertex, E extends IEdge> {
 	public Iterable<V> getVertices();
 	
 	/**
+	 * 
+	 * Gets the index manager associated with this graph.
+	 * 
+	 * @return
+	 * 
+	 */
+	public IIndexManager<V, E> index();
+	
+	/**
 	 *
 	 * Gets all edges in the graph.
 	 * 
