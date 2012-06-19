@@ -14,5 +14,4 @@ public class Neo4jIndexTest extends IndexTest<Neo4jVertex, Neo4jEdge> {
 	public IPersistentGraph<Neo4jVertex, Neo4jEdge> createGraph() {
 		return new Neo4jGraph(path);
 	}
-
 }

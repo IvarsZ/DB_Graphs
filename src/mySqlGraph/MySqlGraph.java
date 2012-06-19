@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
 
 public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 
-	private static final String MYSQL_STRING = " VARCHAR(50) ";
+	protected static final String MYSQL_STRING = " VARCHAR(50) ";
 
 	private String graphName;
 
@@ -33,7 +33,7 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 		mySql.setAutoCommit(false);
 
 		statements = new MySqlStatementPrecompiler(this);
-		index = new MySqlIndexManager();
+		index = new MySqlIndexManager(this);
 
 		// Creates the tables for representing the graph.
 		createTables();
@@ -148,78 +148,17 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 			@Override
 			public Iterator<MySqlVertex> iterator() {
 				try {
-
+					
 
 					// Returns the vertex iterator.
-					return new VertexIterator();
+					return new MySqlVertexIterator(statements.executeGetAllVertices(), MySqlGraph.this);
 
-
+					
 				} catch (SQLException e) {
 					throw new DataAccessException(e);
 				}
 			}
 		};
-	}
-
-	private class VertexIterator implements Iterator<MySqlVertex> {
-
-		// TODO : resource closure.
-
-		ResultSet vertexIterator;
-
-		public VertexIterator() throws SQLException {
-
-			// Query all vertices.
-			vertexIterator = getStatements().executeGetAllVertices();
-
-		}
-
-		@Override
-		public boolean hasNext() {
-			try {
-
-
-				boolean hasNext = vertexIterator.next();
-				if(hasNext) {
-
-					// Reset the cursor back to its previous position.
-					vertexIterator.previous();
-				}
-
-				return hasNext;
-
-
-			} catch (SQLException e) {
-				throw new DataAccessException(e);
-			}
-		}
-
-		@Override
-		public MySqlVertex next() {
-			try {
-
-				// If there is a next vertex creates and returns it.
-				if (vertexIterator.next()) {
-					return new MySqlVertex(vertexIterator.getLong(1), MySqlGraph.this);
-				}
-
-				// Otherwise throws NoSuchElementException.
-				else {
-					throw new NoSuchElementException("Vertex Iterator " + vertexIterator + " has no more vertices.");
-				}
-
-			} catch (SQLException e) {
-				throw new DataAccessException(e);
-			}
-		}
-
-		@Override
-		public void remove() {
-
-			// TODO : Implement?
-			throw new UnsupportedOperationException("Removal not supported");
-		}
-
 	}
 
 	@Override
@@ -385,7 +324,7 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 		return statements;
 	}
 
-	private String getName() {
+	protected String getName() {
 		return graphName;
 	}
 
