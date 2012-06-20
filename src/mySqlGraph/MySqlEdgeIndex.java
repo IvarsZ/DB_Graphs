@@ -10,16 +10,15 @@ import exceptions.DataAccessException;
 
 import graphInterfaces.IIndex;
 
-public class MySqlVertexIndex implements IIndex<MySqlVertex> {
-
+public class MySqlEdgeIndex implements IIndex<MySqlEdge>{
+	
 	private MySqlGraph graph;
 
 	private PreparedStatement addToIndex;
 	private PreparedStatement getFromIndex;
 	private PreparedStatement getDuplicateFromIndex;
 
-
-	protected MySqlVertexIndex(String tableName, MySqlGraph graph) throws SQLException {
+	protected MySqlEdgeIndex(String tableName, MySqlGraph graph) throws SQLException {
 		Statement st = graph.getMySqlConnection().createStatement();
 		try {
 			
@@ -40,19 +39,19 @@ public class MySqlVertexIndex implements IIndex<MySqlVertex> {
 		getFromIndex = graph.getMySqlConnection().prepareStatement("SELECT * FROM " + tableName + " WHERE p_key = ? AND p_value = ?");
 		getDuplicateFromIndex = graph.getMySqlConnection().prepareStatement("SELECT * FROM " + tableName + " WHERE p_key = ? AND p_value = ? AND id = ?");
 	}
-
+	
 	@Override
-	public void add(MySqlVertex vertex, String key, String value) {
+	public void add(MySqlEdge edge, String key, String value) {
 		ResultSet duplicates = null;
 		try {
 			
 
 			// Checks that there are no duplicates.
-			duplicates = executeGetDuplicateFromIndex(key, value, vertex.getId());
+			duplicates = executeGetDuplicateFromIndex(key, value, edge.getId());
 			if (duplicates.next() == false) {
 
 				// Adds the key, value, id triple to the index table.
-				executeAddToIndex(key, value, vertex.getId());
+				executeAddToIndex(key, value, edge.getId());
 			}
 			
 			
@@ -64,15 +63,15 @@ public class MySqlVertexIndex implements IIndex<MySqlVertex> {
 	}
 
 	@Override
-	public Iterable<MySqlVertex> get(final String key, final String value) {
-		return new Iterable<MySqlVertex>() {
+	public Iterable<MySqlEdge> get(final String key, final String value) {
+		return new Iterable<MySqlEdge>() {
 
 			@Override
-			public Iterator<MySqlVertex> iterator() {
+			public Iterator<MySqlEdge> iterator() {
 				try {
 
 					// Creates vertex iterator from the rows that have the same key and value.
-					return new MySqlVertexIterator(executeGetFromIndex(key, value), graph);
+					return new MySqlEdgeIterator(executeGetFromIndex(key, value), graph);
 
 
 				} catch (SQLException e) {
@@ -82,7 +81,7 @@ public class MySqlVertexIndex implements IIndex<MySqlVertex> {
 
 		};
 	}
-
+	
 	private void executeAddToIndex(String key, String value, long id) throws SQLException {
 		addToIndex.setString(1, key);
 		addToIndex.setString(2, value);
@@ -102,5 +101,4 @@ public class MySqlVertexIndex implements IIndex<MySqlVertex> {
 		getDuplicateFromIndex.setLong(3, id);
 		return getDuplicateFromIndex.executeQuery();
 	}
-
 }

@@ -169,7 +169,7 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 				try {
 
 					// Returns new edge iterator.
-					return new EdgeIterator();
+					return new MySqlEdgeIterator(statements.executeGetAllEdges(), MySqlGraph.this);
 
 
 				} catch (SQLException e) {
@@ -178,68 +178,6 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 			}
 
 		};
-	}
-
-	private class EdgeIterator implements Iterator<MySqlEdge> {
-
-		// TODO : resource closure.
-
-		ResultSet edgeIterator;
-
-		public EdgeIterator() throws SQLException {
-
-			// Query all edges.
-			edgeIterator = getStatements().executeGetAllEdges();
-
-		}
-
-		@Override
-		public boolean hasNext() {
-			try {
-
-
-				boolean hasNext = edgeIterator.next();
-				if(hasNext) {
-
-					// Reset the cursor back to its previous position
-					edgeIterator.previous();
-				}
-
-				return hasNext;
-
-
-			} catch (SQLException e) {
-				throw new DataAccessException(e);
-			}			
-		}
-
-		@Override
-		public MySqlEdge next() {
-			try {
-
-
-				// If there is a next edge creates and returns it.
-				if (edgeIterator.next()) {
-					return new MySqlEdge(edgeIterator.getLong(1), (MySqlVertex) getVertex(edgeIterator.getLong(2)), (MySqlVertex) getVertex(edgeIterator.getLong(3)), MySqlGraph.this);
-				}
-
-				// Otherwise throws NoSuchElementException.
-				else {
-					throw new NoSuchElementException("Edge Iterator " + edgeIterator + " has no more edges.");
-				}
-
-
-			} catch (SQLException e) {
-				throw new DataAccessException(e);
-			}
-		}
-
-		@Override
-		public void remove() {
-
-			// TODO : Implement?
-			throw new UnsupportedOperationException("Removal not supported");
-		}
 	}
 	
 	@Override
