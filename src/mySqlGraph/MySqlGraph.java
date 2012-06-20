@@ -268,6 +268,9 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 			// Recreates the tables.
 			dropTables();
 			createTables();
+			
+			// Deletes indexes.
+			index.clear();
 
 
 		} catch (SQLException e) {

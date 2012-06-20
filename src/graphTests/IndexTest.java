@@ -1,5 +1,6 @@
 package graphTests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import graphInterfaces.IEdge;
 import graphInterfaces.IIndex;
@@ -84,6 +85,7 @@ public abstract class IndexTest<V extends IVertex, E extends IEdge> {
 		Iterable<V> vertices = index.get("name", "equalnames");
 		assertTrue(contains(vertices, v1));
 		assertTrue(contains(vertices, v1));
+		assertEquals(2, size(vertices));
 	}
 
 	@Test
@@ -115,7 +117,6 @@ public abstract class IndexTest<V extends IVertex, E extends IEdge> {
 
 		// Gets and checks the vertex by its indexed name.
 		assertTrue(containsOnly(index.get("name", "john"), edge));
-
 	}
 
 	@Test
@@ -180,7 +181,6 @@ public abstract class IndexTest<V extends IVertex, E extends IEdge> {
 		// Gets and checks the vertex by the name and age.
 		assertTrue(containsOnly(index.get("name", "harry"), edge));
 		assertTrue(containsOnly(index.get("age", "23"), edge));
-
 	}
 
 	private static <F> boolean containsOnly(Iterable<F> entities, F entity) {
@@ -205,6 +205,17 @@ public abstract class IndexTest<V extends IVertex, E extends IEdge> {
 		}
 
 		return false;
+	}
+	
+	@SuppressWarnings("unused")
+	private static <F> long size(Iterable<F> entities) {
+		
+		int count = 0;
+		for (F f : entities) {
+			count++;
+		}
+
+		return count;
 	}
 
 }

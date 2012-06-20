@@ -13,6 +13,7 @@ public interface IIndex<T extends IPropertyContainer<String, String>> {
 	/**
 	 * 
 	 * Adds a key/value pair for a specified entity to the index.
+	 * Adding the same key-value pair to the same entity yields no changes.
 	 * 
 	 * @param entity
 	 * @param key
