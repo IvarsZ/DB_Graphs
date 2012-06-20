@@ -10,8 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
+/**
+ * 
+ * MySql implementation of the graph interface.
+ * 
+ * @author iz2
+ *
+ */
 public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 
 	protected static final String MYSQL_STRING = " VARCHAR(50) ";
@@ -20,7 +26,7 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 
 	private Connection mySql;
 
-	private MySqlStatementPrecompiler statements;
+	private GraphStatements statements;
 	
 	private MySqlIndexManager index;
 
@@ -32,7 +38,7 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 		mySql = connector.connect();
 		mySql.setAutoCommit(false);
 
-		statements = new MySqlStatementPrecompiler(this);
+		statements = new GraphStatements(this);
 		index = new MySqlIndexManager(this);
 
 		// Creates the tables for representing the graph.
@@ -187,7 +193,7 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 			
 			return new MySqlGraphOperator(this);
 			
-		// TODO : is this really necessary.
+			
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
 		}
@@ -220,9 +226,8 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 	public void close() throws DataAccessException {
 		try {
 
-			// Rolls back and closes all statements and the connection.
+			// Rolls back and closes the connection.
 			mySql.rollback();
-			statements.close();
 			mySql.close();
 
 
@@ -261,7 +266,7 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 		return mySql;
 	}
 
-	protected MySqlStatementPrecompiler getStatements() {
+	protected GraphStatements getStatements() {
 		return statements;
 	}
 

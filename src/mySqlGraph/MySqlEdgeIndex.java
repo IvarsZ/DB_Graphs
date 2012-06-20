@@ -10,6 +10,13 @@ import exceptions.DataAccessException;
 
 import graphInterfaces.IIndex;
 
+/**
+ * 
+ * IIndex implementation for MySql edges.
+ * 
+ * @author iz2
+ *
+ */
 public class MySqlEdgeIndex implements IIndex<MySqlEdge>{
 	
 	private MySqlGraph graph;

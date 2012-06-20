@@ -12,6 +12,13 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
+/**
+ * 
+ * MySql implementation of the graph operator.
+ * 
+ * @author iz2
+ *
+ */
 public class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 
 	private static final String MARK_DEPTH_COLUMN = "depth_in_findNeighbours";
@@ -23,6 +30,8 @@ public class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge
 
 	private PreparedStatement markDepthStatement;
 	private PreparedStatement getDepthStatement;
+	
+	// TODO : vertices from the same graph.
 
 	protected MySqlGraphOperator(MySqlGraph mySqlGraph) throws SQLException {
 

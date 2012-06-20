@@ -11,6 +11,13 @@ import exceptions.DataAccessException;
 import graphInterfaces.IIndex;
 import graphInterfaces.IIndexManager;
 
+/**
+ * 
+ * MySql implementation of the index manager interface.
+ * 
+ * @author iz2
+ *
+ */
 public class MySqlIndexManager implements IIndexManager<MySqlVertex, MySqlEdge> {
 
 	private MySqlGraph graph;

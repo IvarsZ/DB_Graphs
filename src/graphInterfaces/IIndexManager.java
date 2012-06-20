@@ -1,5 +1,14 @@
 package graphInterfaces;
 
+/**
+ * 
+ * Interface for managing indexes of vertices and edges.
+ * 
+ * @author iz2
+ *
+ * @param <V>
+ * @param <E>
+ */
 public interface IIndexManager<V extends IVertex, E extends IEdge> {
 	
 	/**

@@ -7,6 +7,13 @@ import java.util.NoSuchElementException;
 
 import exceptions.DataAccessException;
 
+/**
+ * 
+ * Iterator over MySql edges, used to iterate over result sets containing edges.
+ * 
+ * @author iz2
+ *
+ */
 public class MySqlEdgeIterator implements Iterator<MySqlEdge> {
 
 	MySqlGraph graph;
@@ -15,9 +22,14 @@ public class MySqlEdgeIterator implements Iterator<MySqlEdge> {
 
 	ResultSet edges;
 
+	/**
+	 * 
+	 * @param edges - has to contain id field.
+	 * @param graph
+	 * 
+	 */
 	public MySqlEdgeIterator(ResultSet edges, MySqlGraph graph) {
 		
-		// TODO : what if the result set is improperly formated.
 		this.edges = edges;
 		this.graph = graph;
 	}

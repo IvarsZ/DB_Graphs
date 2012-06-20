@@ -7,12 +7,12 @@ import java.sql.Statement;
 
 /**
  * 
- * TODO : better name.
+ * A class containing prepared statements used in the MySql graph implementation.
  * 
  * @author iz2
  *
  */
-public class MySqlStatementPrecompiler {
+public class GraphStatements {
 
 	private PreparedStatement createVertex;
 	private PreparedStatement createEdge;
@@ -29,7 +29,7 @@ public class MySqlStatementPrecompiler {
 	private PreparedStatement getAllVertices;
 	private PreparedStatement getAllEdges;
 
-	protected MySqlStatementPrecompiler(MySqlGraph graph) throws SQLException {
+	protected GraphStatements(MySqlGraph graph) throws SQLException {
 
 		createVertex = graph.getMySqlConnection().prepareStatement("INSERT INTO " + graph.getNodesTableName() + " (id) VALUES (DEFAULT)", Statement.RETURN_GENERATED_KEYS);
 		createEdge = graph.getMySqlConnection().prepareStatement("INSERT INTO " + graph.getEdgesTableName() + " (id, start, end) VALUES (DEFAULT, ?, ?)", Statement.RETURN_GENERATED_KEYS);
@@ -45,31 +45,6 @@ public class MySqlStatementPrecompiler {
 
 		getAllVertices = graph.getMySqlConnection().prepareStatement("SELECT * FROM " + graph.getNodesTableName());
 		getAllEdges = graph.getMySqlConnection().prepareStatement("SELECT * FROM " + graph.getEdgesTableName());
-	}
-
-	/**
-	 * 
-	 * Closes all precompiled statements.
-	 * 
-	 * @throws SQLException
-	 */
-	protected void close() throws SQLException {
-
-		// TODO : not all could be closed.
-		createVertex.close();
-		createEdge.close();
-
-		getVertexProperty.close();
-		setVertexProperty.close();
-
-		getEdgeProperty.close();
-		setEdgeProperty.close();
-
-		getVertex.close();
-		getEdge.close();
-
-		getAllVertices.close();
-		getAllEdges.close();
 	}
 	
 	protected ResultSet executeCreateVertex() throws SQLException {

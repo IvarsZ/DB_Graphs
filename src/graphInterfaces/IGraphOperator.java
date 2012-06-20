@@ -2,6 +2,15 @@ package graphInterfaces;
 
 import java.util.Set;
 
+/**
+ * 
+ * Contains various query methods that can be performed on a graph.
+ * 
+ * @author iz2
+ *
+ * @param <V> - vertices of the graph.
+ * @param <E> - edges of the graph.
+ */
 public interface IGraphOperator<V extends IVertex, E extends IEdge> {
 
 	/**

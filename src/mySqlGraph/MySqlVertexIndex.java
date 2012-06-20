@@ -10,6 +10,13 @@ import exceptions.DataAccessException;
 
 import graphInterfaces.IIndex;
 
+/**
+ * 
+ * IIndex implementation for MySql vertices.
+ * 
+ * @author iz2
+ *
+ */
 public class MySqlVertexIndex implements IIndex<MySqlVertex> {
 
 	private MySqlGraph graph;
@@ -102,5 +109,4 @@ public class MySqlVertexIndex implements IIndex<MySqlVertex> {
 		getDuplicateFromIndex.setLong(3, id);
 		return getDuplicateFromIndex.executeQuery();
 	}
-
 }

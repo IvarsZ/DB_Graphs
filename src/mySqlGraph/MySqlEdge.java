@@ -7,6 +7,13 @@ import graphInterfaces.IVertex;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * 
+ * MySql implementation of and edge.
+ * 
+ * @author iz2
+ *
+ */
 public class MySqlEdge implements IEdge {
 
 	private MySqlVertex start;

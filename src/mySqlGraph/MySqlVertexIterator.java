@@ -7,6 +7,13 @@ import java.util.NoSuchElementException;
 
 import exceptions.DataAccessException;
 
+/**
+ * 
+ * Iterator over MySql vertices, used to iterate over result sets containing vertices.
+ * 
+ * @author iz2
+ *
+ */
 public class MySqlVertexIterator implements Iterator<MySqlVertex> {
 
 	MySqlGraph graph;
@@ -15,9 +22,14 @@ public class MySqlVertexIterator implements Iterator<MySqlVertex> {
 
 	ResultSet vertices;
 
+	/**
+	 * 
+	 * @param vertices - has to contain id field.
+	 * 
+	 * @param graph
+	 */
 	public MySqlVertexIterator(ResultSet vertices, MySqlGraph graph) {
 		
-		// TODO : what if the result set is improperly formated.
 		this.vertices = vertices;
 		this.graph = graph;
 	}
@@ -48,7 +60,7 @@ public class MySqlVertexIterator implements Iterator<MySqlVertex> {
 
 			// If there is a next vertex creates and returns it.
 			if (vertices.next()) {
-				return new MySqlVertex(vertices.getLong("id"), graph);
+				return graph.getVertex(vertices.getLong("id"));
 			}
 
 			// Otherwise throws NoSuchElementException.

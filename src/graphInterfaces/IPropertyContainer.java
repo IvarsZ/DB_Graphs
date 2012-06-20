@@ -2,8 +2,6 @@ package graphInterfaces;
 
 import exceptions.DataAccessException;
 
-
-
 /**
  * 
  * An interface for an object that can have properties.
