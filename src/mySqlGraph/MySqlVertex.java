@@ -6,6 +6,8 @@ import graphInterfaces.IVertex;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+
 /**
  * 
  * MySql implementation of the vertex interface.
