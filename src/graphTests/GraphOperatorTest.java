@@ -8,7 +8,6 @@ import graphInterfaces.IIndex;
 import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IVertex;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 import org.junit.After;
