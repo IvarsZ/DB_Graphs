@@ -65,17 +65,10 @@ public class MySqlIndexManager implements IIndexManager<MySqlVertex, MySqlEdge> 
 		try {
 
 			
+			// Drops the vertex index tables.
 			st = graph.getMySqlConnection().createStatement();
 			rs = st.executeQuery("SELECT name FROM " + getVertexIndexNamesTable());
-
-			ArrayList<String> tablesToDrop = new ArrayList<String>();
-			while (rs.next()) {
-				tablesToDrop.add(graph.getName() + "_vertices_" + rs.getString(1));
-			}
-			
-			for (String tableToDrop : tablesToDrop) {
-				st.executeUpdate("DROP TABLE " + tableToDrop);
-			}
+			dropTables(rs, st);
 
 			// Recreates the names of vertex indexes table.
 			st.executeUpdate("DROP TABLE " + getVertexIndexNamesTable());
@@ -95,5 +88,17 @@ public class MySqlIndexManager implements IIndexManager<MySqlVertex, MySqlEdge> 
 
 	private String getVertexIndexNamesTable() {
 		return graph.getName() + "_vertex_indexes";
+	}
+	
+	private void dropTables(ResultSet rs, Statement st) throws SQLException {
+		
+		ArrayList<String> tablesToDrop = new ArrayList<String>();
+		while (rs.next()) {
+			tablesToDrop.add(graph.getName() + "_vertices_" + rs.getString(1));
+		}
+		
+		for (String tableToDrop : tablesToDrop) {
+			st.executeUpdate("DROP TABLE " + tableToDrop);
+		}
 	}
 }

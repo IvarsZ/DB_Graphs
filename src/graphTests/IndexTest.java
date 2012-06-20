@@ -104,6 +104,20 @@ public abstract class IndexTest<V extends IVertex, E extends IEdge> {
 	}
 
 	@Test
+	public void duplicateVertexIndex() {
+
+		// Adds a vertex, and indexes it by the same name twice.
+		V vertex = graph.createVertex();
+		IIndex<V> index = graph.index().forVertices("named vertices");
+		index.add(vertex, "name", "bob");
+		index.add(vertex, "name", "bob");
+		graph.commit();
+
+		// Gets and checks the vertex by the name and age.
+		assertTrue(containsOnly(index.get("name", "bob"), vertex));
+	}
+
+	@Test
 	public void indexEdge() {
 
 		// Adds an edge with a name, and indexes it by the name.
@@ -165,7 +179,7 @@ public abstract class IndexTest<V extends IVertex, E extends IEdge> {
 		assertTrue(contains(vertices, e1));
 		assertTrue(contains(vertices, e2));
 	}
-	
+
 	@Test
 	public void indexEdgeWithTwoPairs() {
 
@@ -181,6 +195,22 @@ public abstract class IndexTest<V extends IVertex, E extends IEdge> {
 		// Gets and checks the vertex by the name and age.
 		assertTrue(containsOnly(index.get("name", "harry"), edge));
 		assertTrue(containsOnly(index.get("age", "23"), edge));
+	}
+	
+	@Test
+	public void duplicateEdgeIndex() {
+
+		// Adds an edge with a name, and indexes it by the name.
+		V start = graph.createVertex();
+		V end = graph.createVertex();
+		E edge = graph.createEdge(start, end);
+		IIndex<E> index = graph.index().forEdges("named edges");
+		index.add(edge, "name", "john");
+		index.add(edge, "name", "john");
+		graph.commit();
+
+		// Gets and checks the vertex by its indexed name.
+		assertTrue(containsOnly(index.get("name", "john"), edge));
 	}
 
 	private static <F> boolean containsOnly(Iterable<F> entities, F entity) {
@@ -206,10 +236,10 @@ public abstract class IndexTest<V extends IVertex, E extends IEdge> {
 
 		return false;
 	}
-	
+
 	@SuppressWarnings("unused")
 	private static <F> long size(Iterable<F> entities) {
-		
+
 		int count = 0;
 		for (F f : entities) {
 			count++;
