@@ -21,6 +21,8 @@ import graphInterfaces.IIndexManager;
  *
  */
 public class MySqlIndexManager implements IIndexManager<MySqlVertex, MySqlEdge> {
+	
+	private static final String LONG_MYSQL_STRING = " VARCHAR(100) ";
 
 	private MySqlGraph graph;
 
@@ -34,16 +36,16 @@ public class MySqlIndexManager implements IIndexManager<MySqlVertex, MySqlEdge> 
 		Statement st = graph.getMySqlConnection().createStatement();
 		try {
 
-			st.executeUpdate("CREATE TABLE IF NOT EXISTS " + getVertexIndexNamesTable() + " (name " + MySqlGraph.MYSQL_STRING + ", PRIMARY KEY(name))");
-			st.executeUpdate("CREATE TABLE IF NOT EXISTS " + getEdgeIndexNamesTable() + " (name " + MySqlGraph.MYSQL_STRING + ", PRIMARY KEY(name))");
+			st.executeUpdate("CREATE TABLE IF NOT EXISTS " + getVertexIndexNamesTable() + " (name" + LONG_MYSQL_STRING + "NOT NULL, PRIMARY KEY(name))");
+			st.executeUpdate("CREATE TABLE IF NOT EXISTS " + getEdgeIndexNamesTable() + " (name" + LONG_MYSQL_STRING + "NOT NULL, PRIMARY KEY(name))");
 
 		} finally {
 			st.close();
 		}
 
 
-		addVertexIndex = graph.getMySqlConnection().prepareStatement("INSERT IGNORE INTO " + getVertexIndexNamesTable() + " (name) VALUES(?)");
-		addEdgeIndex = graph.getMySqlConnection().prepareStatement("INSERT IGNORE INTO " + getEdgeIndexNamesTable() + " (name) VALUES(?)");
+		addVertexIndex = graph.getMySqlConnection().prepareStatement("INSERT INTO " + getVertexIndexNamesTable() + " (name) VALUES(?) ON DUPLICATE KEY UPDATE name = name");
+		addEdgeIndex = graph.getMySqlConnection().prepareStatement("INSERT INTO " + getEdgeIndexNamesTable() + " (name) VALUES(?) ON DUPLICATE KEY UPDATE name = name");
 	}
 
 	@Override
@@ -99,10 +101,10 @@ public class MySqlIndexManager implements IIndexManager<MySqlVertex, MySqlEdge> 
 
 			// Recreates the names of vertex and edge indexes tables.
 			st.executeUpdate("DROP TABLE " + getVertexIndexNamesTable());
-			st.executeUpdate("CREATE TABLE " + getVertexIndexNamesTable() + " (name " + MySqlGraph.MYSQL_STRING + ")");
 			st.executeUpdate("DROP TABLE " + getEdgeIndexNamesTable());
-			st.executeUpdate("CREATE TABLE " + getEdgeIndexNamesTable() + " (name " + MySqlGraph.MYSQL_STRING + ")");
-
+			st.executeUpdate("CREATE TABLE " + getVertexIndexNamesTable() + " (name" + LONG_MYSQL_STRING + "NOT NULL, PRIMARY KEY(name))");
+			st.executeUpdate("CREATE TABLE " + getEdgeIndexNamesTable() + " (name" + LONG_MYSQL_STRING + "NOT NULL, PRIMARY KEY(name))");
+			
 			
 		} finally {
 			if (rs != null) try { rs.close(); } catch (SQLException e) { /* IGNORE */}
