@@ -22,7 +22,6 @@ public class MySqlVertexIndex implements IIndex<MySqlVertex> {
 
 	private PreparedStatement addToIndex;
 	private PreparedStatement getFromIndex;
-	private PreparedStatement getDuplicateFromIndex;
 
 
 	protected MySqlVertexIndex(String tableName, MySqlGraph graph) throws SQLException {
@@ -45,7 +44,6 @@ public class MySqlVertexIndex implements IIndex<MySqlVertex> {
 		// Prepares statements.
 		addToIndex = graph.getMySqlConnection().prepareStatement("INSERT INTO " + tableName + " (p_key, p_value, id) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE p_key = p_key");
 		getFromIndex = graph.getMySqlConnection().prepareStatement("SELECT * FROM " + tableName + " WHERE p_key = ? AND p_value = ?");
-		getDuplicateFromIndex = graph.getMySqlConnection().prepareStatement("SELECT * FROM " + tableName + " WHERE p_key = ? AND p_value = ? AND id = ?");
 	}
 
 	@Override
