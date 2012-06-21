@@ -14,7 +14,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public abstract class GraphOperatorTest<V extends IVertex, E extends IEdge> {
+public abstract class NeighbourFinderTest<V extends IVertex, E extends IEdge> {
 
 	private IPersistentGraph<V, E> graph;
 	private IGraphOperator<V, E> operator;
@@ -25,7 +25,7 @@ public abstract class GraphOperatorTest<V extends IVertex, E extends IEdge> {
 	public void setup() {
 		
 		// Initialise the graph and operator.
-		graph = createGraph("operator test");
+		graph = createGraph("neighbour test");
 		graph.clear();
 		
 		operator = graph.getOperator();

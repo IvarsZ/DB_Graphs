@@ -2,7 +2,7 @@ package mySqlGraphTest;
 
 import exceptions.DataAccessException;
 import graphInterfaces.IPersistentGraph;
-import graphTests.GraphOperatorTest;
+import graphTests.NeighbourFinderTest;
 
 import java.sql.SQLException;
 
@@ -10,7 +10,7 @@ import mySqlGraph.MySqlEdge;
 import mySqlGraph.MySqlGraph;
 import mySqlGraph.MySqlVertex;
 
-public class MySqlGraphOperatorTest extends GraphOperatorTest<MySqlVertex, MySqlEdge> {
+public class MySqlNeighbourFinderTest extends NeighbourFinderTest<MySqlVertex, MySqlEdge> {
 	
 	@Override
 	public IPersistentGraph<MySqlVertex, MySqlEdge> createGraph(String name) {
