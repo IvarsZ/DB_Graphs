@@ -3,11 +3,17 @@ package graphInterfaces;
 /**
  * 
  * Interface for managing indexes of vertices and edges.
+ * It allows to get and create if absent indexes for
+ * vertices and edges.
+ * 
+ * THe indexes are identified with a name, the name must be unique,
+ * but only for vertices and edges separately - there can be two indexes
+ * one for vertices and one for edges with the same name.
  * 
  * @author iz2
  *
- * @param <V>
- * @param <E>
+ * @param <V> - type of vertex.
+ * @param <E> - type of edge.
  */
 public interface IIndexManager<V extends IVertex, E extends IEdge> {
 	
