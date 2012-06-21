@@ -213,7 +213,7 @@ public abstract class IndexTest<V extends IVertex, E extends IEdge> {
 		assertTrue(containsOnly(index.get("name", "john"), edge));
 	}
 
-	private static <F> boolean containsOnly(Iterable<F> entities, F entity) {
+	protected static <F> boolean containsOnly(Iterable<F> entities, F entity) {
 
 		int count = 0;
 		for (F f : entities) {
@@ -224,6 +224,14 @@ public abstract class IndexTest<V extends IVertex, E extends IEdge> {
 		}
 
 		return count == 1;
+	}
+	
+	protected static <F> F getSingle(Iterable<F> entities) {
+		for (F f : entities) {
+			return f;
+		}
+		
+		return null;
 	}
 
 	private static <F> boolean contains(Iterable<F> entities, F entity) {
@@ -238,7 +246,7 @@ public abstract class IndexTest<V extends IVertex, E extends IEdge> {
 	}
 
 	@SuppressWarnings("unused")
-	private static <F> long size(Iterable<F> entities) {
+	protected static <F> long size(Iterable<F> entities) {
 
 		int count = 0;
 		for (F f : entities) {

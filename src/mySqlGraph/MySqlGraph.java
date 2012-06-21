@@ -35,7 +35,7 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 
 	public MySqlGraph(String graphName, MySqlConnector connector) throws SQLException {
 
-		this.graphName = graphName;
+		this.graphName = graphName.replaceAll("\\s","");;
 
 		// Connects to the database, and cancels auto commit.
 		mySql = connector.connect();

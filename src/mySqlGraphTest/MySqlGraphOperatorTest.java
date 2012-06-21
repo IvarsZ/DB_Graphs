@@ -13,11 +13,11 @@ import mySqlGraph.MySqlVertex;
 public class MySqlGraphOperatorTest extends GraphOperatorTest<MySqlVertex, MySqlEdge> {
 	
 	@Override
-	public IPersistentGraph<MySqlVertex, MySqlEdge> createGraph() {
+	public IPersistentGraph<MySqlVertex, MySqlEdge> createGraph(String name) {
 		try {
 			
 			
-			return new MySqlGraph("mysql_graph_operator_test", MySqlGraphTest.getConnector());
+			return new MySqlGraph(name, MySqlGraphTest.getConnector());
 			
 			
 		} catch (SQLException e) {

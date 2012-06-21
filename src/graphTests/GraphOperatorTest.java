@@ -19,13 +19,13 @@ public abstract class GraphOperatorTest<V extends IVertex, E extends IEdge> {
 	private IPersistentGraph<V, E> graph;
 	private IGraphOperator<V, E> operator;
 	
-	public abstract IPersistentGraph<V, E> createGraph();
+	public abstract IPersistentGraph<V, E> createGraph(String name);
 	
 	@Before
 	public void setup() {
 		
 		// Initialise the graph and operator.
-		graph = createGraph();
+		graph = createGraph("operator test");
 		graph.clear();
 		
 		operator = graph.getOperator();
@@ -136,10 +136,51 @@ public abstract class GraphOperatorTest<V extends IVertex, E extends IEdge> {
 	}
 	
 	@Test
-	public void findNeigboursAtDepth3ForLargeGraph() {
+	public void findNeigboursAtDepth100ForLargeGraph() {
 		
-		// Writes/creates the graph used in testing. 
-		// TODO : implement.
+		int count = 10000;
+		int testDepth = 100; // testDepth < count/2.
+		
+		IPersistentGraph<V, E> largeGraph = createGraph("operator test large");
+		
+		// Checks if the graph is empty
+		IIndex<V> vertexIndex = largeGraph.index().forVertices("vertices");
+		boolean isEmpty = IndexTest.size(vertexIndex.get("name", "node1")) == 0;
+		
+		// and writes it if so.
+		if (isEmpty) {
+			
+			V previous = largeGraph.createVertex();
+			
+			// Indexes the first node.
+			previous.setProperty("name", "node1");
+			vertexIndex.add(previous, "name", "node1");
+		
+			// Creates the rest of count nodes, and connects them in a sequence (list).
+			for (int i = 1; i < count; i++) {
+				
+				V next = largeGraph.createVertex();
+				
+				// Indexes testDepth node, for comparing later on.
+				if (i == testDepth) {
+					next.setProperty("name", "node2");
+					vertexIndex.add(next, "name", "node2");
+				}
+				
+				// Connects previous to next, and updates previous.
+				largeGraph.createEdge(previous, next);
+				previous = next;
+			}
+			
+			largeGraph.commit();
+		}
+		
+		// The node2 should be the only neighbour of node1 at testDepth.
+		V node1 = IndexTest.getSingle(vertexIndex.get("name", "node1"));
+		V node2 = IndexTest.getSingle(vertexIndex.get("name", "node2"));
+		assertTrue(IndexTest.containsOnly(largeGraph.getOperator().findNeighbours(node1, testDepth), node2));
+		
+		largeGraph.close();
 	}
 	
 	/**
