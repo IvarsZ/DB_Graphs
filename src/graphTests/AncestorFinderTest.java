@@ -1,21 +1,21 @@
 package graphTests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import graphInterfaces.IEdge;
+import graphInterfaces.IGraphOperator;
+import graphInterfaces.IIndex;
+import graphInterfaces.IPersistentGraph;
+import graphInterfaces.IVertex;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import neo4jGraph.Neo4jEdge;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.neo4j.graphdb.Direction;
-
-import graphInterfaces.IEdge;
-import graphInterfaces.IGraphOperator;
-import graphInterfaces.IIndex;
-import graphInterfaces.IPersistentGraph;
-import graphInterfaces.IVertex;
 
 public abstract class AncestorFinderTest<V extends IVertex, E extends IEdge> {
 
@@ -63,19 +63,17 @@ public abstract class AncestorFinderTest<V extends IVertex, E extends IEdge> {
 	@Test
 	public void test() {
 		
-		// TODO : fix multiple ancestors.
-		// The lowest common ancestor of vertex 11 and vertex 9 is vertex 4 or vertex 3...
-		V v11 = getVertex(11);
-		V v9 = getVertex(9);
-		V v4 = getVertex(4);
-		V v3 = getVertex(3);
+		// The common ancestors of vertex 11 and vertex 9 is are vertices 1, 2, 3, 4.
 		
 		ArrayList<String> edgeTypes = new ArrayList<String>();
 		edgeTypes.add("parent of");
-		V ancestor = graph.getOperator().findAncestor(v11, v9, 5, edgeTypes, IGraphOperator.Direction.INCOMING);
+		Set<V> ancestors = graph.getOperator().findAncestors(getVertex(11), getVertex(9), 5, edgeTypes, IGraphOperator.Direction.INCOMING);
 		
-		// assertEquals(v4, ancestor);
-		assertTrue(ancestor.equals(v3) || ancestor.equals(v4));
+		assertEquals(4, ancestors.size());
+		assertTrue(ancestors.contains(getVertex(1)));
+		assertTrue(ancestors.contains(getVertex(2)));
+		assertTrue(ancestors.contains(getVertex(3)));
+		assertTrue(ancestors.contains(getVertex(4)));
 	}
 	
 	/**

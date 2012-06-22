@@ -44,8 +44,8 @@ public interface IGraphOperator<V extends IVertex, E extends IEdge> {
 	public Set<V> findNeighbours(V start, int atDepth);
 	
 	/**
-	 * TODO : Could have 2 lowest ancestors.
 	 * 
+	 * Finds all common ancestors of two vertices up to certain depth.
 	 * 
 	 * @param v1
 	 * @param v2
@@ -55,6 +55,6 @@ public interface IGraphOperator<V extends IVertex, E extends IEdge> {
 	 * 
 	 * @return
 	 */
-	public V findAncestor(V v1, V v2, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection);
+	public Set<V> findAncestors(V v1, V v2, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection);
 	
 }

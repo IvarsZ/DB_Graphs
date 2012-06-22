@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
@@ -232,6 +233,14 @@ public class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge
 	private ResultSet executeGetIngoingEdges(long end) throws SQLException {
 		getIngoingEdges.setLong(1, end);
 		return getIngoingEdges.executeQuery();
+	}
+	
+	@Override
+	public Set<MySqlVertex> findAncestors(MySqlVertex v1, MySqlVertex v2,
+			int maxDepth, List<String> allowedEdgeTypes,
+			graphInterfaces.IGraphOperator.Direction allowedDirection) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

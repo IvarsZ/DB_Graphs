@@ -64,7 +64,7 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 	}
 
 	@Override
-	public Neo4jVertex findAncestor(Neo4jVertex v1, Neo4jVertex v2, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection) {
+	public Set<Neo4jVertex> findAncestors(Neo4jVertex v1, Neo4jVertex v2, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection) {
 
 		// Traverses the nodes with bfs up to the max depth.
 		TraversalDescription td = Traversal.description();
@@ -95,47 +95,30 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 		
 		// Neo4j nodes work with sets, as they implement hashcode and equals based on id.
 		Set<Node> v1Ancestors = new HashSet<Node>();
-		Set<Node> v2Ancestors = new HashSet<Node>();
 		
-		// Traverses both nodes,
+		
+		// Traverses all ancestors of the first node,
 		Iterator<Node> v1Traverser = td.traverse(v1.getNode()).nodes().iterator();
-		Iterator<Node> v2Traverser = td.traverse(v2.getNode()).nodes().iterator();
+		while (v1Traverser.hasNext()) {
+			
+			// and adds them to the v1 ancestors set.
+			v1Ancestors.add(v1Traverser.next());
+		}
 		
-		// while there are nodes left,
-		while (v1Traverser.hasNext() && v2Traverser.hasNext()) {
+		Set<Neo4jVertex> commonAncestors = new HashSet<Neo4jVertex>();
+		
+		// For each ancestor of the second node,
+		Iterator<Node> v2Traverser = td.traverse(v2.getNode()).nodes().iterator();
+		while (v2Traverser.hasNext()) {
 			
-			// Gets the next ancestor of v1.
-			Node v1Ancestor = v1Traverser.next();
-			
-			// If it is ancestor of v2, 
-			if (v2Ancestors.contains(v1Ancestor)) {
-				
-				// then it is lowest common ancestor. 
-				return new Neo4jVertex(v1Ancestor, graph);
-			}
-			else {
-				
-				// otherwise adds it to v1 ancestors.
-				v1Ancestors.add(v1Ancestor);
-			}
-			
-			// Gets the next ancestor of v2.
+			// adds it to the common ancestors set if is ancestor of v1, too.
 			Node v2Ancestor = v2Traverser.next();
-			
-			// If it as ancestor of v1,
 			if (v1Ancestors.contains(v2Ancestor)) {
-				
-				// then it is lowest common ancestor.
-				return new Neo4jVertex(v2Ancestor, graph);
-			}
-			else {
-				
-				// otherwise adds it to the v2 ancestors.
-				v2Ancestors.add(v2Ancestor);
+				commonAncestors.add(new Neo4jVertex(v2Ancestor, graph));
 			}
 		}
 		
-		// No traversed ancestors were common between v1 and v2, so it has none.
-		return null;
+		// Returns the set of common ancestors.
+		return commonAncestors;
 	}
 }
