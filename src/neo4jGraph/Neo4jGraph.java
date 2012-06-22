@@ -21,6 +21,30 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 	protected static enum RelTypes implements RelationshipType {
 		UNDEFINED
 	}
+	
+	/**
+	 * Converts a specified graph interface direction to neo4j type direction.
+	 * 
+	 * @param direction
+	 * 
+	 * @return
+	 * 
+	 * @throws IllegalArgumentException
+	 * 
+	 */
+	protected static org.neo4j.graphdb.Direction convertDirection(IPersistentGraph.Direction direction) throws IllegalArgumentException {
+		
+		switch (direction) {
+		case BOTH :
+			return org.neo4j.graphdb.Direction.BOTH;
+		case INCOMING :
+			return org.neo4j.graphdb.Direction.INCOMING;
+		case OUTGOING :
+			return org.neo4j.graphdb.Direction.OUTGOING;
+		default :
+			throw new IllegalArgumentException();
+		}
+	}
 
 	private GraphDatabaseService graphDb;
 	private String graphDbPath;

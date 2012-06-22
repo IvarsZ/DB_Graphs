@@ -1,5 +1,7 @@
 package graphInterfaces;
 
+import graphInterfaces.IPersistentGraph.Direction;
+
 import java.util.List;
 import java.util.Set;
 
@@ -13,12 +15,6 @@ import java.util.Set;
  * @param <E> - edges of the graph.
  */
 public interface IGraphOperator<V extends IVertex, E extends IEdge> {
-	
-	public enum Direction {
-		INCOMING,
-		OUTGOING,
-		BOTH
-	}
 
 	/**
 	 * 
@@ -55,6 +51,9 @@ public interface IGraphOperator<V extends IVertex, E extends IEdge> {
 	 * 
 	 * @return
 	 */
-	public Set<V> findAncestors(V v1, V v2, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection);
+	public Set<V> findCommonAncestors(V v1, V v2, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection);
+	
+
+	public Set<V> findLowestCommonAncestors(V v1, V v2, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection);
 	
 }

@@ -2,6 +2,8 @@ package mySqlGraph;
 
 import exceptions.DataAccessException;
 import graphInterfaces.IGraphOperator;
+import graphInterfaces.IPersistentGraph;
+import graphInterfaces.IPersistentGraph.Direction;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -195,7 +197,16 @@ public class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge
 		markDepthStatement.setLong(2, node);
 		markDepthStatement.executeUpdate();
 	}
-
+	/**
+	 * 
+	 * @param v1
+	 * @param v2
+	 * @param maxDepth
+	 * @param allowedEdgeTypes
+	 * @param allowedDirection
+	 * 
+	 * @return
+	 */
 	/**
 	 * 
 	 * @param node
@@ -236,9 +247,17 @@ public class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge
 	}
 	
 	@Override
-	public Set<MySqlVertex> findAncestors(MySqlVertex v1, MySqlVertex v2,
+	public Set<MySqlVertex> findCommonAncestors(MySqlVertex v1, MySqlVertex v2,
 			int maxDepth, List<String> allowedEdgeTypes,
-			graphInterfaces.IGraphOperator.Direction allowedDirection) {
+			IPersistentGraph.Direction allowedDirection) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<MySqlVertex> findLowestCommonAncestors(MySqlVertex v1,
+			MySqlVertex v2, int maxDepth, List<String> allowedEdgeTypes,
+			Direction allowedDirection) {
 		// TODO Auto-generated method stub
 		return null;
 	}

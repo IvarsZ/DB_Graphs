@@ -17,6 +17,12 @@ import exceptions.DataAccessException;
  */
 public interface IPersistentGraph<V extends IVertex, E extends IEdge> {
 	
+	public enum Direction {
+		INCOMING,
+		OUTGOING,
+		BOTH
+	}
+	
 	/**
 	 * 
 	 * Creates a new vertex with no properties in the graph. 
