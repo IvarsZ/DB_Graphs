@@ -7,6 +7,7 @@ import graphInterfaces.IPersistentGraph;
 import java.io.File;
 import java.util.Iterator;
 
+import org.neo4j.graphdb.DynamicRelationshipType;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.NotFoundException;
@@ -17,10 +18,6 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.tooling.GlobalGraphOperations;
 
 public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
-
-	protected static enum RelTypes implements RelationshipType {
-		UNDEFINED
-	}
 	
 	/**
 	 * Converts a specified graph interface direction to neo4j type direction.
@@ -78,7 +75,7 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 	}
 
 	@Override
-	public Neo4jEdge createEdge(Neo4jVertex start, Neo4jVertex end)
+	public Neo4jEdge createEdge(Neo4jVertex start, Neo4jVertex end, String type)
 			throws IllegalArgumentException {
 
 		// If both start and end are from this graph,
@@ -89,7 +86,7 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 			Node endNode = ((Neo4jVertex) end).getNode();
 
 			ensureInTransaction();
-			Relationship edge = startNode.createRelationshipTo(endNode, RelTypes.UNDEFINED);
+			Relationship edge = startNode.createRelationshipTo(endNode, DynamicRelationshipType.withName(type));
 			return new Neo4jEdge(edge, this);
 		}
 

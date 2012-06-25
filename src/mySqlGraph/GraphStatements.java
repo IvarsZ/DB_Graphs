@@ -33,7 +33,7 @@ class GraphStatements {
 	protected GraphStatements(MySqlGraph graph) throws SQLException {
 
 		createVertex = graph.getMySqlConnection().prepareStatement("INSERT INTO " + graph.getNodesTableName() + " (id) VALUES (DEFAULT)", Statement.RETURN_GENERATED_KEYS);
-		createEdge = graph.getMySqlConnection().prepareStatement("INSERT INTO " + graph.getEdgesTableName() + " (id, start, end) VALUES (DEFAULT, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+		createEdge = graph.getMySqlConnection().prepareStatement("INSERT INTO " + graph.getEdgesTableName() + " (id, start, end, type) VALUES (DEFAULT, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 		getVertexProperty = graph.getMySqlConnection().prepareStatement("SELECT p_value FROM " + graph.getNodesPropertiesTableName() + " WHERE id = ? AND p_key = ?");
 		setVertexProperty = graph.getMySqlConnection().prepareStatement("INSERT INTO " + graph.getNodesPropertiesTableName() + " (id, p_key, p_value) VALUES(?, ?, ?)");
@@ -56,11 +56,12 @@ class GraphStatements {
 		return createVertex.getGeneratedKeys();
 	}
 	
-	protected ResultSet executeCreateEdge(long startId, long endId) throws SQLException {
+	protected ResultSet executeCreateEdge(long startId, long endId, String type) throws SQLException {
 		
 		// Sets start and end ids, executes the create edge, and returns inserted id's.
 		createEdge.setLong(1, startId);
 		createEdge.setLong(2, endId);
+		createEdge.setString(3, type);
 		createEdge.executeUpdate();
 		
 		return createEdge.getGeneratedKeys();

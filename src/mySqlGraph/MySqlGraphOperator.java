@@ -150,7 +150,10 @@ class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 			}
 			catch (SQLException e) {
 
-				// Ignores, as the column shouldn't exist, and adds the column.
+				// Ignores, as the column shouldn't exist.
+			} finally {
+				
+				// Adds the column.
 				statement.executeUpdate("ALTER TABLE " + graph.getNodesTableName() + " ADD " + MARK_DEPTH_COLUMN + " BIGINT ;");	
 			}
 

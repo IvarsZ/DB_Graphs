@@ -47,7 +47,7 @@ public abstract class NeighbourFinderTest<V extends IVertex, E extends IEdge> {
 		// Adds edges.
 		int edges[][] = {{0,1}, {0,4}, {2,8}, {5,1}, {5,2}, {5,4}, {5,8}, {6,0}, {6,5}, {7,5}};
 		for (int i = 0; i < edges.length; i++) {
-			graph.createEdge(getVertex(edges[i][0]), getVertex(edges[i][1]));
+			graph.createEdge(getVertex(edges[i][0]), getVertex(edges[i][1]), "connects to");
 		}
 		graph.commit();
 	}
@@ -168,7 +168,7 @@ public abstract class NeighbourFinderTest<V extends IVertex, E extends IEdge> {
 				}
 				
 				// Connects previous to next, and updates previous.
-				largeGraph.createEdge(previous, next);
+				largeGraph.createEdge(previous, next, "connects to");
 				previous = next;
 			}
 			

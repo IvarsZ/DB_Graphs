@@ -123,7 +123,7 @@ public abstract class IndexTest<V extends IVertex, E extends IEdge> {
 		// Adds an edge with a name, and indexes it by the name.
 		V start = graph.createVertex();
 		V end = graph.createVertex();
-		E edge = graph.createEdge(start, end);
+		E edge = graph.createEdge(start, end, "connects to");
 		edge.setProperty("name", "john");
 		IIndex<E> index = graph.index().forEdges("named edges");
 		index.add(edge, "name", edge.getProperty("name"));
@@ -139,12 +139,12 @@ public abstract class IndexTest<V extends IVertex, E extends IEdge> {
 		// Adds 2 edges one with name and other with age, and indexes them.
 		V start1 = graph.createVertex();
 		V end1 = graph.createVertex();
-		E e1 = graph.createEdge(start1, end1);
+		E e1 = graph.createEdge(start1, end1, "connects to");
 		e1.setProperty("name", "john");
 
 		V start2 = graph.createVertex();
 		V end2 = graph.createVertex();
-		E e2 = graph.createEdge(start2, end2);
+		E e2 = graph.createEdge(start2, end2, "connects to");
 		e2.setProperty("age", "13");
 
 		IIndex<E> index = graph.index().forEdges("named edges");
@@ -163,11 +163,11 @@ public abstract class IndexTest<V extends IVertex, E extends IEdge> {
 		// Adds 2 edges and indexes them with the same key-value pair.
 		V start1 = graph.createVertex();
 		V end1 = graph.createVertex();
-		E e1 = graph.createEdge(start1, end1);
+		E e1 = graph.createEdge(start1, end1, "connects to");
 
 		V start2 = graph.createVertex();
 		V end2 = graph.createVertex();
-		E e2 = graph.createEdge(start2, end2);
+		E e2 = graph.createEdge(start2, end2, "connects to");
 
 		IIndex<E> index = graph.index().forEdges("named edges");
 		index.add(e1, "name", "equalnames");
@@ -186,7 +186,7 @@ public abstract class IndexTest<V extends IVertex, E extends IEdge> {
 		// Adds an edge, and indexes it by name and age.
 		V start = graph.createVertex();
 		V end = graph.createVertex();
-		E edge = graph.createEdge(start, end);
+		E edge = graph.createEdge(start, end, "connects to");
 		IIndex<E> index = graph.index().forEdges("named edges");
 		index.add(edge, "name", "harry");
 		index.add(edge, "age", "23");
@@ -203,7 +203,7 @@ public abstract class IndexTest<V extends IVertex, E extends IEdge> {
 		// Adds an edge with a name, and indexes it by the name.
 		V start = graph.createVertex();
 		V end = graph.createVertex();
-		E edge = graph.createEdge(start, end);
+		E edge = graph.createEdge(start, end, "connects to");
 		IIndex<E> index = graph.index().forEdges("named edges");
 		index.add(edge, "name", "john");
 		index.add(edge, "name", "john");

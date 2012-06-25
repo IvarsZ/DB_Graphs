@@ -19,24 +19,27 @@ import java.sql.SQLException;
  */
 public class MySqlEdge implements IEdge {
 
+	private MySqlGraph graph;
+	
 	private MySqlVertex start;
 	private MySqlVertex end;
-	private MySqlGraph graph;
-
+	
 	private long id;
-
+	private String type;
+	
 	/**
 	 * 
 	 * Creates a MySqlEdge, but it and its start and end vertices have to be already written in the MySql database.
 	 * 
+	 * @param id
 	 * @param start
 	 * @param end
-	 * 
+	 * @param type
 	 * @param graph
 	 * 
 	 * @throws IllegalArgumentException - if at least one of the vertices is null.
 	 */
-	protected MySqlEdge(long id, MySqlVertex start, MySqlVertex end, MySqlGraph graph) throws IllegalArgumentException {
+	protected MySqlEdge(long id, MySqlVertex start, MySqlVertex end, String type, MySqlGraph graph) throws IllegalArgumentException {
 		
 		// Start and end vertices can't be null.
 		if (start == null || end == null) {
@@ -46,6 +49,7 @@ public class MySqlEdge implements IEdge {
 		this.id = id;
 		this.start = start;
 		this.end = end;
+		this.type = type;
 		this.graph = graph;
 	}
 
@@ -109,6 +113,11 @@ public class MySqlEdge implements IEdge {
 	}
 	
 	@Override
+	public String getType() {
+		return type;
+	}
+	
+	@Override
 	public boolean equals(Object obj) {
 		
 		if (obj instanceof MySqlEdge) {
@@ -125,5 +134,4 @@ public class MySqlEdge implements IEdge {
 	public int hashCode() {
 		return (int) id;
 	}
-
 }

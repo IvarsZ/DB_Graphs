@@ -41,11 +41,8 @@ public abstract class AncestorFinderTest<V extends IVertex, E extends IEdge> {
 				{4,9}, {3,9}, {5,9}, {6,10}, {6,11}, {7,10}, {7,11}, {7,12},
 				{9,13}, {9,14}, {12,16}, {15,16} };
 
-		E edge;
 		for (int i = 0; i < edges.length; i++) {
-			edge = graph.createEdge(getVertex(edges[i][0]), getVertex(edges[i][1]));
-
-			edge.setProperty(IPersistentGraph.EDGE_TYPE, "parent of");
+			graph.createEdge(getVertex(edges[i][0]), getVertex(edges[i][1]), "parent of");
 		}
 		graph.commit();
 

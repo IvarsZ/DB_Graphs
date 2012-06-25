@@ -24,29 +24,9 @@ public class Neo4jEdge implements IEdge {
 
 	@Override
 	public void setProperty(String key, String value) {
-		
+
 		graph.ensureInTransaction();
-
-		// If the property is the type of the edge,
-		if (key.equals(IPersistentGraph.EDGE_TYPE)) {
-
-			// creates a new relationship with that type,
-			Node startNode = ((Neo4jVertex) start).getNode();
-			Node endNode = ((Neo4jVertex) end).getNode();
-			Relationship newEdge = startNode.createRelationshipTo(endNode, DynamicRelationshipType.withName(value));
-
-			// copies all properties,
-			for (String pKey : edge.getPropertyKeys()) {
-				newEdge.setProperty(pKey, edge.getProperty(pKey));
-			}
-
-			// deletes and replaces the old edge.
-			edge.delete();
-			edge = newEdge;
-
-		} else {
-			edge.setProperty(key, value);
-		}
+		edge.setProperty(key, value);
 	}
 
 	@Override
@@ -56,12 +36,6 @@ public class Neo4jEdge implements IEdge {
 
 	@Override
 	public String getProperty(String key) {
-
-		// If the property is the type of the edge returns the name of the relationship type.
-		if (key.equals(IPersistentGraph.EDGE_TYPE)) {
-			return edge.getType().name();
-		}
-
 		return (String) edge.getProperty(key);
 	}
 
@@ -82,6 +56,11 @@ public class Neo4jEdge implements IEdge {
 	}
 
 	@Override
+	public String getType() {
+		return edge.getType().name();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 
 		// Two Neo4jEdges are equal, if their relationships have equal id's and belong to the same database.
@@ -93,7 +72,7 @@ public class Neo4jEdge implements IEdge {
 
 		return false;
 	}
-	
+
 	protected Relationship getRelationship() {
 		return edge;
 	}

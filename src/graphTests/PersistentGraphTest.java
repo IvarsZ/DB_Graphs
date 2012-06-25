@@ -94,7 +94,7 @@ public abstract class PersistentGraphTest<V extends IVertex, E extends IEdge> {
 		// Creates two vertices and edge between them.
 		V start = graph.createVertex();
 		V end = graph.createVertex();
-		E newEdge = graph.createEdge(start, end);
+		E newEdge = graph.createEdge(start, end, "connects to");
 
 		// Checks it can be retrieved by id.
 		assertTrue(graph.getEdge(newEdge.getId()).equals(newEdge));
@@ -106,7 +106,7 @@ public abstract class PersistentGraphTest<V extends IVertex, E extends IEdge> {
 		// Creates two vertices and edge between them.
 		V start = graph.createVertex();
 		V end = graph.createVertex();
-		E newEdge = graph.createEdge(start, end);
+		E newEdge = graph.createEdge(start, end, "connects to");
 		graph.commit();
 		graph.close();
 
@@ -121,7 +121,7 @@ public abstract class PersistentGraphTest<V extends IVertex, E extends IEdge> {
 		// Creates two vertices and edge between them, then rolls back the changes.
 		V start = graph.createVertex();
 		V end = graph.createVertex();
-		E newEdge = graph.createEdge(start, end);
+		E newEdge = graph.createEdge(start, end, "connects to");
 		graph.rollback();
 
 		// Checks that the edge isn't there.
@@ -151,7 +151,7 @@ public abstract class PersistentGraphTest<V extends IVertex, E extends IEdge> {
 		// Creates an edge with type and age, and closes the graph.
 		V start = graph.createVertex();
 		V end = graph.createVertex();
-		E newEdge = graph.createEdge(start, end);
+		E newEdge = graph.createEdge(start, end, "connects to");
 		newEdge.setProperty("EdgeType", "Knows");
 		newEdge.setProperty("age", "2");
 		graph.commit();

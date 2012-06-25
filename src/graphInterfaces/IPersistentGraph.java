@@ -24,11 +24,6 @@ public interface IPersistentGraph<V extends IVertex, E extends IEdge> {
 	}
 	
 	/**
-	 * Property for different types of edges.
-	 */
-	public static final String EDGE_TYPE = "EdgeType";
-	
-	/**
 	 * 
 	 * Creates a new vertex with no properties in the graph. 
 	 * 
@@ -45,6 +40,7 @@ public interface IPersistentGraph<V extends IVertex, E extends IEdge> {
 	 * 
 	 * @param start - the start vertex of the edge.
 	 * @param end - the end vertex of the edge.
+	 * @param type - the tpye of the edge.
 	 * 
 	 * @return the created Edge, or null if an edge wasn't created.
 	 * 
@@ -53,7 +49,7 @@ public interface IPersistentGraph<V extends IVertex, E extends IEdge> {
 	 * @throws DataAccessException 
 	 * 
 	 */
-	public E createEdge(V start, V end) throws IllegalArgumentException, DataAccessException;
+	public E createEdge(V start, V end, String type) throws IllegalArgumentException, DataAccessException;
 	
 
 	/**
