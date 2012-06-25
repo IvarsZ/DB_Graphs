@@ -42,7 +42,7 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 		case OUTGOING :
 			return org.neo4j.graphdb.Direction.OUTGOING;
 		default :
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Illegal value of direction enum : " + direction);
 		}
 	}
 

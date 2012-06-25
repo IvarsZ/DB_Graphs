@@ -83,6 +83,9 @@ class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 
 	@Override
 	public Set<MySqlVertex> findNeighbours(MySqlVertex start, int atDepth) {
+		
+		// TODO : proper resource closure.
+		
 		try {
 
 		Set<MySqlVertex> neighbours = new HashSet<MySqlVertex>();
@@ -197,16 +200,7 @@ class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 		markDepthStatement.setLong(2, node);
 		markDepthStatement.executeUpdate();
 	}
-	/**
-	 * 
-	 * @param v1
-	 * @param v2
-	 * @param maxDepth
-	 * @param allowedEdgeTypes
-	 * @param allowedDirection
-	 * 
-	 * @return
-	 */
+	
 	/**
 	 * 
 	 * @param node
