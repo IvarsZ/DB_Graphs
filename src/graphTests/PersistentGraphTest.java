@@ -87,6 +87,39 @@ public abstract class PersistentGraphTest<V extends IVertex, E extends IEdge> {
 		// Checks that the vertex isn't there.
 		assertEquals(null, graph.getVertex(newVertex.getId()));
 	}
+	
+	@Test
+	public void createVertexWithProperties() {
+
+		// Creates a vertex with name and age, and closes the graph.
+		V newVertex = graph.createVertex();
+		newVertex.setProperty("name", "test node 1");
+		newVertex.setProperty("age", "20");
+		graph.commit();
+		graph.close();
+
+		// Reopens the graph, checks the properties.
+		graph = createGraph();
+		newVertex = graph.getVertex(newVertex.getId());
+		assertEquals("test node 1", newVertex.getProperty("name"));
+		assertEquals("20", newVertex.getProperty("age"));
+	}
+	
+	@Test
+	public void createVertexWithDuplicateProperties() {
+
+		// Creates a vertex with name and age, and closes the graph.
+		V newVertex = graph.createVertex();
+		newVertex.setProperty("name", "test node 1");
+		newVertex.setProperty("name", "test node 1");
+		graph.commit();
+		graph.close();
+
+		// Reopens the graph, checks the properties.
+		graph = createGraph();
+		newVertex = graph.getVertex(newVertex.getId());
+		assertEquals("test node 1", newVertex.getProperty("name"));
+	}
 
 	@Test
 	public void createEdge() {
@@ -127,23 +160,6 @@ public abstract class PersistentGraphTest<V extends IVertex, E extends IEdge> {
 		// Checks that the edge isn't there.
 		assertEquals(null, graph.getEdge(newEdge.getId()));
 	}
-
-	@Test
-	public void createVertexWithProperties() {
-
-		// Creates a vertex with name and age, and closes the graph.
-		V newVertex = graph.createVertex();
-		newVertex.setProperty("name", "test node 1");
-		newVertex.setProperty("age", "20");
-		graph.commit();
-		graph.close();
-
-		// Reopens the graph, checks the properties.
-		graph = createGraph();
-		newVertex = graph.getVertex(newVertex.getId());
-		assertEquals("test node 1", newVertex.getProperty("name"));
-		assertEquals("20", newVertex.getProperty("age"));
-	}
 	
 	@Test
 	public void createEdgeWithProperties() {
@@ -161,6 +177,24 @@ public abstract class PersistentGraphTest<V extends IVertex, E extends IEdge> {
 		graph = createGraph();
 		newEdge = graph.getEdge(newEdge.getId());
 		assertEquals("Knows", newEdge.getProperty("EdgeType"));
+		assertEquals("2", newEdge.getProperty("age"));
+	}
+	
+	@Test
+	public void createEdgeWithDuplicateProperties() {
+
+		// Creates an edge with type and age, and closes the graph.
+		V start = graph.createVertex();
+		V end = graph.createVertex();
+		E newEdge = graph.createEdge(start, end, "connects to");
+		newEdge.setProperty("age", "2");
+		newEdge.setProperty("age", "2");
+		graph.commit();
+		graph.close();
+
+		// Reopens the graph, checks the properties.
+		graph = createGraph();
+		newEdge = graph.getEdge(newEdge.getId());
 		assertEquals("2", newEdge.getProperty("age"));
 	}
 

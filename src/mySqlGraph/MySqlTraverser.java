@@ -4,6 +4,7 @@ import exceptions.DataAccessException;
 import graphInterfaces.IPersistentGraph.Direction;
 import graphInterfaces.IVertex;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,16 +17,12 @@ import java.util.Queue;
 
 class MySqlTraverser {
 
-	// TODO : unique column.
-	private static final String MARK_DEPTH_COLUMN = "depth_in_findNeighbours";
-
 	public enum TraversalType {
 		BFS,
 		DFS
 	}
 
 	private MySqlGraph graph;
-	private TraversalType traversalType;
 	private int maxDepth;
 	private List<String> allowedEdgeTypes;
 	private Direction allowedDirection;
@@ -33,29 +30,30 @@ class MySqlTraverser {
 	private PreparedStatement getOutgoingEdges;
 	private PreparedStatement getIngoingEdges;
 
-	private PreparedStatement markDepthStatement;
-	private PreparedStatement getDepthStatement;
-
 	// TODO : vertices from the same graph.
 
-	protected MySqlTraverser(MySqlGraph graph, TraversalType traversalType, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection) throws SQLException {
+	protected MySqlTraverser(MySqlGraph graph, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection) throws SQLException {
 
 		this.graph = graph;
-		this.traversalType = traversalType;
 		this.maxDepth = maxDepth;
 		this.allowedEdgeTypes = allowedEdgeTypes;
 		this.allowedDirection = allowedDirection;
 
-		getOutgoingEdges = graph.getMySqlConnection().prepareStatement("SELECT end FROM " + graph.getEdgesTableName() + " WHERE start = ?");
-		getIngoingEdges = graph.getMySqlConnection().prepareStatement("SELECT start FROM " + graph.getEdgesTableName() + " WHERE end = ?");
-
-		markDepthStatement = graph.getMySqlConnection().prepareStatement("UPDATE " + graph.getNodesTableName() + " SET " + MARK_DEPTH_COLUMN + " = ? WHERE id = ? ;");
-		getDepthStatement = graph.getMySqlConnection().prepareStatement("SELECT " + MARK_DEPTH_COLUMN + " FROM "  + graph.getNodesTableName() + " WHERE id = ? ;" );
+		getOutgoingEdges = graph.getMySqlConnection().prepareStatement("SELECT end, type FROM " + graph.getEdgesTableName() + " WHERE start = ?");
+		getIngoingEdges = graph.getMySqlConnection().prepareStatement("SELECT start, type FROM " + graph.getEdgesTableName() + " WHERE end = ?");
 	}
 
 
 
-	private Iterable<MySqlVertex> traverse(final IVertex vertex) {
+	/**
+	 * 
+	 * Each new iterator opens a new connection, so that temporary tables
+	 * can be used for marking if node was visited or not (depth).
+	 * 
+	 * @param vertex
+	 * @return
+	 */
+	public Iterable<MySqlVertex> traverse(final IVertex vertex) {
 
 		return new Iterable<MySqlVertex>() {
 
@@ -76,18 +74,46 @@ class MySqlTraverser {
 	}
 
 	private class TraverserIterator implements Iterator<MySqlVertex> {
-
-		// TODO : cleanup.
+		
+		private static final int UNVISITED_VERTEX = -1;
+		
+		private Connection connection;
+		
+		private PreparedStatement markDepthStatement;
+		private PreparedStatement getDepthStatement;
+		
+		// TODO : resource cleanup.
 
 		private Queue<Long> q;
 
 		private TraverserIterator(long startId) throws SQLException {
-
-			createMarkDepthColumn();
-
+			
+			// Creates the new connection for the traversal.
+			connection = graph.getConnector().connect();
+			
+			// Sets up the depth table.
+			createDepthTable();
+			
+			// Adds the start vertex to the bfs traversal queue.
 			q = new LinkedList<Long>();
 			q.add(startId);
-			executeMarkDepth(startId, 1);	
+			executeMarkDepth(startId, 0);
+		}
+		
+		private void createDepthTable() throws SQLException {
+			Statement statement = connection.createStatement();
+			try {
+				
+				
+				// Creates the depth table, and prepares statements for it.
+				statement.executeUpdate("CREATE TABLE #depth_table (id BIGINT NOT NULL, depth BIGINT NOT NULL, PRIMARY KEY(id))");
+				markDepthStatement = connection.prepareStatement("INSERT INTO #depth_table (id, depth) VALUES(?, ?)");
+				getDepthStatement = connection.prepareStatement("SELECT depth FROM #depth_table WHERE id = ?" );
+				
+				
+			} finally {
+				statement.close();
+			}
 		}
 
 		@Override
@@ -100,52 +126,55 @@ class MySqlTraverser {
 			try {
 
 
+				// If there are more vertices to traverse,
 				if (q.isEmpty() == false) {
 
-					long node = q.poll();
-					MySqlVertex nextVertex = new MySqlVertex(node, graph);
+					// gets the next vertex.
+					long vertexId = q.poll();
+					MySqlVertex nextVertex = new MySqlVertex(vertexId, graph);
 
-					// Gets the depth, and adds the node to neighbours if required (note nodeDepth is larger by one than actual depth).
-					long nodeDepth = getDepth(node);
+					// Gets its depth, and if the depth is not larger than maximum depth, then
+					long nodeDepth = getDepth(vertexId);
+					if (nodeDepth <= maxDepth) {
 
-					// Gets all child vertices and adds them if appropriate to the queue.
-					switch (allowedDirection) {
-					case BOTH : {
+						// gets all child vertices and visits them.
+						switch (allowedDirection) {
+						case BOTH : {
 
-						// Gets child/parent vertices.
-						ResultSet outgoing = executeGetOutgoingEdges(node);
-						visitChildNodes(q, outgoing, nodeDepth);
+							// Gets child/parent vertices.
+							ResultSet outgoing = executeGetOutgoingEdges(vertexId);
+							visitChildNodes(q, outgoing, nodeDepth);
 
-						ResultSet ingoing = executeGetIngoingEdges(node);
-						visitChildNodes(q, ingoing, nodeDepth);
+							ResultSet ingoing = executeGetIngoingEdges(vertexId);
+							visitChildNodes(q, ingoing, nodeDepth);
+						}
+						case INCOMING : {
+
+							// Gets only parent vertices.
+							ResultSet ingoing = executeGetIngoingEdges(vertexId);
+							visitChildNodes(q, ingoing, nodeDepth);
+							break;
+						}
+						case OUTGOING : {
+
+							// Gets only child vertices.
+							ResultSet outgoing = executeGetOutgoingEdges(vertexId);
+							visitChildNodes(q, outgoing, nodeDepth);
+							break;
+						}
+
+						default:
+							// Shouldn't happen.
+							throw new IllegalArgumentException("Illegal value of allowed direction enum : " + allowedDirection);
+						}
+
 					}
-					case INCOMING : {
-
-						// Gets only parent vertices.
-						ResultSet ingoing = executeGetIngoingEdges(node);
-						visitChildNodes(q, ingoing, nodeDepth);
-						break;
-					}
-					case OUTGOING : {
-
-						// Gets only child vertices.
-						ResultSet outgoing = executeGetOutgoingEdges(node);
-						visitChildNodes(q, outgoing, nodeDepth);
-						break;
-					}
-
-					default:
-						// Shouldn't happen.
-						throw new IllegalArgumentException("Illegal value of allowed direction enum : " + allowedDirection);
-					}
-
+					
 					return nextVertex;
 				}
 				else {
 					throw new NoSuchElementException("No more vertices to traverse.");
 				}
-
-
 			} catch (SQLException e) {
 				throw new DataAccessException(e);
 			}
@@ -155,94 +184,69 @@ class MySqlTraverser {
 		public void remove() {
 			throw new UnsupportedOperationException();
 		}
+		
+		private void visitChildNodes(Queue<Long> q, ResultSet resultSet, long nodeDepth) throws SQLException {
 
-	}
+			while (resultSet.next()) {
 
-	private void createMarkDepthColumn() throws SQLException {
-		Statement statement = graph.getMySqlConnection().createStatement();
-		try {
+				// Gets the child id, its depth and edge type.
+				long child = resultSet.getLong(1);
+				long childDepth = getDepth(child);
 
+				// If it hasn't been visited yet.
+				if (childDepth == UNVISITED_VERTEX) {
 
-			statement.executeUpdate("ALTER TABLE " + graph.getNodesTableName() + " ADD " + MARK_DEPTH_COLUMN + " BIGINT ;");	
+					// Gets the edge type.
+					String childType = resultSet.getString(2);
 
-			
-		} catch (SQLException e) {
-			throw e;
-		} finally {
-			statement.close();
+					// Checks if edge type is include (if allowed edge types are empty, all types are included).
+					boolean include = true;
+					if (allowedEdgeTypes.isEmpty() == false && allowedEdgeTypes.contains(childType) == false) {
+						include = false;
+					}
+
+					// If included,
+					if (include) {
+
+						// then adds the child to the queue and marks its depth (one larger than the parent's depth).
+						q.add(child);
+						executeMarkDepth(child, nodeDepth + 1);
+					}
+				}
+			}
 		}
-	}
-
-	private void deleteMarkDepthColumn() throws SQLException {
-		Statement statement = graph.getMySqlConnection().createStatement();
-		try {
-
-
-			statement.executeUpdate("ALTER TABLE " + graph.getNodesTableName() + " DROP " + MARK_DEPTH_COLUMN);
-
-
-		} catch (SQLException e) {
-			throw e;
-		} finally {
-			statement.close();
+		
+		private void executeMarkDepth(long node, long depth) throws SQLException {
+			markDepthStatement.setLong(1, depth);
+			markDepthStatement.setLong(2, node);
+			markDepthStatement.executeUpdate();
 		}
-	}
 
-	private void visitChildNodes(Queue<Long> q, ResultSet resultSet, long nodeDepth) throws SQLException {
-
-		while (resultSet.next()) {
-
-			// Gets the child id, its depth and edge type.
-			long child = resultSet.getLong(1);
-			long childDepth = getDepth(child);
+		private long getDepth(long vertexId) throws SQLException {
 			
-			// TODO : edge types, traverse all if allowed is empty.
+			// Executes the get depth statement.
+			getDepthStatement.setLong(1, vertexId);
+			ResultSet rs = getDepthStatement.executeQuery();
+			try {
 
-			// If depth is 0 it hasn't been visited yet.
-			if (childDepth == 0) {
 
-				// Add to queue and mark depth (one larger than parrent depth).
-				q.add(child);
-				executeMarkDepth(child, nodeDepth + 1);
+				// If has depth,
+				if (rs.next()) {
+					
+					// returns it.
+					return rs.getLong(1);
+				}
+				
+				// Otherwise identifies that the vertex is unvisited.
+				return UNVISITED_VERTEX;
+
+
+			} finally {
+				rs.close();
 			}
 		}
 	}
-
-	private void executeMarkDepth(long node, long depth) throws SQLException {
-		markDepthStatement.setLong(1, depth);
-		markDepthStatement.setLong(2, node);
-		markDepthStatement.executeUpdate();
-	}
-
-	/**
-	 * 
-	 * @param node
-	 * @param getStatement - the first retrieved column has to contain the depth.
-	 * 
-	 * @return
-	 * 
-	 * @throws SQLException
-	 * 
-	 */
-	private long getDepth(long node) throws SQLException {
-
-		// Executes the statement.
-		getDepthStatement.setLong(1, node);
-		ResultSet rs = getDepthStatement.executeQuery();
-
-		try {
-
-
-			// Only one row.
-			rs.next();
-			return rs.getLong(1);
-
-
-		} finally {
-			rs.close();
-		}
-	}
-
+	
 	private ResultSet executeGetOutgoingEdges(long startId) throws SQLException {
 		getOutgoingEdges.setLong(1, startId);
 		return getOutgoingEdges.executeQuery();

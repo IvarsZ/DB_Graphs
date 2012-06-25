@@ -32,8 +32,12 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 	private GraphStatements statements;
 	
 	private MySqlIndexManager index;
+	
+	private MySqlConnector connector;
 
 	public MySqlGraph(String graphName, MySqlConnector connector) throws SQLException {
+		
+		this.connector = connector;
 
 		this.graphName = graphName.replaceAll("\\s","");;
 
@@ -290,6 +294,10 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 
 	protected String getEdgesPropertiesTableName() {
 		return getName() + "_edges_properties";
+	}
+	
+	protected MySqlConnector getConnector() {
+		return connector;
 	}
 
 	private void createTables() throws SQLException {
