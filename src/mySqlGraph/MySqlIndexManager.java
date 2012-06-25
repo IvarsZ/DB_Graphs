@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 
 
+
+
+
 import exceptions.DataAccessException;
 
 import graphInterfaces.IIndex;
@@ -20,7 +23,7 @@ import graphInterfaces.IIndexManager;
  * @author iz2
  *
  */
-class MySqlIndexManager implements IIndexManager<MySqlVertex, MySqlEdge> {
+public class MySqlIndexManager implements IIndexManager<MySqlVertex, MySqlEdge> {
 	
 	private static final String LONG_MYSQL_STRING = " VARCHAR(100) ";
 

@@ -8,6 +8,10 @@ import java.sql.SQLException;
 
 
 
+
+
+
+
 /**
  * 
  * MySql implementation of the vertex interface.

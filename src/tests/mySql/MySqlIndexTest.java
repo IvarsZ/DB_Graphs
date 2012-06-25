@@ -1,6 +1,8 @@
-package mySqlGraphTest;
+package tests.mySql;
 
 import java.sql.SQLException;
+
+import tests.IndexTest;
 
 import exceptions.DataAccessException;
 import mySqlGraph.MySqlConnector;
@@ -8,7 +10,6 @@ import mySqlGraph.MySqlEdge;
 import mySqlGraph.MySqlGraph;
 import mySqlGraph.MySqlVertex;
 import graphInterfaces.IPersistentGraph;
-import graphTests.IndexTest;
 
 public class MySqlIndexTest extends IndexTest<MySqlVertex, MySqlEdge> {
 

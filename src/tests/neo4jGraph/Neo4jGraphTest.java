@@ -1,7 +1,7 @@
-package neo4jGraphTests;
+package tests.neo4jGraph;
 
+import tests.PersistentGraphTest;
 import graphInterfaces.IPersistentGraph;
-import graphTests.PersistentGraphTest;
 import neo4jGraph.Neo4jEdge;
 import neo4jGraph.Neo4jGraph;
 import neo4jGraph.Neo4jVertex;

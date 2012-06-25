@@ -1,10 +1,11 @@
-package mySqlGraphTest;
+package tests.mySql;
 
 import exceptions.DataAccessException;
 import graphInterfaces.IPersistentGraph;
-import graphTests.NeighbourFinderTest;
 
 import java.sql.SQLException;
+
+import tests.NeighbourFinderTest;
 
 import mySqlGraph.MySqlEdge;
 import mySqlGraph.MySqlGraph;

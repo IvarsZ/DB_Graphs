@@ -14,6 +14,9 @@ import java.util.Iterator;
 
 
 
+
+
+
 /**
  * 
  * MySql implementation of the graph interface.
@@ -268,7 +271,7 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 		}
 	}
 
-	protected Connection getMySqlConnection() {
+	public Connection getMySqlConnection() {
 		return mySql;
 	}
 

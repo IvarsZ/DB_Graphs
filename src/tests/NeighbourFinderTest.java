@@ -1,4 +1,4 @@
-package graphTests;
+package tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -13,6 +13,7 @@ import java.util.Set;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 
 public abstract class NeighbourFinderTest<V extends IVertex, E extends IEdge> {
 

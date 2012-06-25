@@ -1,6 +1,8 @@
-package mySqlGraphTest;
+package tests.mySql;
 
 import java.sql.SQLException;
+
+import tests.PersistentGraphTest;
 
 import exceptions.DataAccessException;
 
@@ -9,7 +11,6 @@ import mySqlGraph.MySqlEdge;
 import mySqlGraph.MySqlGraph;
 import mySqlGraph.MySqlVertex;
 import graphInterfaces.IPersistentGraph;
-import graphTests.PersistentGraphTest;
 
 public class MySqlGraphTest extends PersistentGraphTest<MySqlVertex, MySqlEdge> {
 
