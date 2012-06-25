@@ -135,6 +135,8 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 		Set<Node> v1Ancestors = new HashSet<Node>();
 		Set<Node> v2Ancestors = new HashSet<Node>();
 		Set<Neo4jVertex> lowestCommonAncestors = new HashSet<Neo4jVertex>();
+		
+		// TODO : refactor - repeated code.
 
 		// Traverses ancestors of both v1 and v2, in turns. 
 		while ((traverseV1Ancestors && v1Traverser.hasNext()) || (traverseV2Ancestors && v2Traverser.hasNext())) {

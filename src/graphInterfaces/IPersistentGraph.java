@@ -24,6 +24,11 @@ public interface IPersistentGraph<V extends IVertex, E extends IEdge> {
 	}
 	
 	/**
+	 * Property for different types of edges.
+	 */
+	public static final String EDGE_TYPE = "EdgeType";
+	
+	/**
 	 * 
 	 * Creates a new vertex with no properties in the graph. 
 	 * 

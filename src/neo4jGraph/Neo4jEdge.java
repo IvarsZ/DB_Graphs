@@ -1,6 +1,7 @@
 package neo4jGraph;
 
 import graphInterfaces.IEdge;
+import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IVertex;
 
 import org.neo4j.graphdb.DynamicRelationshipType;
@@ -8,11 +9,6 @@ import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 
 public class Neo4jEdge implements IEdge {
-
-	/**
-	 * Property for different types of edges, corresponds to the Relationship type in Neo4j.
-	 */
-	public static final String EDGE_TYPE = "EdgeType";
 
 	private Relationship edge;
 	private Neo4jVertex start;
@@ -32,7 +28,7 @@ public class Neo4jEdge implements IEdge {
 		graph.ensureInTransaction();
 
 		// If the property is the type of the edge,
-		if (key.equals(EDGE_TYPE)) {
+		if (key.equals(IPersistentGraph.EDGE_TYPE)) {
 
 			// creates a new relationship with that type,
 			Node startNode = ((Neo4jVertex) start).getNode();
@@ -62,7 +58,7 @@ public class Neo4jEdge implements IEdge {
 	public String getProperty(String key) {
 
 		// If the property is the type of the edge returns the name of the relationship type.
-		if (key.equals(EDGE_TYPE)) {
+		if (key.equals(IPersistentGraph.EDGE_TYPE)) {
 			return edge.getType().name();
 		}
 

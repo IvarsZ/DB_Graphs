@@ -48,7 +48,7 @@ public abstract class AncestorFinderTest<V extends IVertex, E extends IEdge> {
 			edge = graph.createEdge(getVertex(edges[i][0]), getVertex(edges[i][1]));
 
 			// TODO : fix relationship types.
-			edge.setProperty(Neo4jEdge.EDGE_TYPE, "parent of");
+			edge.setProperty(IPersistentGraph.EDGE_TYPE, "parent of");
 		}
 		graph.commit();
 
