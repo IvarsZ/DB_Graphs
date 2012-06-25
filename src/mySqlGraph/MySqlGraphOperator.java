@@ -24,7 +24,7 @@ import java.util.Set;
  * @author iz2
  *
  */
-public class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
+class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 
 	private static final String MARK_DEPTH_COLUMN = "depth_in_findNeighbours";
 
@@ -236,13 +236,13 @@ public class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge
 		}
 	}
 
-	private ResultSet executeGetOutgoingEdges(long start) throws SQLException {
-		getOutgoingEdges.setLong(1, start);
+	private ResultSet executeGetOutgoingEdges(long startId) throws SQLException {
+		getOutgoingEdges.setLong(1, startId);
 		return getOutgoingEdges.executeQuery();
 	}
 
-	private ResultSet executeGetIngoingEdges(long end) throws SQLException {
-		getIngoingEdges.setLong(1, end);
+	private ResultSet executeGetIngoingEdges(long endId) throws SQLException {
+		getIngoingEdges.setLong(1, endId);
 		return getIngoingEdges.executeQuery();
 	}
 	

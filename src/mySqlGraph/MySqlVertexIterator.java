@@ -16,11 +16,9 @@ import exceptions.DataAccessException;
  * @author iz2
  *
  */
-public class MySqlVertexIterator implements Iterator<MySqlVertex> {
+class MySqlVertexIterator implements Iterator<MySqlVertex> {
 
 	MySqlGraph graph;
-
-	// TODO : resource closure.
 
 	ResultSet vertices;
 
@@ -47,6 +45,9 @@ public class MySqlVertexIterator implements Iterator<MySqlVertex> {
 				// Reset the cursor back to its previous position.
 				vertices.previous();
 			}
+			else {
+				vertices.close();
+			}
 
 			return hasNext;
 
@@ -67,6 +68,7 @@ public class MySqlVertexIterator implements Iterator<MySqlVertex> {
 
 			// Otherwise throws NoSuchElementException.
 			else {
+				vertices.close();
 				throw new NoSuchElementException("Vertex Iterator " + vertices + " has no more vertices.");
 			}
 

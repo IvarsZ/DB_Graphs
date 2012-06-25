@@ -6,9 +6,9 @@ package graphInterfaces;
  * It allows to get and create if absent indexes for
  * vertices and edges.
  * 
- * THe indexes are identified with a name, the name must be unique,
- * but only for vertices and edges separately - there can be two indexes
- * one for vertices and one for edges with the same name.
+ * The indexes are identified with a name, the name must be unique,
+ * but only for vertices and edges separately, there can be two indexes
+ * with the same name - one for vertices and one for edges.
  * 
  * @author iz2
  *

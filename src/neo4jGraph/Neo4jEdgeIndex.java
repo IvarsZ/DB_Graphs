@@ -7,6 +7,13 @@ import graphInterfaces.IIndex;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.index.Index;
 
+/**
+ * 
+ * Neo4j implementation of IIndex for edges.
+ * 
+ * @author iz2
+ *
+ */
 public class Neo4jEdgeIndex implements IIndex<Neo4jEdge> {
 	
 	private Index<Relationship> index;

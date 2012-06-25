@@ -7,6 +7,13 @@ import graphInterfaces.IIndex;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.index.Index;
 
+/**
+ * 
+ * Neo4j implementation if IIndex for vertices.
+ * 
+ * @author iz2
+ *
+ */
 public class Neo4jVertexIndex implements IIndex<Neo4jVertex> {
 	
 	private Index<Node> index;

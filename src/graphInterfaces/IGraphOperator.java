@@ -52,8 +52,20 @@ public interface IGraphOperator<V extends IVertex, E extends IEdge> {
 	 * @return
 	 */
 	public Set<V> findCommonAncestors(V v1, V v2, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection);
-	
 
+	/**
+	 * 
+	 * Finds the lowest common ancestor(s) of two vertices up to certain depth.
+	 * 
+	 * A common ancestor is a vertex which has a path to the both vertices. A vertex is lowest
+	 * common ancestor if for no other common ancestor both paths to the two vertices are shorter.
+	 * 
+	 * @param v1
+	 * @param v2
+	 * @param maxDepth
+	 * @param allowedEdgeTypes
+	 * @param allowedDirection
+	 * @return
+	 */
 	public Set<V> findLowestCommonAncestors(V v1, V v2, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection);
-	
 }

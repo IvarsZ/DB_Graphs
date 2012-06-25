@@ -13,7 +13,7 @@ import java.sql.Statement;
  * @author iz2
  *
  */
-public class GraphStatements {
+class GraphStatements {
 
 	private PreparedStatement createVertex;
 	private PreparedStatement createEdge;

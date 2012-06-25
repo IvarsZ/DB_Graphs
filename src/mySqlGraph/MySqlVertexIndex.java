@@ -16,7 +16,7 @@ import java.util.Iterator;
  * @author iz2
  *
  */
-public class MySqlVertexIndex implements IIndex<MySqlVertex> {
+class MySqlVertexIndex implements IIndex<MySqlVertex> {
 
 	private MySqlGraph graph;
 

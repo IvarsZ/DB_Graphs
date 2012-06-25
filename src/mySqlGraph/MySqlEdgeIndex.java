@@ -19,7 +19,7 @@ import graphInterfaces.IIndex;
  * @author iz2
  *
  */
-public class MySqlEdgeIndex implements IIndex<MySqlEdge>{
+class MySqlEdgeIndex implements IIndex<MySqlEdge>{
 
 	private MySqlGraph graph;
 
@@ -30,11 +30,9 @@ public class MySqlEdgeIndex implements IIndex<MySqlEdge>{
 		Statement st = graph.getMySqlConnection().createStatement();
 		try {
 
-
 			// Creates a table for indexing and indexes it.
 			st.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (p_key" + MySqlGraph.MYSQL_STRING + ", p_value" + MySqlGraph.MYSQL_STRING + ", id BIGINT, PRIMARY KEY(p_key, p_value, id))");
 			st.executeUpdate("ALTER TABLE " + tableName + " ADD INDEX(p_key, p_value)");
-
 
 		} finally {
 			st.close();

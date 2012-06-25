@@ -10,8 +10,6 @@ import graphInterfaces.IVertex;
 import java.util.ArrayList;
 import java.util.Set;
 
-import neo4jGraph.Neo4jEdge;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +45,6 @@ public abstract class AncestorFinderTest<V extends IVertex, E extends IEdge> {
 		for (int i = 0; i < edges.length; i++) {
 			edge = graph.createEdge(getVertex(edges[i][0]), getVertex(edges[i][1]));
 
-			// TODO : fix relationship types.
 			edge.setProperty(IPersistentGraph.EDGE_TYPE, "parent of");
 		}
 		graph.commit();
@@ -83,10 +80,6 @@ public abstract class AncestorFinderTest<V extends IVertex, E extends IEdge> {
 		ArrayList<String> edgeTypes = new ArrayList<String>();
 		edgeTypes.add("parent of");
 		Set<V> ancestors = graph.getOperator().findLowestCommonAncestors(getVertex(11), getVertex(9), 5, edgeTypes, IPersistentGraph.Direction.INCOMING);
-		
-		for (V v : ancestors) {
-			System.out.println(v.getId());
-		}
 
 		assertEquals(2, ancestors.size());
 		assertTrue(ancestors.contains(getVertex(3)));

@@ -20,7 +20,7 @@ import graphInterfaces.IIndexManager;
  * @author iz2
  *
  */
-public class MySqlIndexManager implements IIndexManager<MySqlVertex, MySqlEdge> {
+class MySqlIndexManager implements IIndexManager<MySqlVertex, MySqlEdge> {
 	
 	private static final String LONG_MYSQL_STRING = " VARCHAR(100) ";
 

@@ -147,11 +147,12 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 				Path v1Path = v1Traverser.next();
 				currentDepthOfV1Traversal = v1Path.length();
 
+				// If not outside depth boundaries,
 				if (currentDepthOfV1Traversal <= maxDepth) {
 					Node v1Ancestor = v1Path.endNode();
 					v1Ancestors.add(v1Ancestor);
 
-					// If ancestor of v1 is ancestor of v2,
+					// and if ancestor of v1 is ancestor of v2,
 					if (v2Ancestors.contains(v1Ancestor)) {
 
 						// then adds it to the set of lowest common ancestors.
@@ -163,12 +164,14 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 						}
 					}
 					
-					// flips.
+					// and flips which vertex is traversed, if can traverse the other.
 					if (currentDepthOfV2Traversal <= currentDepthOfV1Traversal) {
 						traverseV1Ancestors = false;
 						traverseV2Ancestors = true;
 					}
 				}
+				
+				// Otherwise attempts to flip which vertex is traversed.
 				else {
 					traverseV1Ancestors = false;
 					if (currentDepthOfV2Traversal <= maxDepth) {
@@ -182,11 +185,12 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 				Path v2Path = v2Traverser.next();
 				currentDepthOfV2Traversal = v2Path.length();
 
+				// If not outside depth boundaries,
 				if (currentDepthOfV1Traversal <= maxDepth) {
 					Node v2Ancestor = v2Path.endNode();
 					v2Ancestors.add(v2Ancestor);
 
-					// If ancestor of v2 is ancestor of v1,
+					// and if ancestor of v2 is ancestor of v1,
 					if (v1Ancestors.contains(v2Ancestor)) {
 
 						// then adds it to the set of lowest common ancestors.
@@ -198,12 +202,14 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 						}
 					}
 					
-					// flips.
+					// and flips which vertex is traversed, if can traverse the other.
 					if (currentDepthOfV1Traversal <= currentDepthOfV2Traversal) {
 						traverseV2Ancestors = false;
 						traverseV1Ancestors = true;
 					}
 				}
+				
+				// Otherwise attempts to flip which vertex is traversed.
 				else {
 					traverseV2Ancestors = false;
 					if (currentDepthOfV1Traversal <= maxDepth) {

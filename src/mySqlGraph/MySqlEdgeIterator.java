@@ -16,11 +16,9 @@ import exceptions.DataAccessException;
  * @author iz2
  *
  */
-public class MySqlEdgeIterator implements Iterator<MySqlEdge> {
+class MySqlEdgeIterator implements Iterator<MySqlEdge> {
 
 	MySqlGraph graph;
-
-	// TODO : resource closure.
 
 	ResultSet edges;
 
@@ -47,6 +45,9 @@ public class MySqlEdgeIterator implements Iterator<MySqlEdge> {
 				// Reset the cursor back to its previous position
 				edges.previous();
 			}
+			else {
+				edges.close();
+			}
 
 			return hasNext;
 
@@ -68,6 +69,7 @@ public class MySqlEdgeIterator implements Iterator<MySqlEdge> {
 
 			// Otherwise throws NoSuchElementException.
 			else {
+				edges.close();
 				throw new NoSuchElementException("Edge Iterator " + edges + " has no more edges.");
 			}
 

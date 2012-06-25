@@ -107,7 +107,7 @@ public interface IPersistentGraph<V extends IVertex, E extends IEdge> {
 	
 	/**
 	 * 
-	 * Creates and returns a new instance of graph operator. TODO : new operator (? so far yes).
+	 * Creates and returns a new instance of graph operator. TODO : change to one instance.
 	 * 
 	 * @return
 	 */
