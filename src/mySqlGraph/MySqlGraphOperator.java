@@ -33,8 +33,6 @@ import scala.annotation.target.getter;
 class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 
 	private static final String MARK_DEPTH_COLUMN = "depth_in_findNeighbours";
-	
-	private MySqlTraverser traverser;
 
 	private MySqlGraph graph;
 
@@ -43,33 +41,33 @@ class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 
 	private PreparedStatement markDepthStatement;
 	private PreparedStatement getDepthStatement;
-	
+
 	// TODO : vertices from the same graph.
 
 	protected MySqlGraphOperator(MySqlGraph mySqlGraph) throws SQLException {
 
-			this.graph = (MySqlGraph) mySqlGraph;
+		this.graph = (MySqlGraph) mySqlGraph;
 
-			getOutgoingEdges = graph.getMySqlConnection().prepareStatement("SELECT end FROM " + graph.getEdgesTableName() + " WHERE start = ?");
-			getIngoingEdges = graph.getMySqlConnection().prepareStatement("SELECT start FROM " + graph.getEdgesTableName() + " WHERE end = ?");
+		getOutgoingEdges = graph.getMySqlConnection().prepareStatement("SELECT end FROM " + graph.getEdgesTableName() + " WHERE start = ?");
+		getIngoingEdges = graph.getMySqlConnection().prepareStatement("SELECT start FROM " + graph.getEdgesTableName() + " WHERE end = ?");
 
-			markDepthStatement = graph.getMySqlConnection().prepareStatement("UPDATE " + graph.getNodesTableName() + " SET " + MARK_DEPTH_COLUMN + " = ? WHERE id = ? ;");
-			getDepthStatement = graph.getMySqlConnection().prepareStatement("SELECT " + MARK_DEPTH_COLUMN + " FROM "  + graph.getNodesTableName() + " WHERE id = ? ;" );
+		markDepthStatement = graph.getMySqlConnection().prepareStatement("UPDATE " + graph.getNodesTableName() + " SET " + MARK_DEPTH_COLUMN + " = ? WHERE id = ? ;");
+		getDepthStatement = graph.getMySqlConnection().prepareStatement("SELECT " + MARK_DEPTH_COLUMN + " FROM "  + graph.getNodesTableName() + " WHERE id = ? ;" );
 	}
-	
+
 	@Override
 	public ITraverser<MySqlVertex> createTraverser(int minDepth, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection) {
 		try {
-			
-			
+
+
 			return new MySqlTraverser(graph, minDepth, maxDepth, allowedEdgeTypes, allowedDirection);
-			
-			
+
+
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
 		}
 	}
-	
+
 	@Override
 	public Set<MySqlVertex> findCommonAncestors(MySqlVertex v1, MySqlVertex v2,
 			int maxDepth, List<String> allowedEdgeTypes,
@@ -93,59 +91,9 @@ class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 	}
 
 	@Override
-	public Set<MySqlVertex> findNeighbours(MySqlVertex start, int atDepth) {
-		
-		// TODO : proper resource closure.
-		
-		try {
-
-		Set<MySqlVertex> neighbours = new HashSet<MySqlVertex>();
-
-		createMarkDepthColumn();
-
-		Queue<Long> q = new LinkedList<Long>();
-		q.add(start.getId());
-		executeMarkDepth(start.getId(), 1);
-
-		while (q.isEmpty() == false) {
-
-			long node = q.poll();
-
-			// Gets the depth, and adds the node to neighbours if required (note nodeDepth is larger by one than actual depth).
-			long nodeDepth = getDepth(node);
-			if (nodeDepth - 1 == atDepth) {
-				neighbours.add(new MySqlVertex(node, graph));
-			}
-			else if (nodeDepth > atDepth) {
-
-				// Since traverses using BFS then all next traversed nodes will have at least the same depth.
-				return neighbours;
-			}
-
-			// Gets all child nodes and adds them to the queue, if not visited.
-			ResultSet outgoing = executeGetOutgoingEdges(node);
-			try {
-				visitChildNodes(q, outgoing, nodeDepth);
-			} finally {
-				outgoing.close();
-			}
-			ResultSet ingoing = executeGetIngoingEdges(node);
-			try {
-				visitChildNodes(q, ingoing, nodeDepth);
-			} finally {
-				ingoing.close();
-			}
-		}
-
-		// Cleanup - delete markDepthColumn.
-		deleteMarkDepthColumn();
-
-		return neighbours;
-		
-		
-		} catch (SQLException e) {
-			throw new DataAccessException(e);
-		}
+	public Iterable<MySqlVertex> findNeighbours(MySqlVertex start, int atDepth) {
+		ArrayList<String> empty = new ArrayList<String>();
+		return createTraverser(atDepth, atDepth, empty, Direction.BOTH).traverse(start);
 	}
 
 	private void createMarkDepthColumn() throws SQLException {
@@ -163,7 +111,7 @@ class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 
 				// Ignores, as the column shouldn't exist.
 			} finally {
-				
+
 				// Adds the column.
 				statement.executeUpdate("ALTER TABLE " + graph.getNodesTableName() + " ADD " + MARK_DEPTH_COLUMN + " BIGINT ;");	
 			}
@@ -214,7 +162,7 @@ class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 		markDepthStatement.setLong(2, node);
 		markDepthStatement.executeUpdate();
 	}
-	
+
 	/**
 	 * 
 	 * @param node
@@ -230,15 +178,15 @@ class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 		// Executes the statement.
 		getDepthStatement.setLong(1, node);
 		ResultSet rs = getDepthStatement.executeQuery();
-		
+
 		try {
 
-			
+
 			// Only one row.
 			rs.next();
 			return rs.getLong(1);
-			
-			
+
+
 		} finally {
 			rs.close();
 		}

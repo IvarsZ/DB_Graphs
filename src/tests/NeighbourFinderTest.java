@@ -114,14 +114,14 @@ public abstract class NeighbourFinderTest<V extends IVertex, E extends IEdge> {
 	public void noNeighboursAtDepth2() {
 		
 		// Node3 has no neighbours at depth 2.
-		assertTrue(operator.findNeighbours(getVertex(3), 2).isEmpty());
+		assertTrue(convertToSet(operator.findNeighbours(getVertex(3), 2)).isEmpty());
 	}
 	
 	@Test
 	public void oneNeighbourAtDepth3() {
 		
 		// Node7 has one neighbour at depth 3 - Node5.
-		Set<V> neighbours = operator.findNeighbours(getVertex(7), 3);
+		Set<V> neighbours = convertToSet(operator.findNeighbours(getVertex(7), 3));
 		assertEquals(1, neighbours.size());
 		assertTrue(neighbours.contains(getVertex(0)));
 	}
@@ -130,7 +130,7 @@ public abstract class NeighbourFinderTest<V extends IVertex, E extends IEdge> {
 	public void multipleNeighboursAtDepth3() {
 		
 		// Node 0 has 3 neighbours at depth 3 - 2, 7, 8.
-		Set<V> neighbours = operator.findNeighbours(getVertex(0), 3);
+		Set<V> neighbours = convertToSet(operator.findNeighbours(getVertex(0), 3));
 		assertEquals(3, neighbours.size());
 		assertTrue(neighbours.contains(getVertex(2)));
 		assertTrue(neighbours.contains(getVertex(7)));
@@ -148,10 +148,9 @@ public abstract class NeighbourFinderTest<V extends IVertex, E extends IEdge> {
 		// Checks if the graph is empty
 		IIndex<V> vertexIndex = largeGraph.index().forVertices("vertices");
 		boolean isEmpty = IndexTest.size(vertexIndex.get("name", "node1")) == 0;
-		
 		// and writes it if so.
 		if (isEmpty) {
-			
+				
 			V previous = largeGraph.createVertex();
 			
 			// Indexes the first node.
@@ -180,6 +179,7 @@ public abstract class NeighbourFinderTest<V extends IVertex, E extends IEdge> {
 		// The node2 should be the only neighbour of node1 at testDepth.
 		V node1 = IndexTest.getSingle(vertexIndex.get("name", "node1"));
 		V node2 = IndexTest.getSingle(vertexIndex.get("name", "node2"));
+		
 		assertTrue(IndexTest.containsOnly(largeGraph.getOperator().findNeighbours(node1, testDepth), node2));
 		
 		largeGraph.close();

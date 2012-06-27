@@ -39,7 +39,7 @@ public interface IGraphOperator<V extends IVertex, E extends IEdge> {
 	 * @return
 	 * 
 	 */
-	public Set<V> findNeighbours(V start, int atDepth);
+	public Iterable<V> findNeighbours(V start, int atDepth);
 	
 	/**
 	 * 
