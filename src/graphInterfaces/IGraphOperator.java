@@ -15,6 +15,8 @@ import java.util.Set;
  * @param <E> - edges of the graph.
  */
 public interface IGraphOperator<V extends IVertex, E extends IEdge> {
+	
+	public ITraverser<V> createTraverser(int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection);
 
 	/**
 	 * 

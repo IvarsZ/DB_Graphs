@@ -2,7 +2,7 @@ package mySqlGraph;
 
 import exceptions.DataAccessException;
 import graphInterfaces.IPersistentGraph.Direction;
-import graphInterfaces.IVertex;
+import graphInterfaces.ITraverser;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +17,7 @@ import java.util.Queue;
 
 
 
-class MySqlTraverser {
+class MySqlTraverser implements ITraverser<MySqlVertex> {
 
 	public enum TraversalType {
 		BFS,
@@ -45,8 +45,6 @@ class MySqlTraverser {
 		getIngoingEdges = graph.getMySqlConnection().prepareStatement("SELECT start, type FROM " + graph.getEdgesTableName() + " WHERE end = ?");
 	}
 
-
-
 	/**
 	 * 
 	 * Each new iterator opens a new connection, so that temporary tables
@@ -55,7 +53,8 @@ class MySqlTraverser {
 	 * @param vertex
 	 * @return
 	 */
-	public Iterable<MySqlVertex> traverse(final IVertex vertex) {
+	@Override
+	public Iterable<MySqlVertex> traverse(final MySqlVertex vertex) {
 
 		return new Iterable<MySqlVertex>() {
 
@@ -63,7 +62,7 @@ class MySqlTraverser {
 			public Iterator<MySqlVertex> iterator() {
 				try {
 
-
+					
 					return new TraverserIterator(vertex.getId());
 
 
@@ -108,9 +107,9 @@ class MySqlTraverser {
 				
 				
 				// Creates the depth table, and prepares statements for it.
-				statement.executeUpdate("CREATE TABLE #depth_table (id BIGINT NOT NULL, depth BIGINT NOT NULL, PRIMARY KEY(id))");
-				markDepthStatement = connection.prepareStatement("INSERT INTO #depth_table (id, depth) VALUES(?, ?)");
-				getDepthStatement = connection.prepareStatement("SELECT depth FROM #depth_table WHERE id = ?" );
+				statement.executeUpdate("CREATE TEMPORARY TABLE depth_table (id BIGINT NOT NULL, depth BIGINT NOT NULL, PRIMARY KEY(id))");
+				markDepthStatement = connection.prepareStatement("INSERT INTO depth_table (id, depth) VALUES(?, ?)");
+				getDepthStatement = connection.prepareStatement("SELECT depth FROM depth_table WHERE id = ?" );
 				
 				
 			} finally {
@@ -137,7 +136,7 @@ class MySqlTraverser {
 
 					// Gets its depth, and if the depth is not larger than maximum depth, then
 					long nodeDepth = getDepth(vertexId);
-					if (nodeDepth <= maxDepth) {
+					if (nodeDepth < maxDepth) {
 
 						// gets all child vertices and visits them.
 						switch (allowedDirection) {
@@ -219,8 +218,8 @@ class MySqlTraverser {
 		}
 		
 		private void executeMarkDepth(long node, long depth) throws SQLException {
-			markDepthStatement.setLong(1, depth);
-			markDepthStatement.setLong(2, node);
+			markDepthStatement.setLong(1, node);
+			markDepthStatement.setLong(2, depth);
 			markDepthStatement.executeUpdate();
 		}
 
@@ -257,5 +256,20 @@ class MySqlTraverser {
 	private ResultSet executeGetIngoingEdges(long endId) throws SQLException {
 		getIngoingEdges.setLong(1, endId);
 		return getIngoingEdges.executeQuery();
+	}
+	
+	@Override
+	public void setMaxDepth(int maxDepth) {
+		this.maxDepth = maxDepth;
+	}
+
+	@Override
+	public void setAllowedEdgeTypes(List<String> allowedEdgeTypes) {
+		this.allowedEdgeTypes = allowedEdgeTypes;
+	}
+
+	@Override
+	public void setAllowedDirection(Direction allowedDirection) {
+		this.allowedDirection = allowedDirection;
 	}
 }

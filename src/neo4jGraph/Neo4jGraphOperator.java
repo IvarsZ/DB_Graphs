@@ -2,11 +2,14 @@ package neo4jGraph;
 
 import graphInterfaces.IGraphOperator;
 import graphInterfaces.IPersistentGraph;
+import graphInterfaces.ITraverser;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import mySqlGraph.MySqlVertex;
 
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.DynamicRelationshipType;
@@ -23,6 +26,12 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 
 	protected Neo4jGraphOperator(Neo4jGraph neo4jGraph) {
 		graph = (Neo4jGraph) neo4jGraph;
+	}
+	
+	@Override
+	public ITraverser<Neo4jVertex> createTraverser(int maxDepth, List<String> allowedEdgeTypes, graphInterfaces.IPersistentGraph.Direction allowedDirection) {
+		// TODO IMPLEMENT.
+		return null;
 	}
 
 	// TODO : vertices from the same graph.

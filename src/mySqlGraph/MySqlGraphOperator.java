@@ -4,6 +4,7 @@ import exceptions.DataAccessException;
 import graphInterfaces.IGraphOperator;
 import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IPersistentGraph.Direction;
+import graphInterfaces.ITraverser;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,6 +30,8 @@ import java.util.Set;
 class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 
 	private static final String MARK_DEPTH_COLUMN = "depth_in_findNeighbours";
+	
+	private MySqlTraverser traverser;
 
 	private MySqlGraph graph;
 
@@ -49,6 +52,35 @@ class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 
 			markDepthStatement = graph.getMySqlConnection().prepareStatement("UPDATE " + graph.getNodesTableName() + " SET " + MARK_DEPTH_COLUMN + " = ? WHERE id = ? ;");
 			getDepthStatement = graph.getMySqlConnection().prepareStatement("SELECT " + MARK_DEPTH_COLUMN + " FROM "  + graph.getNodesTableName() + " WHERE id = ? ;" );
+	}
+	
+	@Override
+	public ITraverser<MySqlVertex> createTraverser(int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection) {
+		try {
+			
+			
+			return new MySqlTraverser(graph, maxDepth, allowedEdgeTypes, allowedDirection);
+			
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		}
+	}
+	
+	@Override
+	public Set<MySqlVertex> findCommonAncestors(MySqlVertex v1, MySqlVertex v2,
+			int maxDepth, List<String> allowedEdgeTypes,
+			IPersistentGraph.Direction allowedDirection) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<MySqlVertex> findLowestCommonAncestors(MySqlVertex v1,
+			MySqlVertex v2, int maxDepth, List<String> allowedEdgeTypes,
+			Direction allowedDirection) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -244,21 +276,4 @@ class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 		getIngoingEdges.setLong(1, endId);
 		return getIngoingEdges.executeQuery();
 	}
-	
-	@Override
-	public Set<MySqlVertex> findCommonAncestors(MySqlVertex v1, MySqlVertex v2,
-			int maxDepth, List<String> allowedEdgeTypes,
-			IPersistentGraph.Direction allowedDirection) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set<MySqlVertex> findLowestCommonAncestors(MySqlVertex v1,
-			MySqlVertex v2, int maxDepth, List<String> allowedEdgeTypes,
-			Direction allowedDirection) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
