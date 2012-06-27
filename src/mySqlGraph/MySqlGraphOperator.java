@@ -10,11 +10,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+
+import scala.annotation.target.getter;
 
 
 
@@ -55,11 +58,11 @@ class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 	}
 	
 	@Override
-	public ITraverser<MySqlVertex> createTraverser(int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection) {
+	public ITraverser<MySqlVertex> createTraverser(int minDepth, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection) {
 		try {
 			
 			
-			return new MySqlTraverser(graph, maxDepth, allowedEdgeTypes, allowedDirection);
+			return new MySqlTraverser(graph, minDepth, maxDepth, allowedEdgeTypes, allowedDirection);
 			
 			
 		} catch (SQLException e) {
@@ -84,35 +87,9 @@ class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 	}
 
 	@Override
-	public Set<MySqlVertex> findNeighbours(MySqlVertex start) {
-		ResultSet outgoing = null;
-		ResultSet ingoing = null;
-		try {
-
-
-			Set<MySqlVertex> neighbours = new HashSet<MySqlVertex>();
-
-			// Queries all nodes that are connected to the node and adds their ids to the neighbours set.
-			outgoing = executeGetOutgoingEdges(start.getId());
-			while (outgoing.next()) {
-				neighbours.add(new MySqlVertex(outgoing.getLong(1), graph));
-			}
-
-			// Queries all nodes that the node is connected to and adds their ids to the neighbours set.
-			ingoing = executeGetIngoingEdges(start.getId());
-			while (ingoing.next()) {
-				neighbours.add(new MySqlVertex(ingoing.getLong(1), graph));
-			}
-
-			return neighbours;
-
-
-		} catch (SQLException e) {
-			throw new DataAccessException(e);
-		} finally {
-			if (outgoing != null) try { outgoing.close(); } catch (SQLException e) { /* Ignore */ }
-			if (ingoing != null) try { ingoing.close(); } catch (SQLException e) { /* Ignore */ }
-		}
+	public Iterable<MySqlVertex> findNeighbours(MySqlVertex start) {
+		ArrayList<String> empty = new ArrayList<String>();
+		return createTraverser(1, 1, empty, Direction.BOTH).traverse(start);
 	}
 
 	@Override

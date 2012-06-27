@@ -63,9 +63,12 @@ public abstract class TraverserTest<V extends IVertex, E extends IEdge> {
 		// Traversing at depth 0, traverses only the vertex itself.
 		ArrayList<String> connections = new ArrayList<String>();
 		connections.add("connects to");
-		for (V v :graph.getOperator().createTraverser(0, connections, Direction.BOTH).traverse(getVertex(0))) {
+		int i = 0;
+		for (V v :graph.getOperator().createTraverser(0, 0, connections, Direction.BOTH).traverse(getVertex(0))) {
 			assertEquals(getVertex(0), v);
+			i++;
 		}
+		assertEquals(1, i);
 	}
 	
 	@Test
@@ -74,11 +77,12 @@ public abstract class TraverserTest<V extends IVertex, E extends IEdge> {
 		connections.add("connects to");
 		int traversalOrder[] = {0, 1, 4, 6, 5, 2, 8, 7}; // should traverse in this order.
 		int i = 0;
-		for (V v :graph.getOperator().createTraverser(3, connections, Direction.BOTH).traverse(getVertex(0))) {
+		for (V v :graph.getOperator().createTraverser(0, 3, connections, Direction.BOTH).traverse(getVertex(0))) {
 			// System.out.println(i + " " + traversalOrder[i] + " " + v.getProperty("number"));
 			assertEquals(getVertex(traversalOrder[i]), v);
 			i++;
 		}
+		assertEquals(traversalOrder.length, i);
 	}
 	
 	@Test
@@ -87,11 +91,12 @@ public abstract class TraverserTest<V extends IVertex, E extends IEdge> {
 		connections.add("connects to");
 		int traversalOrder[] = {5, 1, 2, 4, 8}; // should traverse in this order.
 		int i = 0;
-		for (V v :graph.getOperator().createTraverser(2, connections, Direction.OUTGOING).traverse(getVertex(5))) {
+		for (V v :graph.getOperator().createTraverser(0, 2, connections, Direction.OUTGOING).traverse(getVertex(5))) {
 			// System.out.println(i + " " + traversalOrder[i] + " " + v.getProperty("number"));
 			assertEquals(getVertex(traversalOrder[i]), v);
 			i++;
 		}
+		assertEquals(traversalOrder.length, i);
 	}
 	
 	@Test
@@ -100,11 +105,12 @@ public abstract class TraverserTest<V extends IVertex, E extends IEdge> {
 		connections.add("connects to");
 		int traversalOrder[] = {2, 5, 6, 7}; // should traverse in this order.
 		int i = 0;
-		for (V v :graph.getOperator().createTraverser(2, connections, Direction.INCOMING).traverse(getVertex(2))) {
+		for (V v :graph.getOperator().createTraverser(0, 2, connections, Direction.INCOMING).traverse(getVertex(2))) {
 			// System.out.println(i + " " + traversalOrder[i] + " " + v.getProperty("number"));
 			assertEquals(getVertex(traversalOrder[i]), v);
 			i++;
 		}
+		assertEquals(traversalOrder.length, i);
 	}
 	
 	@Test
@@ -112,11 +118,12 @@ public abstract class TraverserTest<V extends IVertex, E extends IEdge> {
 		ArrayList<String> empty = new ArrayList<String>();
 		int traversalOrder[] = {7, 5, 3, 1, 2, 4, 8, 6, 0}; // should traverse in this order.
 		int i = 0;
-		for (V v :graph.getOperator().createTraverser(3, empty, Direction.BOTH).traverse(getVertex(7))) {
+		for (V v :graph.getOperator().createTraverser(0, 3, empty, Direction.BOTH).traverse(getVertex(7))) {
 			// System.out.println(i + " " + traversalOrder[i] + " " + v.getProperty("number"));
 			assertEquals(getVertex(traversalOrder[i]), v);
 			i++;
 		}
+		assertEquals(traversalOrder.length, i);
 	}
 
 	

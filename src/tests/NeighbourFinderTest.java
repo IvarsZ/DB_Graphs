@@ -8,6 +8,7 @@ import graphInterfaces.IIndex;
 import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IVertex;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.After;
@@ -62,14 +63,14 @@ public abstract class NeighbourFinderTest<V extends IVertex, E extends IEdge> {
 	public void noNeighbours() {
 		
 		// Node3 has no neighbours.
-		assertTrue(operator.findNeighbours(getVertex(3)).isEmpty());
+		assertTrue(convertToSet(operator.findNeighbours(getVertex(3))).isEmpty());
 	}
 	
 	@Test
 	public void oneNeighbour() {
 		
 		// Node7 has one neighbour Node5.
-		Set<V> neighbours = operator.findNeighbours(getVertex(7));
+		Set<V> neighbours = convertToSet(operator.findNeighbours(getVertex(7)));
 		assertEquals(1, neighbours.size());
 		assertTrue(neighbours.contains(getVertex(5)));
 	}
@@ -78,7 +79,7 @@ public abstract class NeighbourFinderTest<V extends IVertex, E extends IEdge> {
 	public void onlyOutGoingNeighbours() {
 		
 		// Node6 has 2 neighbours (0 and 5) both are outgoing.
-		Set<V> neighbours = operator.findNeighbours(getVertex(6));
+		Set<V> neighbours = convertToSet(operator.findNeighbours(getVertex(6)));
 		assertEquals(2, neighbours.size());
 		assertTrue(neighbours.contains(getVertex(0)));
 		assertTrue(neighbours.contains(getVertex(5)));
@@ -88,7 +89,7 @@ public abstract class NeighbourFinderTest<V extends IVertex, E extends IEdge> {
 	public void onlyIngoingNeighbours() {
 		
 		// Node8 has 2 neighbours (2 and 5) both are ingoing.
-		Set<V> neighbours = operator.findNeighbours(getVertex(8));
+		Set<V> neighbours = convertToSet(operator.findNeighbours(getVertex(8)));
 		assertEquals(2, neighbours.size());
 		assertTrue(neighbours.contains(getVertex(2)));
 		assertTrue(neighbours.contains(getVertex(5)));
@@ -98,7 +99,7 @@ public abstract class NeighbourFinderTest<V extends IVertex, E extends IEdge> {
 	public void multipleNeighbours() {
 		
 		// Node 5 has 6 neighbours 1, 2, 4, 6, 7, 8.
-		Set<V> neighbours = operator.findNeighbours(getVertex(5));
+		Set<V> neighbours = convertToSet(operator.findNeighbours(getVertex(5)));
 		assertEquals(6, neighbours.size());
 		assertTrue(neighbours.contains(getVertex(1)));
 		assertTrue(neighbours.contains(getVertex(2)));
@@ -196,5 +197,13 @@ public abstract class NeighbourFinderTest<V extends IVertex, E extends IEdge> {
 		}
 		
 		return null;
+	}
+	
+	private Set<V> convertToSet(Iterable<V> toConvert) {
+		Set<V> set = new HashSet<V>();
+		for (V v : toConvert) {
+			set.add(v);
+		}
+		return set;
 	}
 }

@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public interface IGraphOperator<V extends IVertex, E extends IEdge> {
 	
-	public ITraverser<V> createTraverser(int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection);
+	public ITraverser<V> createTraverser(int minDepth, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection);
 
 	/**
 	 * 
@@ -26,7 +26,7 @@ public interface IGraphOperator<V extends IVertex, E extends IEdge> {
 	 * @param start - vertex whose neighbours are found.
 	 * 
 	 */
-	public Set<V> findNeighbours(V start);
+	public Iterable<V> findNeighbours(V start);
 	
 	/**
 	 * 

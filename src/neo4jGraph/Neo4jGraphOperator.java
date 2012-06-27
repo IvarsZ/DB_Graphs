@@ -29,7 +29,7 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 	}
 	
 	@Override
-	public ITraverser<Neo4jVertex> createTraverser(int maxDepth, List<String> allowedEdgeTypes, graphInterfaces.IPersistentGraph.Direction allowedDirection) {
+	public ITraverser<Neo4jVertex> createTraverser(int minDepth, int maxDepth, List<String> allowedEdgeTypes, graphInterfaces.IPersistentGraph.Direction allowedDirection) {
 		// TODO IMPLEMENT.
 		return null;
 	}
@@ -37,7 +37,7 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 	// TODO : vertices from the same graph.
 
 	@Override
-	public Set<Neo4jVertex> findNeighbours(Neo4jVertex start) {
+	public Iterable<Neo4jVertex> findNeighbours(Neo4jVertex start) {
 
 		Node node = start.getNode();
 

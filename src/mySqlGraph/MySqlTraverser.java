@@ -25,6 +25,7 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 	}
 
 	private MySqlGraph graph;
+	private int minDepth;
 	private int maxDepth;
 	private List<String> allowedEdgeTypes;
 	private Direction allowedDirection;
@@ -34,9 +35,10 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 
 	// TODO : vertices from the same graph.
 
-	protected MySqlTraverser(MySqlGraph graph, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection) throws SQLException {
+	protected MySqlTraverser(MySqlGraph graph, int minDepth, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection) throws SQLException {
 
 		this.graph = graph;
+		this.minDepth = minDepth;
 		this.maxDepth = maxDepth;
 		this.allowedEdgeTypes = allowedEdgeTypes;
 		this.allowedDirection = allowedDirection;
@@ -62,7 +64,7 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 			public Iterator<MySqlVertex> iterator() {
 				try {
 
-					
+
 					return new TraverserIterator(vertex.getId());
 
 
@@ -75,43 +77,49 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 	}
 
 	private class TraverserIterator implements Iterator<MySqlVertex> {
-		
+
 		private static final int UNVISITED_VERTEX = -1;
-		
+
 		private Connection connection;
-		
+
 		private PreparedStatement markDepthStatement;
 		private PreparedStatement getDepthStatement;
-		
+
 		// TODO : resource cleanup.
 
 		private Queue<Long> q;
+		private Long first;
 
 		private TraverserIterator(long startId) throws SQLException {
-			
+
 			// Creates the new connection for the traversal.
 			connection = graph.getConnector().connect();
-			
+
 			// Sets up the depth table.
 			createDepthTable();
-			
+
 			// Adds the start vertex to the bfs traversal queue.
 			q = new LinkedList<Long>();
 			q.add(startId);
 			executeMarkDepth(startId, 0);
+
+			first = null;
+			while (q.isEmpty() == false && first == null) {
+				traverse();
+			}
 		}
-		
+
 		private void createDepthTable() throws SQLException {
 			Statement statement = connection.createStatement();
 			try {
-				
-				
+
+
 				// Creates the depth table, and prepares statements for it.
 				statement.executeUpdate("CREATE TEMPORARY TABLE depth_table (id BIGINT NOT NULL, depth BIGINT NOT NULL, PRIMARY KEY(id))");
 				markDepthStatement = connection.prepareStatement("INSERT INTO depth_table (id, depth) VALUES(?, ?)");
 				getDepthStatement = connection.prepareStatement("SELECT depth FROM depth_table WHERE id = ?" );
-				
-				
+
+
 			} finally {
 				statement.close();
 			}
@@ -119,63 +127,79 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 
 		@Override
 		public boolean hasNext() {
-			return q.isEmpty() == false;
+			return first != null;
+		}
+
+		/**
+		 * 
+		 * @return - id of traversed vertex.
+		 * @throws SQLException 
+		 */
+		private void traverse() throws SQLException {
+
+			// gets the next vertex.
+			long vertexId = q.poll();
+
+			// Gets its depth, and if the depth is not larger than maximum depth, then
+			long nodeDepth = getDepth(vertexId);
+			if (nodeDepth <= maxDepth) {
+
+				if (nodeDepth >= minDepth) {
+					first = vertexId;
+				}
+
+				if (nodeDepth < maxDepth) {
+
+					// gets all child vertices and visits them.
+					switch (allowedDirection) {
+					case BOTH : {
+
+						// Gets child/parent vertices.
+						ResultSet outgoing = executeGetOutgoingEdges(vertexId);
+						visitChildNodes(q, outgoing, nodeDepth);
+
+						ResultSet ingoing = executeGetIngoingEdges(vertexId);
+						visitChildNodes(q, ingoing, nodeDepth);
+					}
+					case INCOMING : {
+
+						// Gets only parent vertices.
+						ResultSet ingoing = executeGetIngoingEdges(vertexId);
+						visitChildNodes(q, ingoing, nodeDepth);
+						break;
+					}
+					case OUTGOING : {
+
+						// Gets only child vertices.
+						ResultSet outgoing = executeGetOutgoingEdges(vertexId);
+						visitChildNodes(q, outgoing, nodeDepth);
+						break;
+					}
+
+					default:
+						// Shouldn't happen.
+						throw new IllegalArgumentException("Illegal value of allowed direction enum : " + allowedDirection);
+					}
+				}
+			}
 		}
 
 		@Override
 		public MySqlVertex next() {
 			try {
 
-
-				// If there are more vertices to traverse,
-				if (q.isEmpty() == false) {
-
-					// gets the next vertex.
-					long vertexId = q.poll();
-					MySqlVertex nextVertex = new MySqlVertex(vertexId, graph);
-
-					// Gets its depth, and if the depth is not larger than maximum depth, then
-					long nodeDepth = getDepth(vertexId);
-					if (nodeDepth < maxDepth) {
-
-						// gets all child vertices and visits them.
-						switch (allowedDirection) {
-						case BOTH : {
-
-							// Gets child/parent vertices.
-							ResultSet outgoing = executeGetOutgoingEdges(vertexId);
-							visitChildNodes(q, outgoing, nodeDepth);
-
-							ResultSet ingoing = executeGetIngoingEdges(vertexId);
-							visitChildNodes(q, ingoing, nodeDepth);
-						}
-						case INCOMING : {
-
-							// Gets only parent vertices.
-							ResultSet ingoing = executeGetIngoingEdges(vertexId);
-							visitChildNodes(q, ingoing, nodeDepth);
-							break;
-						}
-						case OUTGOING : {
-
-							// Gets only child vertices.
-							ResultSet outgoing = executeGetOutgoingEdges(vertexId);
-							visitChildNodes(q, outgoing, nodeDepth);
-							break;
-						}
-
-						default:
-							// Shouldn't happen.
-							throw new IllegalArgumentException("Illegal value of allowed direction enum : " + allowedDirection);
-						}
-
-					}
-					
-					return nextVertex;
-				}
-				else {
+				if (first == null) {
 					throw new NoSuchElementException("No more vertices to traverse.");
 				}
+
+				long firstTmp = first;
+				first = null;
+				if (q.isEmpty() == false) {
+					traverse();
+				}
+
+				return new MySqlVertex(firstTmp, graph);
+
 			} catch (SQLException e) {
 				throw new DataAccessException(e);
 			}
@@ -185,7 +209,7 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 		public void remove() {
 			throw new UnsupportedOperationException();
 		}
-		
+
 		private void visitChildNodes(Queue<Long> q, ResultSet resultSet, long nodeDepth) throws SQLException {
 
 			while (resultSet.next()) {
@@ -216,7 +240,7 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 				}
 			}
 		}
-		
+
 		private void executeMarkDepth(long node, long depth) throws SQLException {
 			markDepthStatement.setLong(1, node);
 			markDepthStatement.setLong(2, depth);
@@ -224,7 +248,7 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 		}
 
 		private long getDepth(long vertexId) throws SQLException {
-			
+
 			// Executes the get depth statement.
 			getDepthStatement.setLong(1, vertexId);
 			ResultSet rs = getDepthStatement.executeQuery();
@@ -233,11 +257,11 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 
 				// If has depth,
 				if (rs.next()) {
-					
+
 					// returns it.
 					return rs.getLong(1);
 				}
-				
+
 				// Otherwise identifies that the vertex is unvisited.
 				return UNVISITED_VERTEX;
 
@@ -247,7 +271,7 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 			}
 		}
 	}
-	
+
 	private ResultSet executeGetOutgoingEdges(long startId) throws SQLException {
 		getOutgoingEdges.setLong(1, startId);
 		return getOutgoingEdges.executeQuery();
@@ -257,7 +281,7 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 		getIngoingEdges.setLong(1, endId);
 		return getIngoingEdges.executeQuery();
 	}
-	
+
 	@Override
 	public void setMaxDepth(int maxDepth) {
 		this.maxDepth = maxDepth;
