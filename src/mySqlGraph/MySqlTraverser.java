@@ -76,7 +76,7 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 		};
 	}
 
-	private class TraverserIterator implements Iterator<MySqlVertex> {
+	class TraverserIterator implements Iterator<MySqlVertex> {
 
 		private static final int UNVISITED_VERTEX = -1;
 
@@ -89,21 +89,23 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 
 		private Queue<Long> q;
 		private Long first;
+		private long depth;
 
-		private TraverserIterator(long startId) throws SQLException {
+		protected TraverserIterator(long startId) throws SQLException {
 
 			// Creates the new connection for the traversal.
 			connection = graph.getConnector().connect();
 
 			// Sets up the depth table.
 			createDepthTable();
-
+			
 			// Adds the start vertex to the bfs traversal queue.
 			q = new LinkedList<Long>();
 			q.add(startId);
 			executeMarkDepth(startId, 0);
 
 			first = null;
+			depth = -1;
 			while (q.isEmpty() == false && first == null) {
 				traverse();
 			}
@@ -146,6 +148,7 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 
 				if (nodeDepth >= minDepth) {
 					first = vertexId;
+					depth = nodeDepth;
 				}
 
 				if (nodeDepth < maxDepth) {
@@ -208,6 +211,10 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 		@Override
 		public void remove() {
 			throw new UnsupportedOperationException();
+		}
+		
+		public long getDepth() {
+			return depth;
 		}
 
 		private void visitChildNodes(Queue<Long> q, ResultSet resultSet, long nodeDepth) throws SQLException {
