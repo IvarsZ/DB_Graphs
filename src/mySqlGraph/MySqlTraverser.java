@@ -33,8 +33,6 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 	private PreparedStatement getOutgoingEdges;
 	private PreparedStatement getIngoingEdges;
 
-	// TODO : vertices from the same graph.
-
 	protected MySqlTraverser(MySqlGraph graph, int minDepth, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection) throws SQLException {
 
 		this.graph = graph;
@@ -84,8 +82,6 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 
 		private PreparedStatement markDepthStatement;
 		private PreparedStatement getDepthStatement;
-
-		// TODO : resource cleanup.
 
 		private Queue<Long> q;
 		private Long first;
@@ -289,20 +285,5 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 	private ResultSet executeGetIngoingEdges(long endId) throws SQLException {
 		getIngoingEdges.setLong(1, endId);
 		return getIngoingEdges.executeQuery();
-	}
-
-	@Override
-	public void setMaxDepth(int maxDepth) {
-		this.maxDepth = maxDepth;
-	}
-
-	@Override
-	public void setAllowedEdgeTypes(List<String> allowedEdgeTypes) {
-		this.allowedEdgeTypes = allowedEdgeTypes;
-	}
-
-	@Override
-	public void setAllowedDirection(Direction allowedDirection) {
-		this.allowedDirection = allowedDirection;
 	}
 }

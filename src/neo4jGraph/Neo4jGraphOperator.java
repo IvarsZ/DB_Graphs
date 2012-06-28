@@ -9,8 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import mySqlGraph.MySqlVertex;
-
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.DynamicRelationshipType;
 import org.neo4j.graphdb.Node;
@@ -27,14 +25,6 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 	protected Neo4jGraphOperator(Neo4jGraph neo4jGraph) {
 		graph = (Neo4jGraph) neo4jGraph;
 	}
-	
-	@Override
-	public ITraverser<Neo4jVertex> createTraverser(int minDepth, int maxDepth, List<String> allowedEdgeTypes, graphInterfaces.IPersistentGraph.Direction allowedDirection) {
-		// TODO IMPLEMENT.
-		return null;
-	}
-
-	// TODO : vertices from the same graph.
 
 	@Override
 	public Iterable<Neo4jVertex> findNeighbours(Neo4jVertex start) {
@@ -59,7 +49,7 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 
 		Node node = start.getNode();
 
-		// Traverses nodes that are atDepth from the start by using BFS and pruning all REFERENCE_TO_NODE relationships.
+		// Traverses nodes that are atDepth from the start by using BFS.
 		TraversalDescription td = Traversal.description();
 		td = td.breadthFirst();
 		td = td.evaluator(Evaluators.atDepth(atDepth));
@@ -144,7 +134,7 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 		Set<Node> v1Ancestors = new HashSet<Node>();
 		Set<Node> v2Ancestors = new HashSet<Node>();
 		Set<Neo4jVertex> lowestCommonAncestors = new HashSet<Neo4jVertex>();
-		
+
 		// TODO : refactor - repeated code.
 
 		// Traverses ancestors of both v1 and v2, in turns. 
@@ -172,14 +162,14 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 							maxDepth = currentDepthOfV1Traversal;
 						}
 					}
-					
+
 					// and flips which vertex is traversed, if can traverse the other.
 					if (currentDepthOfV2Traversal <= currentDepthOfV1Traversal) {
 						traverseV1Ancestors = false;
 						traverseV2Ancestors = true;
 					}
 				}
-				
+
 				// Otherwise attempts to flip which vertex is traversed.
 				else {
 					traverseV1Ancestors = false;
@@ -210,14 +200,14 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 							maxDepth = currentDepthOfV2Traversal;
 						}
 					}
-					
+
 					// and flips which vertex is traversed, if can traverse the other.
 					if (currentDepthOfV1Traversal <= currentDepthOfV2Traversal) {
 						traverseV2Ancestors = false;
 						traverseV1Ancestors = true;
 					}
 				}
-				
+
 				// Otherwise attempts to flip which vertex is traversed.
 				else {
 					traverseV2Ancestors = false;
@@ -229,5 +219,12 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 		}
 
 		return lowestCommonAncestors;
+	}
+
+	@Override
+	public ITraverser<Neo4jVertex> createTraverser(int minDepth, int maxDepth,
+			List<String> allowedEdgeTypes,
+			graphInterfaces.IPersistentGraph.Direction allowedDirection) {
+		return new Neo4jTraverser(minDepth, maxDepth, allowedEdgeTypes, allowedDirection);
 	}
 }

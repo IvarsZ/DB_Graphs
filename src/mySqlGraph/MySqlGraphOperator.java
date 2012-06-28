@@ -25,8 +25,6 @@ class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 
 	private MySqlGraph graph;
 
-	// TODO : vertices from the same graph.
-
 	protected MySqlGraphOperator(MySqlGraph mySqlGraph) throws SQLException {
 
 		this.graph = (MySqlGraph) mySqlGraph;

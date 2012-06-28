@@ -72,7 +72,7 @@ public class MySqlEdge implements IEdge {
 
 	@Override
 	public Iterable<String> getKeys() {
-		// TODO Auto-generated method stub
+		// TODO implement - low priority.
 		return null;
 	}
 
@@ -126,7 +126,6 @@ public class MySqlEdge implements IEdge {
 		
 		if (obj instanceof MySqlEdge) {
 			
-			// TODO : check graphs.
 			MySqlEdge edge = (MySqlEdge) obj;
 			return id == edge.id;
 		}

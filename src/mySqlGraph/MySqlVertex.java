@@ -55,7 +55,7 @@ public class MySqlVertex implements IVertex {
 
 	@Override
 	public Iterable<String> getKeys() {
-		// TODO Auto-generated method stub
+		// TODO implement - low priority.
 		return null;
 	}
 

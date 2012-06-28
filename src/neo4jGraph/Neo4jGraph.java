@@ -12,7 +12,6 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.NotFoundException;
 import org.neo4j.graphdb.Relationship;
-import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.tooling.GlobalGraphOperations;
@@ -47,6 +46,7 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 	private String graphDbPath;
 	private Transaction transaction;
 	private Neo4jIndexManager index;
+	private Neo4jGraphOperator operator;
 
 	/**
 	 * 
@@ -60,6 +60,7 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 		this.graphDbPath = graphDbPath;
 		createDatabase();
 		index = new Neo4jIndexManager(this);
+		operator = new Neo4jGraphOperator(this);
 	}
 
 	private void createDatabase() {
@@ -159,7 +160,7 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 	
 	@Override
 	public IGraphOperator<Neo4jVertex, Neo4jEdge> getOperator() {
-		return new Neo4jGraphOperator(this);
+		return operator;
 	}
 	
 	@Override

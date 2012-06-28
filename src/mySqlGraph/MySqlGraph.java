@@ -37,6 +37,8 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 	private MySqlIndexManager index;
 	
 	private MySqlConnector connector;
+	
+	private MySqlGraphOperator operator;
 
 	public MySqlGraph(String graphName, MySqlConnector connector) throws SQLException {
 		
@@ -50,6 +52,8 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 
 		statements = new GraphStatements(this);
 		index = new MySqlIndexManager(this);
+		
+		operator = new MySqlGraphOperator(this);
 
 		// Creates the tables for representing the graph.
 		createTables();
@@ -197,15 +201,7 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 	
 	@Override
 	public IGraphOperator<MySqlVertex, MySqlEdge> getOperator() {
-		try {
-			
-			
-			return new MySqlGraphOperator(this);
-			
-			
-		} catch (SQLException e) {
-			throw new DataAccessException(e);
-		}
+			return operator;
 	}
 	
 	@Override

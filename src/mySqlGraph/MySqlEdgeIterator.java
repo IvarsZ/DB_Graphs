@@ -83,8 +83,6 @@ class MySqlEdgeIterator implements Iterator<MySqlEdge> {
 
 	@Override
 	public void remove() {
-
-		// TODO : Implement?
 		throw new UnsupportedOperationException("Removal not supported");
 	}
 
