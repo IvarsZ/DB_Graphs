@@ -17,11 +17,14 @@ public class Neo4jTraverser implements ITraverser<Neo4jVertex> {
 	Neo4jGraph graph;
 
 	protected Neo4jTraverser (int minDepth, int maxDepth, List<String> allowedEdgeTypes, graphInterfaces.IPersistentGraph.Direction allowedDirection) {
+		
+		// Describes the traversal from parameters.
 		td = Traversal.description();
 		td = td.breadthFirst();
 		td = td.evaluator(Evaluators.fromDepth(minDepth));
 		td = td.evaluator(Evaluators.toDepth(maxDepth));
 		
+		// Adds allowed directions.
 		Direction direction = Neo4jGraph.convertDirection(allowedDirection);
 		for (String type : allowedEdgeTypes) {
 			td = td.relationships(DynamicRelationshipType.withName(type), direction);
