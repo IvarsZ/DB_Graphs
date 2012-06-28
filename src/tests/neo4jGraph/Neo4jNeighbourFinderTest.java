@@ -1,6 +1,6 @@
 package tests.neo4jGraph;
 
-import tests.NeighbourFinderTest;
+import tests.abstractTests.NeighbourFinderTest;
 import graphInterfaces.IPersistentGraph;
 import neo4jGraph.Neo4jEdge;
 import neo4jGraph.Neo4jGraph;

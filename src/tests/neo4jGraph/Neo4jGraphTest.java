@@ -1,6 +1,6 @@
 package tests.neo4jGraph;
 
-import tests.PersistentGraphTest;
+import tests.abstractTests.PersistentGraphTest;
 import graphInterfaces.IPersistentGraph;
 import neo4jGraph.Neo4jEdge;
 import neo4jGraph.Neo4jGraph;

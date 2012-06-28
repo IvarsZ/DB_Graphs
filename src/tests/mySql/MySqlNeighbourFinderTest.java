@@ -5,7 +5,7 @@ import graphInterfaces.IPersistentGraph;
 
 import java.sql.SQLException;
 
-import tests.NeighbourFinderTest;
+import tests.abstractTests.NeighbourFinderTest;
 
 import mySqlGraph.MySqlEdge;
 import mySqlGraph.MySqlGraph;

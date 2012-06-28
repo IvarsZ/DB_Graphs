@@ -72,7 +72,6 @@ public class MySqlEdge implements IEdge {
 
 	@Override
 	public Iterable<String> getKeys() {
-		// TODO implement - low priority.
 		return null;
 	}
 

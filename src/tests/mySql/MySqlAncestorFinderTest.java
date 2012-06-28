@@ -7,7 +7,7 @@ import graphInterfaces.IPersistentGraph;
 import mySqlGraph.MySqlEdge;
 import mySqlGraph.MySqlGraph;
 import mySqlGraph.MySqlVertex;
-import tests.AncestorFinderTest;
+import tests.abstractTests.AncestorFinderTest;
 
 public class MySqlAncestorFinderTest extends AncestorFinderTest<MySqlVertex, MySqlEdge> {
 

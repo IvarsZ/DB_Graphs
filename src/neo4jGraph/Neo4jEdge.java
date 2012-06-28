@@ -1,11 +1,8 @@
 package neo4jGraph;
 
 import graphInterfaces.IEdge;
-import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IVertex;
 
-import org.neo4j.graphdb.DynamicRelationshipType;
-import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 
 public class Neo4jEdge implements IEdge {

@@ -7,7 +7,7 @@ import graphInterfaces.IPersistentGraph;
 import mySqlGraph.MySqlEdge;
 import mySqlGraph.MySqlGraph;
 import mySqlGraph.MySqlVertex;
-import tests.TraverserTest;
+import tests.abstractTests.TraverserTest;
 
 public class MySqlTraverserTest extends TraverserTest<MySqlVertex, MySqlEdge> {
 

@@ -55,7 +55,6 @@ public class MySqlVertex implements IVertex {
 
 	@Override
 	public Iterable<String> getKeys() {
-		// TODO implement - low priority.
 		return null;
 	}
 
@@ -91,8 +90,6 @@ public class MySqlVertex implements IVertex {
 	
 	@Override
 	public boolean equals(Object obj) {
-		
-		// TODO : check graphs as well.
 		
 		if (obj instanceof MySqlVertex) {
 			MySqlVertex vertex = (MySqlVertex) obj;

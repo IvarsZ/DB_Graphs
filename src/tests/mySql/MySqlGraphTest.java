@@ -2,7 +2,7 @@ package tests.mySql;
 
 import java.sql.SQLException;
 
-import tests.PersistentGraphTest;
+import tests.abstractTests.PersistentGraphTest;
 
 import exceptions.DataAccessException;
 

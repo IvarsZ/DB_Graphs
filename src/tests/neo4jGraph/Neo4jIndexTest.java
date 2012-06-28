@@ -1,6 +1,6 @@
 package tests.neo4jGraph;
 
-import tests.IndexTest;
+import tests.abstractTests.IndexTest;
 import neo4jGraph.Neo4jEdge;
 import neo4jGraph.Neo4jGraph;
 import neo4jGraph.Neo4jVertex;

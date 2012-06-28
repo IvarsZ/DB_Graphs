@@ -2,7 +2,7 @@ package tests.mySql;
 
 import java.sql.SQLException;
 
-import tests.IndexTest;
+import tests.abstractTests.IndexTest;
 
 import exceptions.DataAccessException;
 import mySqlGraph.MySqlConnector;

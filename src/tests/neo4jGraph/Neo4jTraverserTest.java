@@ -4,7 +4,7 @@ import graphInterfaces.IPersistentGraph;
 import neo4jGraph.Neo4jEdge;
 import neo4jGraph.Neo4jGraph;
 import neo4jGraph.Neo4jVertex;
-import tests.TraverserTest;
+import tests.abstractTests.TraverserTest;
 
 public class Neo4jTraverserTest extends TraverserTest<Neo4jVertex, Neo4jEdge> {
 

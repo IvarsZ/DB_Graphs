@@ -222,9 +222,9 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 	}
 
 	@Override
-	public ITraverser<Neo4jVertex> createTraverser(int minDepth, int maxDepth,
-			List<String> allowedEdgeTypes,
+	public ITraverser<Neo4jVertex> createTraverser(int minDepth, int maxDepth, List<String> allowedEdgeTypes,
 			graphInterfaces.IPersistentGraph.Direction allowedDirection) {
+		
 		return new Neo4jTraverser(minDepth, maxDepth, allowedEdgeTypes, allowedDirection);
 	}
 }
