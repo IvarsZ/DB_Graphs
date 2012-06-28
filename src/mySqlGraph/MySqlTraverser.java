@@ -90,6 +90,7 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 		private Queue<Long> q;
 		private Long first;
 		private long depth;
+		private long nextDepth;
 
 		protected TraverserIterator(long startId) throws SQLException {
 
@@ -148,7 +149,8 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 
 				if (nodeDepth >= minDepth) {
 					first = vertexId;
-					depth = nodeDepth;
+					depth = nextDepth;
+					nextDepth = nodeDepth;
 				}
 
 				if (nodeDepth < maxDepth) {

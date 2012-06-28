@@ -35,6 +35,7 @@ public abstract class AncestorFinderTest<V extends IVertex, E extends IEdge> {
 		IIndex<V> index = graph.index().forVertices("vertices");
 		for (Integer i = 1; i <= nodeCount; i++) {
 			vertex = graph.createVertex();
+			vertex.setProperty("number", i.toString());
 			index.add(vertex, "number", i.toString());
 		}
 
