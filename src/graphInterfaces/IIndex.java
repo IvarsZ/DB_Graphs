@@ -42,5 +42,7 @@ public interface IIndex<T extends IPropertyContainer<String, String>> {
 	 * 
 	 */
 	public Iterable<T> get(String key, String value);
+	
+	public T getFirst(String key, String value);
 
 }

@@ -15,7 +15,7 @@ public class MySqlAncestorFinderTest extends AncestorFinderTest<MySqlVertex, MyS
 	public IPersistentGraph<MySqlVertex, MySqlEdge> createGraph(String name) {
 		try {
 			
-			
+			// TODO : move the connector, and create a factory???
 			return new MySqlGraph(name, MySqlGraphTest.getConnector());
 			
 			

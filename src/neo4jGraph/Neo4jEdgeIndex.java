@@ -43,4 +43,9 @@ public class Neo4jEdgeIndex implements IIndex<Neo4jEdge> {
 		};
 	}
 
+	@Override
+	public Neo4jEdge getFirst(String key, String value) {
+		return new Neo4jEdge(index.get(key, value).getSingle(), graph);
+	}
+
 }

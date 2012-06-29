@@ -95,5 +95,24 @@ class MySqlVertexIndex implements IIndex<MySqlVertex> {
 		getFromIndex.setString(2, value);
 		return getFromIndex.executeQuery();
 	}
+	
+	@Override
+	public MySqlVertex getFirst(String key, String value) {
+		// TODO : closure.
+		try {
+			
+			
+			MySqlVertexIterator vertices = new MySqlVertexIterator(executeGetFromIndex(key, value), graph);
+			if (vertices.hasNext()) {
+				return vertices.next();
+			}
+			
+			return null;
+			
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		}
+	}
 
 }

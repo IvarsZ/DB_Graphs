@@ -94,4 +94,23 @@ class MySqlEdgeIndex implements IIndex<MySqlEdge>{
 		getFromIndex.setString(2, value);
 		return getFromIndex.executeQuery();
 	}
+
+	@Override
+	public MySqlEdge getFirst(String key, String value) {
+		// TODO : closure.
+		try {
+			
+			
+			MySqlEdgeIterator edges = new MySqlEdgeIterator(executeGetFromIndex(key, value), graph);
+			if (edges.hasNext()) {
+				return edges.next();
+			}
+			
+			return null;
+			
+			
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
+		}
+	}
 }

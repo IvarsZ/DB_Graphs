@@ -43,4 +43,9 @@ public class Neo4jVertexIndex implements IIndex<Neo4jVertex> {
 			
 		};
 	}
+	
+	@Override
+	public Neo4jVertex getFirst(String key, String value) {
+		return new Neo4jVertex(index.get(key, value).getSingle(), graph);
+	}
 }
