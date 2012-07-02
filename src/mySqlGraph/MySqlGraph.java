@@ -271,7 +271,7 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 		return statements;
 	}
 
-	protected String getName() {
+	public String getName() {
 		return graphName;
 	}
 

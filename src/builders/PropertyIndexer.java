@@ -1,19 +1,19 @@
 package builders;
 
-import java.util.ArrayList;
-
 import graphInterfaces.IEdge;
 import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IVertex;
+
+import java.util.List;
 
 public class PropertyIndexer implements IIndexer {
 	
 	
 	private String indexName;
 	private String keyToIndex;
-	private ArrayList<String> valuesToIndex;
+	private List<String> valuesToIndex;
 
-	protected PropertyIndexer(String indexName, String keyToIndex, ArrayList<String> valuesToIndex, IPersistentGraph<IVertex, IEdge> graph) {
+	public PropertyIndexer(String indexName, String keyToIndex, List<String> valuesToIndex) {
 
 		this.indexName = indexName;
 		this.keyToIndex = keyToIndex;
@@ -21,7 +21,7 @@ public class PropertyIndexer implements IIndexer {
 	}
 
 	@Override
-	public void index(IVertex vertex, IPersistentGraph<IVertex, IEdge> graph) {
+	public <V extends IVertex, E extends IEdge> void index(V vertex, IPersistentGraph<V, E> graph) {
 		
 		String value = vertex.getProperty(keyToIndex);
 		if (valuesToIndex.contains(value)) {

@@ -6,6 +6,6 @@ import graphInterfaces.IVertex;
 
 public interface IIndexer {
 	
-	public void index(IVertex vertex, IPersistentGraph<IVertex, IEdge> graph); 
+	public <V extends IVertex, E extends IEdge> void index(V vertex, IPersistentGraph<V, E> graph); 
 
 }

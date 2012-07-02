@@ -151,4 +151,6 @@ public interface IPersistentGraph<V extends IVertex, E extends IEdge> {
 	 * 
 	 */
 	public void close() throws DataAccessException;
+
+	public String getName();
 }

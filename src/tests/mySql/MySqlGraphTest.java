@@ -15,7 +15,10 @@ import graphInterfaces.IPersistentGraph;
 public class MySqlGraphTest extends PersistentGraphTest<MySqlVertex, MySqlEdge> {
 
 	public static MySqlConnector getConnector() {
+		
+		// TODO : is localhost possible?
 		return new MySqlConnector("jdbc:mysql://iz2.host.cs.st-andrews.ac.uk:3306/iz2_db","iz2","2mH6=H-5");
+		//return new MySqlConnector("jdbc:mysql://localhost", "admin", "graphs");
 	}
 
 	@Override

@@ -246,5 +246,11 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 		}
 	}
 
+	@Override
+	public String getName() {
+		// The path servers as a name:
+		return graphDbPath;
+	}
+
 
 }
