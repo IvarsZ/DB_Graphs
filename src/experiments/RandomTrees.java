@@ -18,19 +18,18 @@ import neo4jGraph.Neo4jGraph;
 import neo4jGraph.Neo4jVertex;
 import tests.mySql.MySqlGraphTest;
 import builders.PropertyIndexer;
-import builders.TreeBuilder;
+import builders.RandomTreeBuilder;
 
 public class RandomTrees {
 
 	private static final String NUMBERS_INDEX = "numbers";
 
-	TreeBuilder builder;
+	RandomTreeBuilder builder;
 
 	private RandomTrees(long size, int spawnCount, long seed, List<String> numbersToIndex) {
 
 		// Creates and indexer for the builder and then the builder itself.
-		PropertyIndexer indexer = new PropertyIndexer(NUMBERS_INDEX, TreeBuilder.NUMBER_KEY, numbersToIndex);
-		builder = new TreeBuilder(size, spawnCount);
+		builder = new RandomTreeBuilder(size, spawnCount);
 	}
 
 	private IPersistentGraph<MySqlVertex, MySqlEdge> buildMySql(String name, boolean rewrite) throws SQLException {
