@@ -1,4 +1,4 @@
-package builders;
+package experiments.builders;
 
 import graphInterfaces.IEdge;
 import graphInterfaces.IPersistentGraph;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author iz2
  *
  */
-public class RandomTreeBuilder  {
+public class RandomTreeBuilder implements IBuilder  {
 
 	public static final String NUMBER_KEY = "number";
 
@@ -30,14 +30,17 @@ public class RandomTreeBuilder  {
 	 * Creates a new tree build with specific parameters.
 	 * 
 	 * @param size - number of vertices in the tree.
-	 * @param spawnCount - maximum number of vertices to which a new vertex can be attached to.
+	 * @param maxWidth - maximum width (vertices on one level) of the tree.
 	 * 
 	 */
-	public RandomTreeBuilder(long size, int spawnCount) {
+	public RandomTreeBuilder(long size, int maxWidth) {
 		this.size = size;
-		this.spawnCount = spawnCount;
+		this.spawnCount = maxWidth;
+		
+		verticesToIndex = new ArrayList<Long>();
 	}
 
+	@Override
 	public <V extends IVertex, E extends IEdge> void build(long seed, IPersistentGraph<V, E> graph) {
 
 		// Uses Linear congruential generator.
@@ -77,6 +80,7 @@ public class RandomTreeBuilder  {
 		graph.commit();
 	}
 
+	@Override
 	public <V extends IVertex, E extends IEdge> boolean isWrittenTo(IPersistentGraph<V, E> graph) {
 
 		// Gets the root and checks the size. // TODO : write check other parameters?
@@ -88,16 +92,25 @@ public class RandomTreeBuilder  {
 		return false;
 	}
 
-	public void addVerticesToIndex(ArrayList<Long> verticesToIndex) {
+	@Override
+	public void addVerticesToIndex(ArrayList<Long> indexesOfVertices) throws IllegalArgumentException {
 
 		// For every vertex,
-		for (Long vertexNumber : verticesToIndex) {
+		for (Long vertexNumber : indexesOfVertices) {
+			
+			// checks that there are enough vertices for this to be indexed,
+			if (vertexNumber >= size) {
+				
+				// TODO : better message.
+				throw new IllegalArgumentException("too high vertex index " + vertexNumber + " for size " + size);
+			}
 
-			// if it hasn't been added,
+			// and if it hasn't been added,
 			if (verticesToIndex.contains(vertexNumber) == false) {
 
 				// adds it to the vertices to index.
 				verticesToIndex.add(vertexNumber);
+				
 			}
 		}
 	}

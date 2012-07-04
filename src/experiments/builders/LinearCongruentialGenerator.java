@@ -1,4 +1,4 @@
-package builders;
+package experiments.builders;
 
 public class LinearCongruentialGenerator {
 	

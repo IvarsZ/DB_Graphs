@@ -22,6 +22,17 @@ public class LCAQuery extends Query {
 	int maxDepth;
 	private ArrayList<String> allowedEdgeTypes;
 	private Direction allowedDirection;
+	
+	
+
+	public LCAQuery(long v1Number, long v2Number, int maxDepth, ArrayList<String> allowedEdgeTypes, Direction allowedDirection) {
+		
+		this.v1Number = v1Number;
+		this.v2Number = v2Number;
+		this.maxDepth = maxDepth;
+		this.allowedEdgeTypes = allowedEdgeTypes;
+		this.allowedDirection = allowedDirection;
+	}
 
 	public <V extends IVertex, E extends IEdge> void execute(IPersistentGraph<V, E> graph) {
 
@@ -37,15 +48,6 @@ public class LCAQuery extends Query {
 		print(time, graph);
 	}
 
-	public void printArguments() {
-
-		System.out.println("v1 " + v1Number + " v2 " + v2Number + " max depth " + maxDepth);
-
-		// TODO : necessary?
-		System.out.println("on edges " + Arrays.toString(allowedEdgeTypes.toArray()));
-		System.out.println("direction " + allowedDirection);
-	}
-
 	@Override
 	public ArrayList<Long> getQueryVertices() {
 		
@@ -55,5 +57,14 @@ public class LCAQuery extends Query {
 		queryVertices.add(v2Number);
 		
 		return queryVertices;
+	}
+	
+	private void printArguments() {
+
+		System.out.println("v1 " + v1Number + " v2 " + v2Number + " max depth " + maxDepth);
+
+		// TODO : necessary?
+		System.out.println("on edges " + Arrays.toString(allowedEdgeTypes.toArray()));
+		System.out.println("direction " + allowedDirection);
 	}
 }
