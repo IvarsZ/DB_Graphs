@@ -58,9 +58,9 @@ public class Experiment {
 			for (int j = 0; j < factories.size(); j++) {
 				IFactory<?, ?> factory = factories.get(j);
 				
-				// creates a graph and builds it if necessary.
+				// creates a graph and builds it if necessary. // TODO : better mechanism (for forcing rewriting).
 				IPersistentGraph<?, ?> graph = factory.createGraph(name + "_" + seed);
-				if (builder.isWrittenTo(graph, seed) == false) {
+				if (true || builder.isWrittenTo(graph, seed) == false) {
 					graph.clear();
 					builder.build(seed, graph);
 				}

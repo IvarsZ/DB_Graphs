@@ -1,5 +1,10 @@
 package experiments.builders;
 
+/**
+ * 
+ * @author iz2
+ *
+ */
 public class LinearCongruentialGenerator {
 	
 	long seed;

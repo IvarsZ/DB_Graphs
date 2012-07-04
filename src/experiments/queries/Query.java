@@ -1,14 +1,17 @@
 package experiments.queries;
 
-import java.util.ArrayList;
-
-import util.Printer;
-
 import graphInterfaces.IEdge;
 import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IVertex;
 
+import java.util.ArrayList;
+
 public abstract class Query {
+	
+	// TODO : move?
+	protected static <V extends IVertex, E extends IEdge> V getVertex(long vertexNumber, IPersistentGraph<V, E> graph) {
+		return graph.index().forVertices("numbers").getFirst("number", vertexNumber + "");
+	}
 	
 	/**
 	 * 
@@ -20,10 +23,6 @@ public abstract class Query {
 	public abstract <V extends IVertex, E extends IEdge> long execute(IPersistentGraph<V, E> graph);
 	
 	public abstract ArrayList<Long> getQueryVertices();
-	
-	public <V extends IVertex, E extends IEdge> V getVertex(long vertexNumber, IPersistentGraph<V, E> graph) {
-		return graph.index().forVertices("numbers").getFirst("number", vertexNumber + "");
-	}
 	
 	public abstract String getPrintDetials();
 

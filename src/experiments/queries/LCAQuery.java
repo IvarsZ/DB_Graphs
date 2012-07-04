@@ -6,9 +6,6 @@ import graphInterfaces.IPersistentGraph.Direction;
 import graphInterfaces.IVertex;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import util.Printer;
 
 /**
  * 
