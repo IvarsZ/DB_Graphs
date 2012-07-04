@@ -8,13 +8,15 @@ import java.util.ArrayList;
 
 public interface IBuilder {
 
-	public abstract <V extends IVertex, E extends IEdge> void build(long seed,
+	public <V extends IVertex, E extends IEdge> void build(long seed,
 			IPersistentGraph<V, E> graph);
 
-	public abstract <V extends IVertex, E extends IEdge> boolean isWrittenTo(
-			IPersistentGraph<V, E> graph);
+	public <V extends IVertex, E extends IEdge> boolean isWrittenTo(
+			IPersistentGraph<V, E> graph, long seed);
 
-	public abstract void addVerticesToIndex(ArrayList<Long> verticesToIndex)
+	public void addVerticesToIndex(ArrayList<Long> verticesToIndex)
 			throws IllegalArgumentException;
+	
+	public String getPrintDetails();
 
 }

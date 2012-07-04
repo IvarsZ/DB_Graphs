@@ -3,8 +3,8 @@ package tests.mySql;
 import java.sql.SQLException;
 
 import tests.abstractTests.IndexTest;
+import util.DataAccessException;
 
-import exceptions.DataAccessException;
 import mySqlGraph.MySqlConnector;
 import mySqlGraph.MySqlEdge;
 import mySqlGraph.MySqlGraph;

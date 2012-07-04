@@ -6,12 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import util.DataAccessException;
 
 
 
 
 
-import exceptions.DataAccessException;
+
 
 import graphInterfaces.IIndex;
 import graphInterfaces.IIndexManager;

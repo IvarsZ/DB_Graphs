@@ -2,12 +2,12 @@ package tests.mySql;
 
 import java.sql.SQLException;
 
-import exceptions.DataAccessException;
 import graphInterfaces.IPersistentGraph;
 import mySqlGraph.MySqlEdge;
 import mySqlGraph.MySqlGraph;
 import mySqlGraph.MySqlVertex;
 import tests.abstractTests.TraverserTest;
+import util.DataAccessException;
 
 public class MySqlTraverserTest extends TraverserTest<MySqlVertex, MySqlEdge> {
 

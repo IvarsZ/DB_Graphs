@@ -2,6 +2,8 @@ package experiments;
 
 import java.util.ArrayList;
 
+import util.Printer;
+
 import experiments.builders.IBuilder;
 import experiments.queries.Query;
 import graphFactories.IFactory;
@@ -14,9 +16,11 @@ public class Experiment {
 	private String name;
 	private IBuilder builder;
 
-	private ArrayList<IFactory<? extends IVertex, ? extends IEdge>> factories;
+	private ArrayList<IFactory<?, ?>> factories;
 	private ArrayList<Long> seeds;
 	private ArrayList<Query> queries;
+	
+	long executionTimes[][][];
 
 	public Experiment(String name, IBuilder builder) {
 		this.name = name;
@@ -43,29 +47,56 @@ public class Experiment {
 	}
 	
 	public void executeQueries() {
-
+		
+		executionTimes = new long[seeds.size()][factories.size()][queries.size()];
+		
 		// For every seed and
-		for (Long seed : seeds) {
-
+		for (int i = 0; i < seeds.size(); i++) {
+			long seed = seeds.get(i);
+			
 			// every factory
-			for (IFactory<? extends IVertex, ? extends IEdge> factory : factories) {
-
-				// creates an empty graph and builds it, then executes all queries on it.
-				IPersistentGraph<? extends IVertex, ? extends IEdge> graph = factory.createEmptyGraph(name + "_" + seed);
-				builder.build(seed, graph);
-				executeQueries(graph);
+			for (int j = 0; j < factories.size(); j++) {
+				IFactory<?, ?> factory = factories.get(j);
 				
-				// Closes the graph.
+				// creates a graph and builds it if necessary.
+				IPersistentGraph<?, ?> graph = factory.createGraph(name + "_" + seed);
+				if (builder.isWrittenTo(graph, seed) == false) {
+					graph.clear();
+					builder.build(seed, graph);
+				}
+				
+				// Then executes all queries on it, and saves the times.
+				for (int k = 0; k < queries.size(); k++) {
+					executionTimes[i][j][k] = queries.get(k).execute(graph);
+				}
+				
+				// Finally closes the graph.
 				graph.close();
 			}
 		}
 	}
-
-	private <V extends IVertex, E extends IEdge> void executeQueries(IPersistentGraph<V, E> graph) {
-
-		// Iterates over and executes all queries on the graph.
-		for (Query query : queries) {
-			query.execute(graph);
+	
+	public void printExecutionTimes() {
+		
+		// Checks that experiment has been executed.
+		if (executionTimes == null) {
+			throw new IllegalStateException();
 		}
+		
+		Printer.println("Experiment " + name + " using " + builder.getPrintDetails());
+		Printer.println("");
+		for (int i = 0; i < seeds.size(); i++) {
+			Printer.println("For seed " + seeds.get(i));
+			
+			for (int k = 0; k < queries.size(); k++) {
+				Printer.println("\tFor query " + queries.get(k).getPrintDetials());
+				
+				for (int j = 0; j < factories.size(); j++) {
+					Printer.println("\t\t" + factories.get(j).getPrintDetails() + " time is " + executionTimes[i][j][k]);
+				}
+				
+			}
+		}
+		
 	}
 }

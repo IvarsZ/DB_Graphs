@@ -1,6 +1,5 @@
 package mySqlGraph;
 
-import exceptions.DataAccessException;
 import graphInterfaces.IIndex;
 
 import java.sql.PreparedStatement;
@@ -8,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
+
+import util.DataAccessException;
 
 
 

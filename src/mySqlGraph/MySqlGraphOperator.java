@@ -1,6 +1,5 @@
 package mySqlGraph;
 
-import exceptions.DataAccessException;
 import graphInterfaces.IGraphOperator;
 import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IPersistentGraph.Direction;
@@ -11,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import util.DataAccessException;
 
 import mySqlGraph.MySqlTraverser.TraverserIterator;
 

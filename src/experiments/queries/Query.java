@@ -2,13 +2,22 @@ package experiments.queries;
 
 import java.util.ArrayList;
 
+import util.Printer;
+
 import graphInterfaces.IEdge;
 import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IVertex;
 
 public abstract class Query {
 	
-	public abstract <V extends IVertex, E extends IEdge> void execute(IPersistentGraph<V, E> graph);
+	/**
+	 * 
+	 * @param graph
+	 * 
+	 * @return time in ms.
+	 * 
+	 */
+	public abstract <V extends IVertex, E extends IEdge> long execute(IPersistentGraph<V, E> graph);
 	
 	public abstract ArrayList<Long> getQueryVertices();
 	
@@ -16,7 +25,6 @@ public abstract class Query {
 		return graph.index().forVertices("numbers").getFirst("number", vertexNumber + "");
 	}
 	
-	protected <V extends IVertex, E extends IEdge> void print(long time, IPersistentGraph<V, E> graph) {
-		System.out.println("For graph " + graph.getName() + " LCA time is " + time);
-	}
+	public abstract String getPrintDetials();
+
 }

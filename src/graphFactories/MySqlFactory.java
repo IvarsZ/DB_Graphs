@@ -2,9 +2,9 @@ package graphFactories;
 
 import java.sql.SQLException;
 
-import exceptions.DataAccessException;
 
 import tests.mySql.MySqlGraphTest;
+import util.DataAccessException;
 import graphInterfaces.IPersistentGraph;
 import mySqlGraph.MySqlEdge;
 import mySqlGraph.MySqlGraph;
@@ -13,17 +13,20 @@ import mySqlGraph.MySqlVertex;
 public class MySqlFactory implements IFactory<MySqlVertex, MySqlEdge> {
 
 	@Override
-	public IPersistentGraph<MySqlVertex, MySqlEdge> createEmptyGraph(String name) {
+	public IPersistentGraph<MySqlVertex, MySqlEdge> createGraph(String name) {
 		try {
 			
 			
-			// Creates the new graph and clears it.
-			IPersistentGraph<MySqlVertex, MySqlEdge> graph = new MySqlGraph(name, MySqlGraphTest.getConnector());
-			graph.clear();
-			return graph;
+			return new MySqlGraph(name, MySqlGraphTest.getConnector());
+			
 			
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
 		}
+	}
+
+	@Override
+	public String getPrintDetails() {
+		return "mysql";
 	}
 }

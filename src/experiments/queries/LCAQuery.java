@@ -8,6 +8,8 @@ import graphInterfaces.IVertex;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import util.Printer;
+
 /**
  * 
  * Lowest common ancestor.
@@ -22,8 +24,6 @@ public class LCAQuery extends Query {
 	int maxDepth;
 	private ArrayList<String> allowedEdgeTypes;
 	private Direction allowedDirection;
-	
-	
 
 	public LCAQuery(long v1Number, long v2Number, int maxDepth, ArrayList<String> allowedEdgeTypes, Direction allowedDirection) {
 		
@@ -34,18 +34,19 @@ public class LCAQuery extends Query {
 		this.allowedDirection = allowedDirection;
 	}
 
-	public <V extends IVertex, E extends IEdge> void execute(IPersistentGraph<V, E> graph) {
+	public <V extends IVertex, E extends IEdge> long execute(IPersistentGraph<V, E> graph) {
 
 		// Gets required vertices.
 		V v1 = getVertex(v1Number, graph);
 		V v2 = getVertex(v2Number, graph);
 
 		// Executes the query and captures the time.
-		long start = System.currentTimeMillis();
+		long start, end;
+		start = System.currentTimeMillis();
 		graph.getOperator().findLowestCommonAncestors(v1, v2, maxDepth, allowedEdgeTypes, allowedDirection);
-		long time = System.currentTimeMillis() - start;
+		end = System.currentTimeMillis();
 
-		print(time, graph);
+		return end - start;
 	}
 
 	@Override
@@ -58,13 +59,9 @@ public class LCAQuery extends Query {
 		
 		return queryVertices;
 	}
-	
-	private void printArguments() {
 
-		System.out.println("v1 " + v1Number + " v2 " + v2Number + " max depth " + maxDepth);
-
-		// TODO : necessary?
-		System.out.println("on edges " + Arrays.toString(allowedEdgeTypes.toArray()));
-		System.out.println("direction " + allowedDirection);
+	public String getPrintDetials() {
+		
+		return "LCA (v1 " + v1Number + ", v2 " + v2Number + ", max depth " + maxDepth + ")";
 	}
 }

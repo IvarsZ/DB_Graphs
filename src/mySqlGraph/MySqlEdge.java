@@ -1,11 +1,12 @@
 package mySqlGraph;
 
-import exceptions.DataAccessException;
 import graphInterfaces.IEdge;
 import graphInterfaces.IVertex;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import util.DataAccessException;
 
 
 

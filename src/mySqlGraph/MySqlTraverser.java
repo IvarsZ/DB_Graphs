@@ -1,6 +1,5 @@
 package mySqlGraph;
 
-import exceptions.DataAccessException;
 import graphInterfaces.IPersistentGraph.Direction;
 import graphInterfaces.ITraverser;
 
@@ -14,6 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
+
+import util.DataAccessException;
 
 
 

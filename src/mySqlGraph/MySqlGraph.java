@@ -1,6 +1,5 @@
 package mySqlGraph;
 
-import exceptions.DataAccessException;
 import graphInterfaces.IEdge;
 import graphInterfaces.IGraphOperator;
 import graphInterfaces.IIndexManager;
@@ -12,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
+
+import util.DataAccessException;
 
 /**
  * 

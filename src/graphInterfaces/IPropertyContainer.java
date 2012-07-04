@@ -1,6 +1,6 @@
 package graphInterfaces;
 
-import exceptions.DataAccessException;
+import util.DataAccessException;
 
 /**
  * 
