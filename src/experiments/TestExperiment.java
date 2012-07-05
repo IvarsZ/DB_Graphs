@@ -18,9 +18,9 @@ public class TestExperiment {
 
 		// TODO : add experiment reader and use files?
 
-		//experiment1();
-		//experiment2();
-		//experiment3();
+		// experiment1();
+		// experiment2();
+		// experiment3();
 		experiment4();
 	}
 
@@ -43,7 +43,7 @@ public class TestExperiment {
 
 	private static void experiment2() {
 
-		// Tests finding all common ancesstors on uniform random graphs.
+		// Tests finding all common ancestors on uniform random graphs.
 		IBuilder builder = new UniformRandomGraph(25, 0.5);
 		Experiment experiment = new Experiment("urg_and_aca", builder);
 
@@ -73,7 +73,6 @@ public class TestExperiment {
 
 		experiment.executeQueries(false);
 		experiment.printExecutionTimes();
-
 	}
 
 	private static void experiment4() {
@@ -91,7 +90,6 @@ public class TestExperiment {
 
 		experiment.executeQueries(false);
 		experiment.printExecutionTimes();
-
 	}
 
 	private static final ArrayList<String> empty = new ArrayList<String>();
