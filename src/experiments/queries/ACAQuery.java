@@ -10,12 +10,12 @@ import java.util.ArrayList;
 
 /**
  * 
- * Common ancestors query.
+ * All Common ancestors query.
  * 
  * @author iz2
  *
  */
-public class CAQuery implements IQuery {
+public class ACAQuery implements IQuery {
 	
 	private long v1Number;
 	private long v2Number;
@@ -26,7 +26,7 @@ public class CAQuery implements IQuery {
 	/**
 	 * Creates a common ancestors query with the given arguments.
 	 */
-	public CAQuery(long v1Number, long v2Number, int maxDepth, ArrayList<String> allowedEdgeTypes, Direction allowedDirection) {
+	public ACAQuery(long v1Number, long v2Number, int maxDepth, ArrayList<String> allowedEdgeTypes, Direction allowedDirection) {
 		
 		this.v1Number = v1Number;
 		this.v2Number = v2Number;
