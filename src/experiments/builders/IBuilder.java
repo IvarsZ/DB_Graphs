@@ -11,6 +11,9 @@ import java.util.ArrayList;
  * Builder for populating a graph with vertices and edges.
  * The graph is generated pseudo-randomly using a seed.
  * 
+ * If all parameters are the same (except the seed), then
+ * the graphs should have a similar structure.
+ * 
  * @author iz2
  *
  */

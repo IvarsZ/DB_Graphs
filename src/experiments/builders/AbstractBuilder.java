@@ -6,13 +6,19 @@ import graphInterfaces.IVertex;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ * Abstract base class for implementing IBuilder interface.
+ * Deals with vertex creation and indexing, and root retrieval.
+ * 
+ * @author iz2
+ *
+ */
 public abstract class AbstractBuilder implements IBuilder {
 	
+	protected static final String SEED_KEY = "seed";
 	protected static final String SIZE_KEY = "size";
 	protected static final String TYPE_KEY = "type";
-	protected static final String SEED_KEY = "seed";
-	
-	private static final String NUMBER_KEY = "number";
 	
 	private long size;
 	
@@ -48,22 +54,6 @@ public abstract class AbstractBuilder implements IBuilder {
 		}
 	}
 	
-	protected <V extends IVertex, E extends IEdge> V createVertex(long i, IPersistentGraph<V, E> graph) {
-
-		// Creates a new vertex, and sets its index (number).
-		V vertex = graph.createVertex();
-		vertex.setProperty(NUMBER_KEY, i + "");
-
-		// If the vertex is used in queries,
-		if (verticesToIndex.contains(i)) {
-
-			// Indexes it
-			graph.index().forVertices("numbers").add(vertex, "number", i + "");
-		}
-
-		return vertex;
-	}
-	
 	protected <V extends IVertex, E extends IEdge> V createRoot(long i, IPersistentGraph<V, E> graph) {
 		
 		// Creates the root and separately indexes it.
@@ -71,6 +61,22 @@ public abstract class AbstractBuilder implements IBuilder {
 		graph.index().forVertices("roots").add(root, "root", "root" + i);
 		
 		return root;
+	}
+	
+	protected <V extends IVertex, E extends IEdge> V createVertex(long i, IPersistentGraph<V, E> graph) {
+
+		// Creates a new vertex, and sets its index (number).
+		V vertex = graph.createVertex();
+		vertex.setProperty(Indexer.NUMBER_KEY, i + "");
+
+		// If the vertex is used in queries,
+		if (verticesToIndex.contains(i)) {
+
+			// Indexes it
+			Indexer.indexVertex(i, vertex, graph);
+		}
+
+		return vertex;
 	}
 	
 	protected <V extends IVertex, E extends IEdge> V getRoot(long i, IPersistentGraph<V, E> graph) {

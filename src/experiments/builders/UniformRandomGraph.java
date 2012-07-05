@@ -6,7 +6,10 @@ import graphInterfaces.IVertex;
 
 /**
  * 
- * Can have and edge between one vertex.
+ * Builder for creating a pseudo random graph,
+ * in which every possible edge occurs independently with some set probability.
+ * 
+ * The graph can have and edge where start and end vertex is the same.
  * 
  * @author iz2
  *
@@ -17,9 +20,19 @@ public class UniformRandomGraph extends AbstractBuilder {
 
 	private double edgeProbability;
 
+	/**
+	 * 
+	 * Creates a uniform random graph builder with the specified size and
+	 * edgeProbability.
+	 * 
+	 * @param size - number of vertices in the generated graphs.
+	 * @param edgeProbability - probability of occurrence of each possible edge.
+	 * 
+	 */
 	public UniformRandomGraph(long size, double edgeProbability) {
 		super(size);
 		
+		// checks that edge probability is in the range.
 		if (edgeProbability < 0 || edgeProbability > 1) {
 			throw new IllegalArgumentException();
 		}
@@ -37,14 +50,14 @@ public class UniformRandomGraph extends AbstractBuilder {
 
 		// Creates the root (not necessarily connected to all vertices) and indexes it.
 		V root = createVertex(0, graph);
-		indexVertex(0, root, graph);
+		indexVertexTemporary(0, root, graph);
 
 		// Create size - 1 vertices,
 		for (long i = 1; i < getSize(); i++) {
 			V vertex = createVertex(i, graph);
 			
 			// and indexes them. TODO : temporary index.
-			indexVertex(i, vertex, graph);
+			indexVertexTemporary(i, vertex, graph);
 		}
 		
 		// For every edge,
@@ -91,10 +104,19 @@ public class UniformRandomGraph extends AbstractBuilder {
 		return "UniformRandomGraph (size " + getSize() + ", edge probability " + edgeProbability + ")";
 	}
 
+	/**
+	 * 
+	 * Adds random outgoing edges to a given vertex.
+	 * 
+	 * @param vertexNumber - the number of the given vertex.
+	 * @param graph - the graph to which the vertex belongs.
+	 * @param randomGenerator - generator to use for generating random numbers.
+	 * 
+	 */
 	private <V extends IVertex, E extends IEdge> void addRandomEdges(long vertexNumber, IPersistentGraph<V, E> graph, LinearCongruentialGenerator randomGenerator) {
 
 		// Gets the vertex to which random edges are added.
-		V start = getVertex(vertexNumber, graph);
+		V start = getVertexTemporary(vertexNumber, graph);
 		
 		// For all vertices,
 		for (long i = 0; i < getSize(); i++) {
@@ -106,17 +128,17 @@ public class UniformRandomGraph extends AbstractBuilder {
 			if (p < edgeProbability) {
 				
 				// then adds the edge between start vertex and this vertex.
-				V end = getVertex(i, graph);
+				V end = getVertexTemporary(i, graph);
 				graph.createEdge(start, end, "connected to");
 			}
 		}
 	}
 	
-	private <V extends IVertex, E extends IEdge> void indexVertex(long vertexNumber, V vertex, IPersistentGraph<V, E> graph) {
+	private <V extends IVertex, E extends IEdge> void indexVertexTemporary(long vertexNumber, V vertex, IPersistentGraph<V, E> graph) {
 		graph.index().forVertices("tmpNumbers").add(vertex, "number", vertexNumber + "");
 	}
 	
-	private <V extends IVertex, E extends IEdge> V getVertex(long vertexNumber, IPersistentGraph<V, E> graph) {
+	private <V extends IVertex, E extends IEdge> V getVertexTemporary(long vertexNumber, IPersistentGraph<V, E> graph) {
 		return graph.index().forVertices("tmpNumbers").getFirst("number", vertexNumber + "");
 	}
 

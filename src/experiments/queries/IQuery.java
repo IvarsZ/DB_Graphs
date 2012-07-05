@@ -6,22 +6,33 @@ import graphInterfaces.IVertex;
 
 import java.util.ArrayList;
 
-public abstract class Query {
+/**
+ * 
+ * interface for queries used in experiments.
+ * 
+ * @author iz2
+ *
+ */
+public interface IQuery {
 	
-	// TODO : move?
-	protected static <V extends IVertex, E extends IEdge> V getVertex(long vertexNumber, IPersistentGraph<V, E> graph) {
-		return graph.index().forVertices("numbers").getFirst("number", vertexNumber + "");
-	}
 	
 	/**
 	 * 
-	 * @param graph
+	 * Executes the query on a give graph.
 	 * 
-	 * @return time in ms.
+	 * @param graph - the given graph.
+	 * 
+	 * @return execution time in ms.
 	 * 
 	 */
 	public abstract <V extends IVertex, E extends IEdge> long execute(IPersistentGraph<V, E> graph);
 	
+	/**
+	 * 
+	 * Gets the vertices used in the query.
+	 * 
+	 * @return arraylist containing all vertices used in the query.
+	 */
 	public abstract ArrayList<Long> getQueryVertices();
 	
 	public abstract String getPrintDetials();

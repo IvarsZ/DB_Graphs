@@ -38,7 +38,7 @@ public class TestExperiment {
 		experiment.addQuery(new LCAQuery(5, 10, 100, empty, Direction.INCOMING));
 		experiment.addQuery(new LCAQuery(7, 15, 550, empty, Direction.INCOMING));
 		
-		experiment.executeQueries();
+		experiment.executeQueries(true);
 		experiment.printExecutionTimes();
 	}
 	

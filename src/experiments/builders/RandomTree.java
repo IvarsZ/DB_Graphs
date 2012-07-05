@@ -9,8 +9,9 @@ import java.util.ArrayList;
 /**
  * 
  * Creates a new pseudo-random tree of certain size (appears to be random but depends on the seed).
- * The tree is actually a heap and the vertices are indexed with numbers in order
- * of their addition to the graph.
+ * 
+ * The vertices are indexed with numbers in order of their addition to the graph, and
+ * regarding to indexes the tree is actually forms a heap.
  * 
  * @author iz2
  *
@@ -23,7 +24,7 @@ public class RandomTree extends AbstractBuilder  {
 
 	/**
 	 * 
-	 * Creates a new tree build with specific parameters.
+	 * Creates a new random tree builder with specific parameters.
 	 * 
 	 * @param size - number of vertices in the tree.
 	 * @param maxWidth - maximum width (vertices on one level) of the tree.
@@ -51,14 +52,14 @@ public class RandomTree extends AbstractBuilder  {
 
 			// creates it and connects it to a random parent.
 			V vertex = createVertex(i, graph);
-			int parent = (int) (randomGenerator.next() % spawnPoints.size());
+			int parent = (int) (randomGenerator.nextLong() % spawnPoints.size());
 			graph.createEdge(spawnPoints.get(parent), vertex, "parent of");
 
 			// If too many spawn points,
 			if (spawnPoints.size() >= width) {
 
 				// removes a random spawn point vertex.
-				spawnPoints.remove((int) (randomGenerator.next() % spawnPoints.size()));
+				spawnPoints.remove((int) (randomGenerator.nextLong() % spawnPoints.size()));
 			}
 
 			// Ads the new vertex to spawning points.
