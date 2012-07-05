@@ -10,6 +10,15 @@ public class Neo4jVertex implements IVertex {
 	private Neo4jGraph graph;
 	
 	protected Neo4jVertex(Node node, Neo4jGraph graph) {
+		
+		if (node == null) {
+			throw new IllegalArgumentException("null node");
+		}
+		
+		if (graph == null) {
+			throw new IllegalArgumentException("null graph");
+		}
+		
 		this.vertex = node;
 		this.graph = graph;
 	}

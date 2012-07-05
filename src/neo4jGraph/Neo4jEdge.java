@@ -13,6 +13,15 @@ public class Neo4jEdge implements IEdge {
 	private Neo4jGraph graph;
 
 	protected Neo4jEdge(Relationship edge, Neo4jGraph graph) {
+		
+		if (edge == null) {
+			throw new IllegalArgumentException("null edge");
+		}
+		
+		if (graph == null) {
+			throw new IllegalArgumentException("null graph");
+		}
+		
 		this.edge = edge;
 		this.graph = graph;
 		start = new Neo4jVertex(edge.getStartNode(), graph);

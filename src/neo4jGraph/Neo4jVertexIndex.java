@@ -19,8 +19,6 @@ public class Neo4jVertexIndex implements IIndex<Neo4jVertex> {
 	private Index<Node> index;
 	private Neo4jGraph graph;
 	
-	
-
 	protected Neo4jVertexIndex(Index<Node> index, Neo4jGraph graph) {
 		this.index = index;
 		this.graph = graph;
@@ -46,6 +44,14 @@ public class Neo4jVertexIndex implements IIndex<Neo4jVertex> {
 	
 	@Override
 	public Neo4jVertex getFirst(String key, String value) {
-		return new Neo4jVertex(index.get(key, value).getSingle(), graph);
+		
+		// If at least one node is gotten from the index returns new neo4j vertex with it,
+		Node firstNode = index.get(key, value).getSingle();
+		if (firstNode != null) {
+			return new Neo4jVertex(index.get(key, value).getSingle(), graph);
+		}
+		
+		// otherwise null.
+		return null;
 	}
 }

@@ -1,5 +1,7 @@
 package experiments.builders;
 
+import util.Util;
+
 /**
  * 
  * Generates stream of pseudo random numbers using recurence relation
@@ -48,12 +50,8 @@ class LinearCongruentialGenerator {
 	 */
 	protected double nextDouble() {
 		
-		// Converts the random long to a double in range [0,1].
-		long r = nextLong() % LARGE_LONG;
-		if (r < 0) {
-			r += LARGE_LONG;
-		}
-		
+		// Gets positive modulo for the next random long, and scales it to the range [0, 1].
+		long r = Util.mod(nextLong(), LARGE_LONG);
 		return r / ((double) LARGE_LONG );
 	}
 }

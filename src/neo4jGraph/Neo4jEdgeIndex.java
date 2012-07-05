@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import graphInterfaces.IIndex;
 
+import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.index.Index;
 
@@ -45,7 +46,15 @@ public class Neo4jEdgeIndex implements IIndex<Neo4jEdge> {
 
 	@Override
 	public Neo4jEdge getFirst(String key, String value) {
-		return new Neo4jEdge(index.get(key, value).getSingle(), graph);
+		
+		// If at least one relationship is gotten from the index returns new neo4j edge with it,
+		Relationship firstNode = index.get(key, value).getSingle();
+		if (firstNode != null) {
+			return new Neo4jEdge(index.get(key, value).getSingle(), graph);
+		}
+		
+		// otherwise null.
+		return null;
 	}
 
 }

@@ -49,7 +49,7 @@ public class UniformRandomGraph extends AbstractBuilder {
 		LinearCongruentialGenerator randomGenerator =  new LinearCongruentialGenerator(seed);
 
 		// Creates the root (not necessarily connected to all vertices) and indexes it.
-		V root = createVertex(0, graph);
+		V root = createRoot(0, graph);
 		indexVertexTemporary(0, root, graph);
 
 		// Create size - 1 vertices,

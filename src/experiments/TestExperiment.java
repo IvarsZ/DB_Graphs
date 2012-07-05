@@ -3,6 +3,7 @@ package experiments;
 import java.util.ArrayList;
 
 import experiments.builders.IBuilder;
+import experiments.builders.RandomTree;
 import experiments.builders.UniformRandomGraph;
 import experiments.queries.LCAQuery;
 import graphFactories.MySqlFactory;
@@ -13,35 +14,44 @@ public class TestExperiment {
 
 	public static void main(String args[]) {
 
+		experiment1();
+		experiment2();
+	}
+
+	private static void experiment1() {
+
 		// Tests on random trees.
-		/*IBuilder builder = new RandomTree(25000, 100);
+		IBuilder builder = new RandomTree(2500, 10);
 		Experiment experiment = new Experiment("rtt1", builder);
-		
+
 		experiment.addFactory(new MySqlFactory());
 		experiment.addFactory(new Neo4jFactory());
 		experiment.addSeed(14124);
 		experiment.addSeed(141242356236L);
-		experiment.addQuery(new LCAQuery(5000, 10000, 10000, empty, Direction.INCOMING));
-		experiment.addQuery(new LCAQuery(7500, 15000, 55000, empty, Direction.INCOMING));
-		
-		experiment.executeQueries();
-		experiment.printExecutionTimes();*/
+		experiment.addQuery(new LCAQuery(500, 1000, 1000, empty, Direction.INCOMING));
+		experiment.addQuery(new LCAQuery(750, 1500, 5500, empty, Direction.INCOMING));
+
+		experiment.executeQueries(false);
+		experiment.printExecutionTimes();
+	}
+	
+	private static void experiment2() {
 		
 		// Tests on uniform random graphs.
 		IBuilder builder = new UniformRandomGraph(25, 0.5);
 		Experiment experiment = new Experiment("urg1", builder);
-		
+
 		experiment.addFactory(new MySqlFactory());
 		experiment.addFactory(new Neo4jFactory());
 		experiment.addSeed(504952);
 		experiment.addSeed(1259944358674910L);
 		experiment.addQuery(new LCAQuery(5, 10, 100, empty, Direction.INCOMING));
 		experiment.addQuery(new LCAQuery(7, 15, 550, empty, Direction.INCOMING));
-		
-		experiment.executeQueries(true);
+
+		experiment.executeQueries(false);
 		experiment.printExecutionTimes();
 	}
-	
+
 	private static final ArrayList<String> empty = new ArrayList<String>();
 
 }

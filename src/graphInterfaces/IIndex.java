@@ -43,6 +43,17 @@ public interface IIndex<T extends IPropertyContainer<String, String>> {
 	 */
 	public Iterable<T> get(String key, String value);
 	
+	/**
+	 * 
+	 * Returns the first exact match from this index, given the key-value pair.
+	 * Matches will be for key-value pairs just as they were added.
+	 * 
+	 * @param key - the key that the searched entity must have.
+	 * @param value - the value that the searched entity must have.
+	 * 
+	 * @return - the first entity to match the specified key and value, or null if none were found.
+	 * 
+	 */
 	public T getFirst(String key, String value);
 
 }

@@ -212,6 +212,8 @@ public abstract class IndexTest<V extends IVertex, E extends IEdge> {
 		// Gets and checks the vertex by its indexed name.
 		assertTrue(containsOnly(index.get("name", "john"), edge));
 	}
+	
+	// TODO : test getFirst (especially not found).
 
 	protected static <F> boolean containsOnly(Iterable<F> entities, F entity) {
 

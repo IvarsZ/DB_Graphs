@@ -6,6 +6,8 @@ import graphInterfaces.IVertex;
 
 import java.util.ArrayList;
 
+import util.Util;
+
 /**
  * 
  * Creates a new pseudo-random tree of certain size (appears to be random but depends on the seed).
@@ -52,14 +54,14 @@ public class RandomTree extends AbstractBuilder  {
 
 			// creates it and connects it to a random parent.
 			V vertex = createVertex(i, graph);
-			int parent = (int) (randomGenerator.nextLong() % spawnPoints.size());
+			int parent = (int) Util.mod(randomGenerator.nextLong(), spawnPoints.size());
 			graph.createEdge(spawnPoints.get(parent), vertex, "parent of");
 
 			// If too many spawn points,
 			if (spawnPoints.size() >= width) {
 
 				// removes a random spawn point vertex.
-				spawnPoints.remove((int) (randomGenerator.nextLong() % spawnPoints.size()));
+				spawnPoints.remove((int) Util.mod(randomGenerator.nextLong(), spawnPoints.size()));
 			}
 
 			// Ads the new vertex to spawning points.
