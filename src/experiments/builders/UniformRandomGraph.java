@@ -58,6 +58,7 @@ public class UniformRandomGraph extends AbstractBuilder {
 			
 			// and indexes them. TODO : temporary index.
 			indexVertexTemporary(i, vertex, graph);
+			graph.commit();
 		}
 		
 		// For every edge,
@@ -65,11 +66,11 @@ public class UniformRandomGraph extends AbstractBuilder {
 			
 			// adds some random edges (possibly none).
 			addRandomEdges(i, graph, randomGenerator);
+			graph.commit();
 		}
 
 		// Writes the details of the builder
 		writeDetails(root, seed);
-
 		graph.commit();
 	}
 

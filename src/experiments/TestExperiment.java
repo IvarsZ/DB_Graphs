@@ -2,20 +2,15 @@ package experiments;
 
 import java.util.ArrayList;
 
-import org.hamcrest.Factory;
-
 import experiments.builders.IBuilder;
 import experiments.builders.RandomTree;
 import experiments.builders.UniformRandomGraph;
 import experiments.queries.ACAQuery;
 import experiments.queries.FRNQuery;
 import experiments.queries.LCAQuery;
-import graphFactories.IFactory;
 import graphFactories.MySqlFactory;
 import graphFactories.Neo4jFactory;
-import graphInterfaces.IEdge;
 import graphInterfaces.IPersistentGraph.Direction;
-import graphInterfaces.IVertex;
 
 public class TestExperiment {
 
@@ -23,10 +18,10 @@ public class TestExperiment {
 
 		// TODO : add experiment reader and use files?
 
-		// experiment1();
-		// experiment2();
-		// experiment3();
-		experiment4();
+		//experiment1();
+		experiment2();
+		//experiment3();
+		//experiment4();
 	}
 
 	private static void experiment1() {
@@ -48,7 +43,7 @@ public class TestExperiment {
 	private static void experiment2() {
 
 		// Tests finding all common ancestors on uniform random graphs.
-		IBuilder builder = new UniformRandomGraph(25, 0.5);
+		IBuilder builder = new UniformRandomGraph(10000, 0.5);
 		Experiment experiment = new Experiment("urg_and_aca", builder);
 
 		addAllFactories(experiment);
@@ -97,7 +92,7 @@ public class TestExperiment {
 	
 	private static final void addAllFactories(Experiment experiment) {
 		experiment.addFactory(new Neo4jFactory());
-		experiment.addFactory(new MySqlFactory());
+		// experiment.addFactory(new MySqlFactory());
 	}
 
 }

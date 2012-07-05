@@ -66,11 +66,12 @@ public class RandomTree extends AbstractBuilder  {
 
 			// Ads the new vertex to spawning points.
 			spawnPoints.add(vertex);
+			
+			graph.commit();
 		}
 
 		// Writes the details of the builder
 		writeDetails(root, seed);
-
 		graph.commit();
 	}
 	
