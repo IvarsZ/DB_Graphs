@@ -197,5 +197,22 @@ public abstract class PersistentGraphTest<V extends IVertex, E extends IEdge> {
 		newEdge = graph.getEdge(newEdge.getId());
 		assertEquals("2", newEdge.getProperty("age"));
 	}
+	
+	@Test
+	public void getUnexisitingVertexProperty() {
+		
+		V v = graph.createVertex();
+		assertTrue(v.getProperty("nonexisting") == null);
+	}
+	
+	@Test
+	public void getUnexisitingEdgeProperty() {
+		
+		V start = graph.createVertex();
+		V end = graph.createVertex();
+		E newEdge = graph.createEdge(start, end, "connects to");
+		
+		assertTrue(newEdge.getProperty("nonexisting") == null);
+	}
 
 }

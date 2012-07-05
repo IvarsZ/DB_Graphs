@@ -27,7 +27,7 @@ public class Neo4jVertex implements IVertex {
 
 	@Override
 	public String getProperty(String key) {
-		return (String) vertex.getProperty(key);
+		return (String) vertex.getProperty(key, null);
 	}
 
 	@Override

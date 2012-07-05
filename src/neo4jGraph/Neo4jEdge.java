@@ -33,7 +33,7 @@ public class Neo4jEdge implements IEdge {
 
 	@Override
 	public String getProperty(String key) {
-		return (String) edge.getProperty(key);
+		return (String) edge.getProperty(key, null);
 	}
 
 	@Override
