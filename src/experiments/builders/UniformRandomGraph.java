@@ -13,8 +13,6 @@ import graphInterfaces.IVertex;
  */
 public class UniformRandomGraph extends AbstractBuilder {
 
-	private static final long LARGE_LONG = 100000000000000L;
-
 	private static final String EDGE_PROBABILITY = "edgeProbability";
 
 	private double edgeProbability;
@@ -102,8 +100,7 @@ public class UniformRandomGraph extends AbstractBuilder {
 		for (long i = 0; i < getSize(); i++) {
 			
 			// generates (pseudo) random probability p.
-			double p = (randomGenerator.next() % LARGE_LONG) / ((double) LARGE_LONG ); // FIXME
-			System.out.println(p); // TODO : remove.
+			double p = randomGenerator.nextDouble();
 			
 			// If random p is smaller than edgeProbability,
 			if (p < edgeProbability) {

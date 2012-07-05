@@ -3,7 +3,6 @@ package experiments;
 import java.util.ArrayList;
 
 import experiments.builders.IBuilder;
-import experiments.builders.RandomTree;
 import experiments.builders.UniformRandomGraph;
 import experiments.queries.LCAQuery;
 import graphFactories.MySqlFactory;
@@ -29,15 +28,15 @@ public class TestExperiment {
 		experiment.printExecutionTimes();*/
 		
 		// Tests on uniform random graphs.
-		IBuilder builder = new UniformRandomGraph(2500, 0.5);
+		IBuilder builder = new UniformRandomGraph(25, 0.5);
 		Experiment experiment = new Experiment("urg1", builder);
 		
 		experiment.addFactory(new MySqlFactory());
 		experiment.addFactory(new Neo4jFactory());
 		experiment.addSeed(504952);
 		experiment.addSeed(1259944358674910L);
-		experiment.addQuery(new LCAQuery(500, 1000, 1000, empty, Direction.INCOMING));
-		experiment.addQuery(new LCAQuery(750, 1500, 5500, empty, Direction.INCOMING));
+		experiment.addQuery(new LCAQuery(5, 10, 100, empty, Direction.INCOMING));
+		experiment.addQuery(new LCAQuery(7, 15, 550, empty, Direction.INCOMING));
 		
 		experiment.executeQueries();
 		experiment.printExecutionTimes();
