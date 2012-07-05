@@ -102,7 +102,7 @@ public class UniformRandomGraph extends AbstractBuilder {
 		for (long i = 0; i < getSize(); i++) {
 			
 			// generates (pseudo) random probability p.
-			double p = (randomGenerator.next() % LARGE_LONG) / (LARGE_LONG * 1.0); // FIXME
+			double p = (randomGenerator.next() % LARGE_LONG) / ((double) LARGE_LONG ); // FIXME
 			System.out.println(p); // TODO : remove.
 			
 			// If random p is smaller than edgeProbability,
