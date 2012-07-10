@@ -19,6 +19,8 @@ import util.DataAccessException;
 
 
 class MySqlTraverser implements ITraverser<MySqlVertex> {
+	
+	// TODO : resource, especially connection closure.
 
 	public enum TraversalType {
 		BFS,
@@ -141,6 +143,11 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 				nextVertexId = null;
 				if (q.isEmpty() == false) {
 					traverse();
+				}
+				
+				// All vertices have been traversed, closes the connection.
+				if (nextVertexId == null) {
+					connection.close();
 				}
 
 				return new MySqlVertex(firstTmp, graph);
@@ -320,7 +327,6 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 					throw new DataAccessException(e);
 				}
 			}
-
 		};
 	}
 }

@@ -1,10 +1,9 @@
 package neo4jGraph;
 
-import java.util.Iterator;
-
 import graphInterfaces.IIndex;
 
-import org.neo4j.graphdb.Node;
+import java.util.Iterator;
+
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.index.Index;
 

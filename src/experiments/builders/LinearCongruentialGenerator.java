@@ -4,7 +4,7 @@ import util.Util;
 
 /**
  * 
- * Generates stream of pseudo random numbers using recurence relation
+ * Generates stream of pseudo random numbers using recurrence relation
  * 
  * x_(n+1) = (a*x_n + c) mod m.
  * 

@@ -125,23 +125,23 @@ public class Experiment {
 		}
 	}
 	
-	public void printExecutionTimes() {
+	public void printExecutionTimes(Printer printer) {
 		
 		// Checks that experiment has been executed.
 		if (executionTimes == null) {
 			throw new IllegalStateException();
 		}
 		
-		Printer.println("Experiment " + name + " using " + builder.getPrintDetails());
-		Printer.println("");
+		printer.println("Experiment " + name + " using " + builder.getPrintDetails());
+		printer.println("");
 		for (int i = 0; i < seeds.size(); i++) {
-			Printer.println("For seed " + seeds.get(i));
+			printer.println("For seed " + seeds.get(i));
 			
 			for (int k = 0; k < queries.size(); k++) {
-				Printer.println("\tFor query " + queries.get(k).getPrintDetials());
+				printer.println("\tFor query " + queries.get(k).getPrintDetials());
 				
 				for (int j = 0; j < factories.size(); j++) {
-					Printer.println("\t\t" + factories.get(j).getPrintDetails() + " time is " + executionTimes[i][j][k]);
+					printer.println("\t\t" + factories.get(j).getPrintDetails() + " time is " + executionTimes[i][j][k]);
 				}
 				
 			}

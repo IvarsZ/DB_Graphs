@@ -15,5 +15,5 @@ public interface ITraverser<V extends IVertex> {
 	
 	// TODO : capture traversal properties here?
 	
-	public abstract Iterable<V> traverse(final V vertex);
+	public Iterable<V> traverse(final V vertex);
 }

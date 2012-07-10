@@ -24,7 +24,7 @@ public class MySqlConnector {
 		this.password = password;
 	}
 
-	protected Connection connect() throws SQLException {
+	public Connection connect() throws SQLException {
 
 		// Opens a connection to a mySql database from parameters.
 		return DriverManager.getConnection(url, user, password);

@@ -19,22 +19,30 @@ import util.Util;
  *
  */
 public class RandomTree extends AbstractBuilder  {
+	
+	private static final int MAX_SPAWN_POINTS = 1000000;
 
-	private static final String WIDTH_KEY = "width";
+	private static final String DEPTH_KEY = "depth";
 
-	private int width;
+	private int depth;
 
 	/**
 	 * 
 	 * Creates a new random tree builder with specific parameters.
 	 * 
 	 * @param size - number of vertices in the tree.
-	 * @param maxWidth - maximum width (vertices on one level) of the tree.
+	 * @param depth - depth of the tree.
 	 * 
 	 */
-	public RandomTree(long size, int maxWidth) {
+	public RandomTree(long size, int depth) throws IllegalArgumentException {
 		super(size);
-		this.width = maxWidth;
+		
+		if (size < depth) {
+			throw new IllegalArgumentException("size " + size + " smaller than depth " + depth);
+		}
+		
+		
+		this.depth = depth;
 	}
 
 	@Override
@@ -43,29 +51,48 @@ public class RandomTree extends AbstractBuilder  {
 		// Uses Linear congruential generator.
 		LinearCongruentialGenerator randomGenerator =  new LinearCongruentialGenerator(seed);
 
-		ArrayList<V> spawnPoints = new ArrayList<V>(width);
+		ArrayList<V> spawnPoints = new ArrayList<V>();
 
-		// Adds the root.
+		// Adds the root, and marks it depth.
 		V root = createRoot(0, graph);
+		root.setProperty(DEPTH_KEY, 0 + "");
 		spawnPoints.add(root);
-
-		// For size - 1 vertices,
-		for (long i = 1; i < getSize(); i++) {
-
-			// creates it and connects it to a random parent.
+		
+		// then creates a linked list of length depth + 1 starting at root.
+		V parent = root;
+		for (long i = 1; i < depth + 1; i++) {
+			
+			spawnPoints.add(parent);
+			
 			V vertex = createVertex(i, graph);
-			int parent = (int) Util.mod(randomGenerator.nextLong(), spawnPoints.size());
-			graph.createEdge(spawnPoints.get(parent), vertex, "parent of");
+			vertex.setProperty(DEPTH_KEY, i + "");
+			graph.createEdge(parent, vertex, "parent of");
+			parent = vertex;
+		}
 
-			// If too many spawn points,
-			if (spawnPoints.size() >= width) {
+		// For the rest size - 2 vertices,
+		for (long i = depth + 1; i < getSize(); i++) {
 
-				// removes a random spawn point vertex.
+			// creates it and connects it to a random parent, and
+			V vertex = createVertex(i, graph);
+			parent = spawnPoints.get((int) Util.mod(randomGenerator.nextLong(), spawnPoints.size()));
+			graph.createEdge(parent, vertex, "parent of");
+			
+			// marks the depth of the vertex.
+			int currentDepth = Integer.parseInt(parent.getProperty(DEPTH_KEY)) + 1;
+			vertex.setProperty(DEPTH_KEY, currentDepth + "");
+			
+			// If the current depth hasn't reached maximum,
+			if (currentDepth < depth) {
+			
+				// then adds this node to spawn points.
+				spawnPoints.add(vertex);
+			}
+			
+			// If there's too many spawn points, removes one at random.
+			if (spawnPoints.size() >= MAX_SPAWN_POINTS) {
 				spawnPoints.remove((int) Util.mod(randomGenerator.nextLong(), spawnPoints.size()));
 			}
-
-			// Ads the new vertex to spawning points.
-			spawnPoints.add(vertex);
 			
 			graph.commit();
 		}
@@ -84,7 +111,7 @@ public class RandomTree extends AbstractBuilder  {
 			
 			return ("RandomTree").equals(root.getProperty(TYPE_KEY)) &&
 				   (getSize() + "").equals(root.getProperty(SIZE_KEY)) &&
-				   (width + "").equals(root.getProperty(WIDTH_KEY)) &&
+				   (depth + "").equals(root.getProperty(DEPTH_KEY)) &&
 				   (seed + "").equals(root.getProperty(SEED_KEY));
 		}
 
@@ -92,14 +119,14 @@ public class RandomTree extends AbstractBuilder  {
 	}
 	
 	public String getPrintDetails() {
-		return "RandomTree (size " + getSize() + ", width " + width + ")";
+		return "RandomTree (size " + getSize() + ", depth " + depth + ")";
 	}
 	
 	private void writeDetails(IVertex root, long seed) {
 		
 		root.setProperty(TYPE_KEY, "RandomTree");
 		root.setProperty(SIZE_KEY, getSize() + "");
-		root.setProperty(WIDTH_KEY, width + "");
+		root.setProperty(DEPTH_KEY, depth + "");
 		root.setProperty(SEED_KEY, seed + "");
 	}
 }

@@ -1,10 +1,8 @@
 package mySqlGraph;
 
-import graphInterfaces.IEdge;
 import graphInterfaces.IGraphOperator;
 import graphInterfaces.IIndexManager;
 import graphInterfaces.IPersistentGraph;
-import graphInterfaces.IVertex;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -231,7 +229,6 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 			// Rolls back and closes the connection.
 			mySql.rollback();
 			mySql.close();
-
 
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
