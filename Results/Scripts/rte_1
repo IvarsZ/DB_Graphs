@@ -1,0 +1,14 @@
+cd ~/GraphDBSource
+
+echo starting rte_100_10_1
+
+declare seeds=(85141245913 123 90652050 741629253 91241255239 12431246 38017355 99912884412413 353785923040147 6235785239842398)
+
+for (( j = 0; j < 10; j++ ))
+do
+	for (( i = 0; i < 10; i++ ))
+	do
+		java -cp bin:Neo4jLibraries/*:MySqlConnector/* experiments.RandomTreeExperiment /home/iz2/RandomTreeExperiment/rte_100_10_1 norw neo4j ${seeds[$i]}
+		java -cp bin:Neo4jLibraries/*:MySqlConnector/* experiments.RandomTreeExperiment /home/iz2/RandomTreeExperiment/rte_100_10_1 norw mysql ${seeds[$i]}
+	done
+done
