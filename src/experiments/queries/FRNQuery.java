@@ -5,7 +5,8 @@ import graphInterfaces.IEdge;
 import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IVertex;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  * @author iz2
  *
  */
-public class FRNQuery implements IQuery {
+public class FRNQuery implements IQueryTemplate {
 
 	private long vNumber;
 
@@ -22,29 +23,20 @@ public class FRNQuery implements IQuery {
 	 * Creates a common ancestors query with the given arguments.
 	 */
 	public FRNQuery(long vNumber) {
-		
+
 		this.vNumber = vNumber;
 	}
 
 	@Override
-	public <V extends IVertex, E extends IEdge> long execute(IPersistentGraph<V, E> graph) {
+	public String getPrintDetials() {
 
-		// Gets required vertices.
-		V v = Indexer.getVertex(vNumber, graph);
-
-		// Executes the query and captures the time.
-		long start, end;
-		start = System.currentTimeMillis();
-		graph.getOperator().findNeighbours(v);
-		end = System.currentTimeMillis();
-
-		return end - start;
+		return "FRN (v " + vNumber + ")";
 	}
 
 	@Override
-	public ArrayList<Long> getQueryVertices() {
+	public Set<Long> getQueryVertices() {
 		
-		ArrayList<Long> queryVertices = new ArrayList<Long>();
+		Set<Long> queryVertices = new HashSet<Long>();
 		
 		queryVertices.add(vNumber);
 		
@@ -52,9 +44,17 @@ public class FRNQuery implements IQuery {
 	}
 
 	@Override
-	public String getPrintDetials() {
-		
-		return "FRN (v " + vNumber + ")";
+	public <V extends IVertex, E extends IEdge> IPreparedQuery prepare(final IPersistentGraph<V, E> graph) {
+
+		return new IPreparedQuery() {
+
+			private V v = Indexer.getVertex(vNumber, graph);
+
+			@Override
+			public void execute() {
+				graph.getOperator().findNeighbours(v);
+			}
+		};
 	}
 
 }

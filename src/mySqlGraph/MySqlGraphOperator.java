@@ -3,7 +3,7 @@ package mySqlGraph;
 import graphInterfaces.IGraphOperator;
 import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IPersistentGraph.Direction;
-import graphInterfaces.ITraverser;
+import graphInterfaces.ITraversalDescription;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 	}
 
 	@Override
-	public ITraverser<MySqlVertex> createTraverser(int minDepth, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection) {
+	public ITraversalDescription<MySqlVertex> createTraverser(int minDepth, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection) {
 		try {
 
 
@@ -52,7 +52,7 @@ class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 		Set<MySqlVertex> v1Ancestors = new HashSet<MySqlVertex>();
 
 		// Traverses all ancestors of the first node,
-		ITraverser<MySqlVertex> traverser = createTraverser(0, maxDepth, allowedEdgeTypes, allowedDirection);
+		ITraversalDescription<MySqlVertex> traverser = createTraverser(0, maxDepth, allowedEdgeTypes, allowedDirection);
 		for (MySqlVertex v : traverser.traverse(v1)) {
 
 			// and adds them to the v1 ancestors set.
@@ -80,7 +80,7 @@ class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 			Direction allowedDirection) {
 
 		// Traverses ancestors of the both nodes
-		ITraverser<MySqlVertex> traverser = createTraverser(0, maxDepth, allowedEdgeTypes, allowedDirection);
+		ITraversalDescription<MySqlVertex> traverser = createTraverser(0, maxDepth, allowedEdgeTypes, allowedDirection);
 		TraverserIterator v1Traverser = (TraverserIterator) traverser.traverse(v1).iterator();
 		TraverserIterator v2Traverser = (TraverserIterator) traverser.traverse(v2).iterator();
 
@@ -174,6 +174,13 @@ class MySqlGraphOperator implements IGraphOperator<MySqlVertex, MySqlEdge> {
 				}
 
 			}
+		}
+		
+		try {
+			v1Traverser.close();
+			v2Traverser.close();
+		} catch (SQLException e) {
+			throw new DataAccessException(e);
 		}
 		
 		return lowestCommonAncestors;

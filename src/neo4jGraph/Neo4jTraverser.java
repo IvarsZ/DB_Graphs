@@ -1,6 +1,6 @@
 package neo4jGraph;
 
-import graphInterfaces.ITraverser;
+import graphInterfaces.ITraversalDescription;
 
 import java.util.Iterator;
 import java.util.List;
@@ -11,12 +11,14 @@ import org.neo4j.graphdb.traversal.Evaluators;
 import org.neo4j.graphdb.traversal.TraversalDescription;
 import org.neo4j.kernel.Traversal;
 
-public class Neo4jTraverser implements ITraverser<Neo4jVertex> {
+public class Neo4jTraverser implements ITraversalDescription<Neo4jVertex> {
 
 	TraversalDescription td = Traversal.description();
 	Neo4jGraph graph;
 
-	protected Neo4jTraverser (int minDepth, int maxDepth, List<String> allowedEdgeTypes, graphInterfaces.IPersistentGraph.Direction allowedDirection) {
+	protected Neo4jTraverser (int minDepth, int maxDepth, List<String> allowedEdgeTypes, graphInterfaces.IPersistentGraph.Direction allowedDirection, Neo4jGraph graph) {
+		
+		this.graph = graph;
 		
 		// Describes the traversal from parameters.
 		td = Traversal.description();

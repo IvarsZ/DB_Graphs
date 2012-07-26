@@ -10,7 +10,7 @@ public class Neo4jFactory implements IFactory<Neo4jVertex, Neo4jEdge> {
 	@Override
 	public IPersistentGraph<Neo4jVertex, Neo4jEdge> createGraph(String name) {
 		
-		return new Neo4jGraph(name);
+		return new Neo4jGraph(System.getProperty("user.home") + "/graphs/" + name);
 	}
 	
 	@Override

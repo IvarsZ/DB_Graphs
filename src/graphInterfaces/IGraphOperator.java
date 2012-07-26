@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public interface IGraphOperator<V extends IVertex, E extends IEdge> {
 	
-	public ITraverser<V> createTraverser(int minDepth, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection);
+	public ITraversalDescription<V> createTraverser(int minDepth, int maxDepth, List<String> allowedEdgeTypes, Direction allowedDirection);
 
 	/**
 	 * 

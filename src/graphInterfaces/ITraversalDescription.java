@@ -11,7 +11,7 @@ package graphInterfaces;
  *
  * @param <V> - type of vertices/graph to traverse.
  */
-public interface ITraverser<V extends IVertex> {
+public interface ITraversalDescription<V extends IVertex> {
 	
 	// TODO : capture traversal properties here?
 	

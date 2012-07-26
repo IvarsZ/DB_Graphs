@@ -20,9 +20,11 @@ import util.Util;
  */
 public class RandomTree extends AbstractBuilder  {
 	
-	private static final int MAX_SPAWN_POINTS = 1000000;
+	private static final int MAX_SPAWN_POINTS = 100000;
+	private static final int VERTEX_PRINT_COUNT = 10000;
 
-	private static final String DEPTH_KEY = "depth";
+	private static final String TREE_DEPTH_KEY = "treeDepth";
+	private static final String VERTEX_DEPTH_KEY = "depth";
 
 	private int depth;
 
@@ -55,7 +57,7 @@ public class RandomTree extends AbstractBuilder  {
 
 		// Adds the root, and marks it depth.
 		V root = createRoot(0, graph);
-		root.setProperty(DEPTH_KEY, 0 + "");
+		root.setProperty(VERTEX_DEPTH_KEY, 0 + "");
 		spawnPoints.add(root);
 		
 		// then creates a linked list of length depth + 1 starting at root.
@@ -65,7 +67,7 @@ public class RandomTree extends AbstractBuilder  {
 			spawnPoints.add(parent);
 			
 			V vertex = createVertex(i, graph);
-			vertex.setProperty(DEPTH_KEY, i + "");
+			vertex.setProperty(VERTEX_DEPTH_KEY, i + "");
 			graph.createEdge(parent, vertex, "parent of");
 			parent = vertex;
 		}
@@ -79,8 +81,8 @@ public class RandomTree extends AbstractBuilder  {
 			graph.createEdge(parent, vertex, "parent of");
 			
 			// marks the depth of the vertex.
-			int currentDepth = Integer.parseInt(parent.getProperty(DEPTH_KEY)) + 1;
-			vertex.setProperty(DEPTH_KEY, currentDepth + "");
+			int currentDepth = Integer.parseInt(parent.getProperty(VERTEX_DEPTH_KEY)) + 1;
+			vertex.setProperty(VERTEX_DEPTH_KEY, currentDepth + "");
 			
 			// If the current depth hasn't reached maximum,
 			if (currentDepth < depth) {
@@ -94,7 +96,10 @@ public class RandomTree extends AbstractBuilder  {
 				spawnPoints.remove((int) Util.mod(randomGenerator.nextLong(), spawnPoints.size()));
 			}
 			
-			graph.commit();
+			if ( i % VERTEX_PRINT_COUNT == 0) {
+				graph.commit();
+				System.out.println("Added " + i + " vertices to the graph");
+			}
 		}
 
 		// Writes the details of the builder
@@ -111,7 +116,7 @@ public class RandomTree extends AbstractBuilder  {
 			
 			return ("RandomTree").equals(root.getProperty(TYPE_KEY)) &&
 				   (getSize() + "").equals(root.getProperty(SIZE_KEY)) &&
-				   (depth + "").equals(root.getProperty(DEPTH_KEY)) &&
+				   (depth + "").equals(root.getProperty(TREE_DEPTH_KEY)) &&
 				   (seed + "").equals(root.getProperty(SEED_KEY));
 		}
 
@@ -119,14 +124,14 @@ public class RandomTree extends AbstractBuilder  {
 	}
 	
 	public String getPrintDetails() {
-		return "RandomTree (size " + getSize() + ", depth " + depth + ")";
+		return getSize() + " " + depth;
 	}
 	
 	private void writeDetails(IVertex root, long seed) {
 		
 		root.setProperty(TYPE_KEY, "RandomTree");
 		root.setProperty(SIZE_KEY, getSize() + "");
-		root.setProperty(DEPTH_KEY, depth + "");
+		root.setProperty(TREE_DEPTH_KEY, depth + "");
 		root.setProperty(SEED_KEY, seed + "");
 	}
 }

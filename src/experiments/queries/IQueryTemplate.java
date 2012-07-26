@@ -1,10 +1,11 @@
 package experiments.queries;
 
+import java.util.Set;
+
 import graphInterfaces.IEdge;
 import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IVertex;
 
-import java.util.ArrayList;
 
 /**
  * 
@@ -13,19 +14,10 @@ import java.util.ArrayList;
  * @author iz2
  *
  */
-public interface IQuery {
+public interface IQueryTemplate {
 	
-	
-	/**
-	 * 
-	 * Executes the query on a give graph.
-	 * 
-	 * @param graph - the given graph.
-	 * 
-	 * @return execution time in ms.
-	 * 
-	 */
-	public abstract <V extends IVertex, E extends IEdge> long execute(IPersistentGraph<V, E> graph);
+
+	public abstract <V extends IVertex, E extends IEdge> IPreparedQuery prepare(final IPersistentGraph<V, E> graph);
 	
 	/**
 	 * 
@@ -33,7 +25,7 @@ public interface IQuery {
 	 * 
 	 * @return arraylist containing all vertices used in the query.
 	 */
-	public abstract ArrayList<Long> getQueryVertices();
+	public abstract Set<Long> getQueryVertices();
 	
 	public abstract String getPrintDetials();
 

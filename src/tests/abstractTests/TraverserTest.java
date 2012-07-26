@@ -64,7 +64,7 @@ public abstract class TraverserTest<V extends IVertex, E extends IEdge> {
 		ArrayList<String> connections = new ArrayList<String>();
 		connections.add("connects to");
 		int i = 0;
-		for (V v :graph.getOperator().createTraverser(0, 0, connections, Direction.BOTH).traverse(getVertex(0))) {
+		for (V v : graph.getOperator().createTraverser(0, 0, connections, Direction.BOTH).traverse(getVertex(0))) {
 			assertEquals(getVertex(0), v);
 			i++;
 		}

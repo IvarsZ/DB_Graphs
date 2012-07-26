@@ -82,7 +82,9 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 		try {
 
 			// If both start and end vertices belong to the graph
-			if (belongToGraph(start) && belongToGraph(end)) {
+			
+			// FIXME : check is now disabled to improve write performance in experiments with huge graphs.
+			//if (belongToGraph(start) && belongToGraph(end)) {
 
 
 				// Creates the edge in the MySql database and gets its id.
@@ -90,12 +92,13 @@ public class MySqlGraph implements IPersistentGraph<MySqlVertex, MySqlEdge> {
 				rs.next();
 				long id = rs.getInt(1);
 				return new MySqlEdge(id, (MySqlVertex) start, (MySqlVertex) end, type, this);
-			}
+			/*}
 
 			// Otherwise throw IllegalArgumentException.
 			else {
 				throw new IllegalArgumentException("Vertex " + start + " or " + end + " doesn't belong the the graph");
 			}
+			*/
 
 
 		} catch (SQLException e) {

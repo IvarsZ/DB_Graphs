@@ -80,7 +80,9 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 			throws IllegalArgumentException {
 
 		// If both start and end are from this graph,
-		if (belongToGraph(start) && belongToGraph(end)) {
+		
+		// FIXME : check is now disabled to improve write performance in experiments with huge graphs.
+		// if (belongToGraph(start) && belongToGraph(end)) {
 
 			// Creates a new relationship, and returns its edge.
 			Node startNode = ((Neo4jVertex) start).getNode();
@@ -89,9 +91,9 @@ public class Neo4jGraph implements IPersistentGraph<Neo4jVertex, Neo4jEdge> {
 			ensureInTransaction();
 			Relationship edge = startNode.createRelationshipTo(endNode, DynamicRelationshipType.withName(type));
 			return new Neo4jEdge(edge, this);
-		}
+		//}
 
-		throw new IllegalArgumentException("Vertex " + start + " or " + end + " doesn't belong the the graph");
+		//throw new IllegalArgumentException("Vertex " + start + " or " + end + " doesn't belong the the graph");
 	}
 
 	private boolean belongToGraph(Neo4jVertex vertex) {

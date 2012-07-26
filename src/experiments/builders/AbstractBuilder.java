@@ -4,7 +4,8 @@ import graphInterfaces.IEdge;
 import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IVertex;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 
@@ -22,17 +23,17 @@ public abstract class AbstractBuilder implements IBuilder {
 	
 	private long size;
 	
-	private ArrayList<Long> verticesToIndex;
+	private Set<Long> verticesToIndex;
 	
 	protected AbstractBuilder(long size) {
 		
 		this.size = size;
 		
-		verticesToIndex = new ArrayList<Long>();
+		verticesToIndex = new HashSet<Long>();
 	}
 
 	@Override
-	public void addVerticesToIndex(ArrayList<Long> indexesOfVertices) throws IllegalArgumentException {
+	public void addVerticesToIndex(Set<Long> indexesOfVertices) throws IllegalArgumentException {
 
 		// For every vertex,
 		for (Long vertexNumber : indexesOfVertices) {

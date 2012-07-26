@@ -7,6 +7,8 @@ import graphInterfaces.IVertex;
 import graphInterfaces.IPersistentGraph.Direction;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 
@@ -15,7 +17,7 @@ import java.util.ArrayList;
  * @author iz2
  *
  */
-public class ACAQuery implements IQuery {
+public class ACAQuery implements IQueryTemplate {
 	
 	private long v1Number;
 	private long v2Number;
@@ -34,27 +36,26 @@ public class ACAQuery implements IQuery {
 		this.allowedEdgeTypes = allowedEdgeTypes;
 		this.allowedDirection = allowedDirection;
 	}
+	
+	public <V extends IVertex, E extends IEdge> IPreparedQuery prepare(final IPersistentGraph<V, E> graph) {
+		
+		return new IPreparedQuery() {
+			
+			V v1 = Indexer.getVertex(v1Number, graph);
+			V v2 = Indexer.getVertex(v2Number, graph);
 
-	@Override
-	public <V extends IVertex, E extends IEdge> long execute(IPersistentGraph<V, E> graph) {
-
-		// Gets required vertices.
-		V v1 = Indexer.getVertex(v1Number, graph);
-		V v2 = Indexer.getVertex(v2Number, graph);
-
-		// Executes the query and captures the time.
-		long start, end;
-		start = System.currentTimeMillis();
-		graph.getOperator().findCommonAncestors(v1, v2, maxDepth, allowedEdgeTypes, allowedDirection);
-		end = System.currentTimeMillis();
-
-		return end - start;
+			@Override
+			public void execute() {
+				graph.getOperator().findCommonAncestors(v1, v2, maxDepth, allowedEdgeTypes, allowedDirection);
+			}
+			
+		};
 	}
 
 	@Override
-	public ArrayList<Long> getQueryVertices() {
+	public Set<Long> getQueryVertices() {
 		
-		ArrayList<Long> queryVertices = new ArrayList<Long>();
+		Set<Long> queryVertices = new HashSet<Long>();
 		
 		queryVertices.add(v1Number);
 		queryVertices.add(v2Number);

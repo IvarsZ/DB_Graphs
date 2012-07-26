@@ -1,12 +1,12 @@
-package experiments;
+package experiments.queries;
 
 import experiments.builders.Indexer;
-import experiments.queries.IQuery;
 import graphInterfaces.IEdge;
 import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IVertex;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 
@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author iz2
  *
  */
-public class FNDQuery implements IQuery {
+public class FNDQuery implements IQueryTemplate {
 	
 	private long vNumber;
 	private int atDepth;
@@ -30,24 +30,9 @@ public class FNDQuery implements IQuery {
 	}
 
 	@Override
-	public <V extends IVertex, E extends IEdge> long execute(IPersistentGraph<V, E> graph) {
-
-		// Gets required vertices.
-		V v = Indexer.getVertex(vNumber, graph);
-
-		// Executes the query and captures the time.
-		long start, end;
-		start = System.currentTimeMillis();
-		graph.getOperator().findNeighbours(v, atDepth);
-		end = System.currentTimeMillis();
-
-		return end - start;
-	}
-
-	@Override
-	public ArrayList<Long> getQueryVertices() {
+	public Set<Long> getQueryVertices() {
 		
-		ArrayList<Long> queryVertices = new ArrayList<Long>();
+		Set<Long> queryVertices = new HashSet<Long>();
 		
 		queryVertices.add(vNumber);
 		
@@ -58,5 +43,19 @@ public class FNDQuery implements IQuery {
 	public String getPrintDetials() {
 		
 		return "FND (v " + vNumber + ", depth " + atDepth + ")";
+	}
+
+	@Override
+	public <V extends IVertex, E extends IEdge> IPreparedQuery prepare(final IPersistentGraph<V, E> graph) {
+		
+		return new IPreparedQuery() {
+			
+			V v = Indexer.getVertex(vNumber, graph);
+			
+			@Override
+			public void execute() {
+				graph.getOperator().findNeighbours(v, atDepth);
+			}
+		};
 	}
 }

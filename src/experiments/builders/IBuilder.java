@@ -1,10 +1,11 @@
 package experiments.builders;
 
+import java.util.Set;
+
 import graphInterfaces.IEdge;
 import graphInterfaces.IPersistentGraph;
 import graphInterfaces.IVertex;
 
-import java.util.ArrayList;
 
 /**
  * 
@@ -50,7 +51,7 @@ public interface IBuilder {
 	 * 
 	 * @throws IllegalArgumentException if the number of the vertex is larger than the number of vertices.
 	 */
-	public void addVerticesToIndex(ArrayList<Long> verticesToIndex)
+	public void addVerticesToIndex(Set<Long> verticesToIndex)
 			throws IllegalArgumentException;
 	
 	/**

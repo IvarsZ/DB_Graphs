@@ -1,7 +1,7 @@
 package mySqlGraph;
 
 import graphInterfaces.IPersistentGraph.Direction;
-import graphInterfaces.ITraverser;
+import graphInterfaces.ITraversalDescription;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,9 +16,7 @@ import java.util.Queue;
 
 import util.DataAccessException;
 
-
-
-class MySqlTraverser implements ITraverser<MySqlVertex> {
+class MySqlTraverser implements ITraversalDescription<MySqlVertex> {
 	
 	// TODO : resource, especially connection closure.
 
@@ -98,6 +96,10 @@ class MySqlTraverser implements ITraverser<MySqlVertex> {
 
 		public long getDepth() {
 			return currentDepth;
+		}
+		
+		public void close() throws SQLException {
+			connection.close();
 		}
 
 		private long getDepth(long vertexId) throws SQLException {

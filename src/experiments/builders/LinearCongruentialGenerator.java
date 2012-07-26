@@ -11,7 +11,7 @@ import util.Util;
  * @author iz2
  *
  */
-class LinearCongruentialGenerator {
+public class LinearCongruentialGenerator {
 	
 	private static final long LARGE_LONG = 100000000000000L;
 

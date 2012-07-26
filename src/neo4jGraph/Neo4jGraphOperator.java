@@ -2,7 +2,7 @@ package neo4jGraph;
 
 import graphInterfaces.IGraphOperator;
 import graphInterfaces.IPersistentGraph;
-import graphInterfaces.ITraverser;
+import graphInterfaces.ITraversalDescription;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -222,9 +222,9 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 	}
 
 	@Override
-	public ITraverser<Neo4jVertex> createTraverser(int minDepth, int maxDepth, List<String> allowedEdgeTypes,
+	public ITraversalDescription<Neo4jVertex> createTraverser(int minDepth, int maxDepth, List<String> allowedEdgeTypes,
 			graphInterfaces.IPersistentGraph.Direction allowedDirection) {
 		
-		return new Neo4jTraverser(minDepth, maxDepth, allowedEdgeTypes, allowedDirection);
+		return new Neo4jTraverser(minDepth, maxDepth, allowedEdgeTypes, allowedDirection, graph);
 	}
 }

@@ -7,6 +7,8 @@ import graphInterfaces.IPersistentGraph.Direction;
 import graphInterfaces.IVertex;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 
@@ -15,19 +17,19 @@ import java.util.ArrayList;
  * @author iz2
  *
  */
-public class LCAQuery implements IQuery {
+public class LCAQuery implements IQueryTemplate {
 
+	private Direction allowedDirection;
+	private ArrayList<String> allowedEdgeTypes;
+	int maxDepth;
 	private long v1Number;
 	private long v2Number;
-	int maxDepth;
-	private ArrayList<String> allowedEdgeTypes;
-	private Direction allowedDirection;
 
 	/**
 	 * Creates a lowest common ancestor query with the given arguments.
 	 */
 	public LCAQuery(long v1Number, long v2Number, int maxDepth, ArrayList<String> allowedEdgeTypes, Direction allowedDirection) {
-		
+
 		this.v1Number = v1Number;
 		this.v2Number = v2Number;
 		this.maxDepth = maxDepth;
@@ -36,25 +38,15 @@ public class LCAQuery implements IQuery {
 	}
 
 	@Override
-	public <V extends IVertex, E extends IEdge> long execute(IPersistentGraph<V, E> graph) {
+	public String getPrintDetials() {
 
-		// Gets required vertices.
-		V v1 = Indexer.getVertex(v1Number, graph);
-		V v2 = Indexer.getVertex(v2Number, graph);
-
-		// Executes the query and captures the time.
-		long start, end;
-		start = System.currentTimeMillis();
-		graph.getOperator().findLowestCommonAncestors(v1, v2, maxDepth, allowedEdgeTypes, allowedDirection);
-		end = System.currentTimeMillis();
-
-		return end - start;
+		return "LCA (v1 " + v1Number + ", v2 " + v2Number + ", max depth " + maxDepth + ")";
 	}
 
 	@Override
-	public ArrayList<Long> getQueryVertices() {
+	public Set<Long> getQueryVertices() {
 		
-		ArrayList<Long> queryVertices = new ArrayList<Long>();
+		Set<Long> queryVertices = new HashSet<Long>();
 		
 		queryVertices.add(v1Number);
 		queryVertices.add(v2Number);
@@ -63,8 +55,18 @@ public class LCAQuery implements IQuery {
 	}
 
 	@Override
-	public String getPrintDetials() {
-		
-		return "LCA (v1 " + v1Number + ", v2 " + v2Number + ", max depth " + maxDepth + ")";
+	public <V extends IVertex, E extends IEdge> IPreparedQuery prepare(final IPersistentGraph<V, E> graph) {
+
+		return new IPreparedQuery() {
+
+			V v1 = Indexer.getVertex(v1Number, graph);
+			V v2 = Indexer.getVertex(v2Number, graph);
+
+			@Override
+			public void execute() {
+				
+				graph.getOperator().findLowestCommonAncestors(v1, v2, maxDepth, allowedEdgeTypes, allowedDirection);
+			}
+		};
 	}
 }
