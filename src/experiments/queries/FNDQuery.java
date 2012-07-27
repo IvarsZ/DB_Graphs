@@ -54,7 +54,12 @@ public class FNDQuery implements IQueryTemplate {
 			
 			@Override
 			public void execute() {
-				graph.getOperator().findNeighbours(v, atDepth);
+				
+				// Gets the iterator and exhausts it.
+				Iterable<V> neighbours = graph.getOperator().findNeighbours(v, atDepth);
+				for(V n : neighbours) {
+					
+				}
 			}
 		};
 	}

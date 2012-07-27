@@ -70,6 +70,10 @@ class MySqlTraverser implements ITraversalDescription<MySqlVertex> {
 			while (q.isEmpty() == false && nextVertexId == null) {
 				traverse();
 			}
+			
+			if (nextVertexId == null) {
+				connection.close();
+			}
 		}
 
 		private void createDepthTable() throws SQLException {

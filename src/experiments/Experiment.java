@@ -146,7 +146,7 @@ public class Experiment {
 
 	private void warmup(IPersistentGraph<?, ?> graph) {
 
-		// Executes queries from the experiment for at least 1 second.
+		// Executes queries from the experiment for at least 10 second.
 		long start = System.currentTimeMillis();
 		int i = 0;
 		do {
@@ -157,7 +157,7 @@ public class Experiment {
 			if (i >= queries.size()) {
 				i = 0;
 			}
-		} while (System.currentTimeMillis() - start < 1000);
+		} while (System.currentTimeMillis() - start < 10000);
 	}
 
 	public void printExecutionTimes(Printer printer) {

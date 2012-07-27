@@ -8,6 +8,7 @@ import graphInterfaces.IPersistentGraph.Direction;
 import graphInterfaces.IVertex;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.junit.After;
 import org.junit.Before;
@@ -125,7 +126,6 @@ public abstract class TraverserTest<V extends IVertex, E extends IEdge> {
 		}
 		assertEquals(traversalOrder.length, i);
 	}
-
 	
 	/**
 	 * 

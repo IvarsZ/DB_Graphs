@@ -4,6 +4,7 @@ import graphInterfaces.IGraphOperator;
 import graphInterfaces.IPersistentGraph;
 import graphInterfaces.ITraversalDescription;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -19,6 +20,8 @@ import org.neo4j.graphdb.traversal.TraversalDescription;
 import org.neo4j.kernel.Traversal;
 
 public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge> {
+	
+	private static final ArrayList<String> EMPTY = new ArrayList<String>();
 
 	private Neo4jGraph graph;
 
@@ -43,23 +46,9 @@ public class Neo4jGraphOperator implements IGraphOperator<Neo4jVertex, Neo4jEdge
 	}
 
 	@Override
-	public Set<Neo4jVertex> findNeighbours(Neo4jVertex start, int atDepth) {
+	public Iterable<Neo4jVertex> findNeighbours(Neo4jVertex start, int atDepth) {
 
-		Set<Neo4jVertex> neighbours = new HashSet<Neo4jVertex>();
-
-		Node node = start.getNode();
-
-		// Traverses nodes that are atDepth from the start by using BFS.
-		TraversalDescription td = Traversal.description();
-		td = td.breadthFirst();
-		td = td.evaluator(Evaluators.atDepth(atDepth));
-
-		// Adds all traversed nodes to the neighbours set.
-		for (Path traversePath : td.traverse(node)) {
-			neighbours.add(new Neo4jVertex(traversePath.endNode(), graph));
-		}
-
-		return neighbours;
+		return createTraverser(atDepth, atDepth, EMPTY, IPersistentGraph.Direction.BOTH).traverse(start);
 	}
 
 	@Override

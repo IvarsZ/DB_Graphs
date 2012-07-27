@@ -1,6 +1,7 @@
 package tests.abstractTests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import graphInterfaces.IEdge;
 import graphInterfaces.IGraphOperator;
@@ -183,6 +184,23 @@ public abstract class NeighbourFinderTest<V extends IVertex, E extends IEdge> {
 		assertTrue(IndexTest.containsOnly(largeGraph.getOperator().findNeighbours(node1, testDepth), node2));
 		
 		largeGraph.close();
+	}
+	
+	@Test
+	public void emptyIterator() {
+		
+		Iterable<V> neighbours = operator.findNeighbours(getVertex(0), 15);
+		assertFalse(neighbours.iterator().hasNext());
+	}
+	
+	@Test
+	public void manyEmptyIterators() {
+		
+		// To check if mysql connection limit is exceeded.
+		Iterable<V> neighbours = operator.findNeighbours(getVertex(0), 15);
+		for (int i = 0; i < 200; i++) {
+			neighbours.iterator().hasNext();
+		}
 	}
 	
 	/**
