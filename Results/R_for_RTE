@@ -1,0 +1,139 @@
+#Reads and calculates time.
+queries <- read.table("GraphDBResults/all_results", head = TRUE)
+
+q <- aggregate(queries["QTime"], by=queries[c("Impl", "TSize", "TDepth", "QType", "QDepth", "QCount")], FUN=mean)
+names(q)[names(q)=="QTime"] <- "MeanQTime"
+
+cil <- function(x) {
+	result <- t.test(x)$conf.int[1]
+	return (result)
+}
+
+q.cil <- aggregate(queries["QTime"], by=queries[c("Impl", "TSize", "TDepth", "QType", "QDepth", "QCount")], FUN=cil)
+names(q.cil)[names(q.cil)=="QTime"] <- "CilQTime"
+q.cil$CilQTime = round(q.cil$CilQTime, 1)
+
+q$AbsErQTime <- (q$MeanQTime - q.cil$CilQTime)/q$QCount
+q$MeanQTime <- q$MeanQTime/q$QCount
+
+q$RelErQTime <- round((q$AbsErQTime/q$MeanQTime)*100, 1)
+
+q <- q[order(q$QType, q$TSize, q$QDepth), ]
+
+#Plots the graphs of tree size against time with different lines for query depths and implementations.
+zero <-c(0)
+options(scipen=10)
+for (qtype in c("LCA", "FND")) {
+
+    p <- 0
+
+    implQ <- subset(q, q$QType==qtype)
+
+    plot(zero, zero, ylim=c(implQ[order(implQ$MeanQTime), "MeanQTime"][1], implQ[order(implQ$MeanQTime), "MeanQTime"][nrow(implQ)]), log="xy", xlab="Tree Size", ylab="Time, ms", main=paste("Query time against tree size for", qtype, "queries", sep=" "), pch=p, xlim=c(100, 100000))
+
+    
+    	for (impl in c("neo4j", "mysql")) {
+		
+		for (qdepth in c(5, 10, 15, 20, 25)) {
+			tmp <- subset(implQ, implQ$QDepth==qdepth & implQ$Impl==impl)	
+			points(tmp$TSize, tmp$MeanQTime, pch=p)
+        		lines(tmp$TSize, tmp$MeanQTime, col=qdepth/5 + 1)
+			#points(x=tmp$TSize, y=tmp$MeanQTime - tmp$AbsErQTime, pch=p, col=qdepth/5 + 1)
+           		#points(x=tmp$TSize, y=tmp$MeanQTime + tmp$AbsErQTime, pch=p, col=qdepth/5 + 1)
+		}
+
+		p <- p + 1
+	}
+
+    legend("topleft", title="Query depth", legend=c(5, 10, 15, 20, 25), col=c(2,3,4,5,6), cex=0.5, pch=3)
+	legend("topleft", inset=c(0.15, 0), title="Impl", legend=c("neo4j", "mysql"), pch=c(0,1), cex=0.8)
+	
+}
+
+#Plots all measurments
+queries$NormQTime <- queries$QTime/queries$QCount
+for (qtype in c("LCA", "FND")) {
+	for (qdepth in c(5, 10, 15, 20, 25)) {
+
+		p <- 0
+    		plotQ <- subset(queries, queries$QType==qtype)
+
+    		plot(zero, zero, ylim=c(plotQ[order(plotQ$NormQTime), "NormQTime"][1], plotQ[order(plotQ$NormQTime), "NormQTime"][nrow(plotQ)]), log="xy", xlab="Tree Size", ylab="Time, ms", main=paste("Query time against tree size for", qtype, "queries", "and qdepth", qdepth, sep=" "), pch=p, xlim=c(100, 100000))
+
+	
+    		for (impl in c("neo4j", "mysql")) {
+		
+			tmp <- subset(plotQ, plotQ$QDepth==qdepth & plotQ$Impl==impl)	
+			points(tmp$TSize, tmp$NormQTime, col=p + 1)
+			p <- p + 1
+		}
+		legend("topleft", title="Impl", legend=c("neo4j", "mysql"), pch=c(0,1), col=c(1,2), cex=0.8)
+	}
+}
+
+#Plots against the query depth.
+for (qtype in c("LCA", "FND")) {
+
+	p <- 0
+    	for (impl in c("neo4j", "mysql")) {
+
+		implQ <- subset(q, q$QType==qtype & q$Impl==impl)
+		plot(zero, zero, ylim=c(implQ[order(implQ$MeanQTime), "MeanQTime"][1], implQ[order(implQ$MeanQTime), "MeanQTime"][nrow(implQ)]), xlab="Query depth", ylab="Time, ms", main=paste("Query time against query depth for", qtype, "queries", "in", impl, sep=" "), pch=p, xlim=c(5, 25))
+		
+
+		c <- 2
+		for (tsize in c(100, 1000, 10000, 100000)) {
+			tmp <- subset(implQ, implQ$TSize==tsize)	
+			points(tmp$QDepth, tmp$MeanQTime, pch=p)
+        		lines(tmp$QDepth, tmp$MeanQTime, col=c)
+			#points(x=tmp$QDepth, y=tmp$MeanQTime - tmp$AbsErQTime, pch=p, col=c)
+            		#points(x=tmp$QDepth, y=tmp$MeanQTime + tmp$AbsErQTime, pch=p, col=c)
+			c <- c + 1
+		}
+
+		legend("topleft", title="Tree size", legend=c(100, 1000, 10000, 100000), col=c(2,3,4,5), cex=0.5, pch=3)
+		p <- p + 1
+	}
+}
+
+# mysql time divided by the neo4j time
+DiffF <- function(x) {
+    result <- x[1]/x[2]
+}
+qDiff <- aggregate(q["MeanQTime"], by=q[c("TSize", "TDepth", "QType", "QDepth", "QCount")], FUN=DiffF)
+names(qDiff)[names(qDiff)=="MeanQTime"] <- "DiffQTime"
+qDiff <- qDiff[order(qDiff$QType, qDiff$TSize, qDiff$QDepth), ]
+
+#Plots time differences.
+for (qtype in c("LCA", "FND")) {
+
+	implQ <- subset(qDiff, qDiff$QType==qtype)
+	plot(zero, zero, ylim=c(implQ[order(implQ$DiffQTime), "DiffQTime"][1], implQ[order(implQ$DiffQTime), "DiffQTime"][nrow(implQ)]), xlab="Tree Size", ylab="Time, ms", main=paste("Ratio of query times of mysql and neo4j against tree size for", qtype, "queries", sep=" "), log="xy", pch=p, xlim=c(100, 100000))
+		
+	for (qdepth in c(5, 10, 15, 20, 25)) {
+			tmp <- subset(implQ, implQ$QDepth==qdepth)	
+			points(tmp$TSize, tmp$DiffQTime, pch=p)
+        		lines(tmp$TSize, tmp$DiffQTime, col=qdepth/5 + 1)
+			#points(x=tmp$TSize, y=tmp$DiffQTime - tmp$AbsErQTime, pch=p, col=qdepth/5 + 1)
+           		#points(x=tmp$TSize, y=tmp$DiffQTime + tmp$AbsErQTime, pch=p, col=qdepth/5 + 1)
+	}
+
+	legend("bottomleft", title="Query depth", legend=c(5, 10, 15, 20, 25), col=c(2,3,4,5,6), cex=0.5, pch=3)
+}
+
+#Calculates the regressions
+q.neo4j.LCA <- subset(q, q$Impl=="neo4j" & q$QType=="LCA")
+regression <- lm(q.neo4j.LCA$MeanQTime ~ q.neo4j.LCA$TSize + q.neo4j.LCA$QDepth)
+summary(regression)
+
+q.neo4j.FND <- subset(q, q$Impl=="neo4j" & q$QType=="FND")
+regression <- lm(q.neo4j.FND$MeanQTime ~ q.neo4j.FND$TSize + q.neo4j.FND$QDepth)
+summary(regression)
+
+q.mysql.LCA <- subset(q, q$Impl=="mysql" & q$QType=="LCA")
+regression <- lm(q.mysql.LCA$MeanQTime ~ q.mysql.LCA$TSize + q.mysql.LCA$QDepth)
+summary(regression)
+
+q.mysql.FND <- subset(q, q$Impl=="mysql" & q$QType=="FND")
+regression <- lm(q.mysql.FND$MeanQTime ~ q.mysql.FND$TSize + q.mysql.FND$QDepth)
+summary(regression)

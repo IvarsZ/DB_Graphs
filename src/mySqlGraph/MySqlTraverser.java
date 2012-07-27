@@ -253,6 +253,9 @@ class MySqlTraverser implements ITraversalDescription<MySqlVertex> {
 					}
 				}
 			}
+			
+			// FIXME.
+			resultSet.close();
 		}
 	}
 	private Direction allowedDirection;

@@ -27,8 +27,7 @@ public class RandomTreeExperiment {
 
 	/**
 	 * 
-	 * @param args - the first argument is the filename of the file containing the configuration of the experiment
-	 * the second is the random seed to use.
+	 * @param args - the first argument is the filename of the file containing the configuration of the experiment.
 	 * 
 	 * @throws IOException 
 	 */
